@@ -1,0 +1,254 @@
+/* Главная */
+
+/* ---------- герой: по Figma ZlzQiYNm… кадр «home» 4030:690 (раньше s8aXHdn1… 139:21) ----------
+   Всё в долях кадра 1920: --u = ширина окна без полосы прокрутки / 1920 (--vw ставит site.js).
+   Мелкий текст и элементы управления — в --t, не мельче .85px на единицу, чтобы на 1280–1440 читалось.
+   Высота кадра 954u; в окне выше этого герой дорастает до экрана (не больше 1100u),
+   содержимое опускается на половину прибавки (--ex). */
+
+
+/* стопка «герой + блок 2»: герой липнет (низом к низу окна, если он выше окна), блок 2 наезжает карточкой-артом.
+   --p (0…1) ставит home.js по прокрутке: герой постепенно размывается (как кадр «скролл» в Figma), затемнение едва заметное,
+   отъезд вверх небольшой. Края размытого кадра прячет лёгкое увеличение видео */
+.stack { position: relative; }
+.hero {
+  --hh: max(calc(954 * var(--u)), min(100svh, calc(1100 * var(--u))));
+  --ex: calc((var(--hh) - 954 * var(--u)) / 2);
+  position: sticky; top: min(0px, calc(100svh - var(--hh))); height: var(--hh);
+  overflow: hidden; isolation: isolate;
+  transform: translateY(calc(var(--p, 0) * -40 * var(--u)));
+}
+.hero > :not(.hero-dim) { filter: blur(calc(var(--p, 0) * 18 * var(--u))); }
+.hero-dim { position: absolute; inset: 0; z-index: 5; pointer-events: none; background: #0a0712; opacity: calc(var(--p, 0) * .22); }
+/* видео как в макете: слой 2108×1026 при −135/−81 (масштаб 1,098), видна верхняя часть кадра.
+   Ролик уже обрезан по видимой ширине (с 120-го px исходника) — коробка от −3,25 шириной 1927,9;
+   низ у 945, в высоком окне коробка дорастает вниз вместе с героем */
+.hero-media { position: absolute; z-index: -4; left: calc(-3.25 * var(--u)); top: calc(-81 * var(--u)); width: calc(1927.9 * var(--u)); bottom: calc(9 * var(--u)); overflow: hidden; }
+.hero-video { display: block; width: 100%; height: auto; scale: calc(1 + var(--p, 0) * .04); }
+/* «тень» — затемнение слева под текст, .44 */
+.hero-shade { position: absolute; z-index: -3; pointer-events: none; opacity: .44;
+  left: calc(-372 * var(--u)); top: calc(-96 * var(--u)); width: calc(2303 * var(--u)); height: calc(1024 * var(--u) + var(--ex) * 2);
+  background: linear-gradient(90deg, rgba(10, 7, 18, .92) 0%, rgba(10, 7, 18, .78) 22%, rgba(10, 7, 18, .45) 40%, rgba(10, 7, 18, .12) 56%, rgba(10, 7, 18, 0) 66%);
+}
+/* «тень 2» — уход в фон снизу (556…954): линейная, как в макете, только начало смягчено — без видимой кромки */
+.hero-fade { position: absolute; z-index: -2; left: 0; right: 0; bottom: 0; height: calc(398 * var(--u)); pointer-events: none;
+  background: linear-gradient(180deg, rgba(10, 7, 18, 0) 0%, rgba(10, 7, 18, .06) 10%, rgba(10, 7, 18, .17) 20%, rgba(10, 7, 18, .28) 30%, rgba(10, 7, 18, .39) 40%, rgba(10, 7, 18, .5) 50%, rgba(10, 7, 18, .6) 60%, rgba(10, 7, 18, .7) 70%, rgba(10, 7, 18, .8) 80%, rgba(10, 7, 18, .9) 90%, var(--bg) 100%);
+}
+.hero-bill { position: absolute; z-index: -1; left: calc(-33 * var(--u)); top: calc(164 * var(--u) + var(--ex)); width: calc(160 * var(--u)); height: calc(171.3 * var(--u)); max-width: none; filter: blur(calc(6.6 * var(--u))); pointer-events: none; }
+/* вторая купюра — справа сверху, срезана краем (Figma 4030:736: 160×171,3, поворот 129,51°) */
+.hero-bill2 { position: absolute; z-index: -1; left: calc(1788 * var(--u)); top: calc(13 * var(--u)); width: calc(233.95 * var(--u)); height: calc(232.42 * var(--u)); display: grid; place-items: center; pointer-events: none; }
+.hero-bill2 img { width: calc(160 * var(--u)); height: calc(171.3 * var(--u)); max-width: none; flex: none; transform: rotate(129.51deg); filter: blur(calc(6.6 * var(--u))); }
+
+.hero-in { position: absolute; left: calc(310 * var(--u)); top: calc(229 * var(--u) + var(--ex)); }
+.hero-in h1 { margin: calc(11 * var(--u)) 0 0; font: 600 calc(78.98 * var(--u))/.96 'Inter Tight', var(--f-body); letter-spacing: -.03756em; color: #fff; text-shadow: 0 calc(-1.98 * var(--u)) calc(25.2 * var(--u)) rgba(255, 255, 255, .48); white-space: nowrap; }
+.hero-lead { margin-top: calc(11.4 * var(--u)); width: calc(372 * var(--t)); font: 500 calc(17 * var(--t))/1.35 'Inter Tight', var(--f-body); color: #fff; }
+.hero-lead.rv.is-in { opacity: .91; }
+.hero-cta { display: flex; gap: calc(7.2 * var(--u)); margin-top: calc(38 * var(--u)); }
+
+/* отсчёт: плашка со стеклом, цифры один в один с макетом (в --t, от внутреннего края рамки); справа — дата и платформы */
+.hero-count { --b: calc(1.157 * var(--t));
+  position: absolute; left: calc(310 * var(--u)); top: calc(736 * var(--u) + var(--ex)); width: calc(830 * var(--t)); height: calc(118 * var(--t));
+  border-radius: calc(18.51 * var(--t)); border: var(--b) solid rgba(255, 222, 242, .12); background: rgba(32, 2, 25, .43);
+  backdrop-filter: blur(calc(16.2 * var(--t))); -webkit-backdrop-filter: blur(calc(16.2 * var(--t))); }
+.hero-count > * { position: absolute; }
+.hc-d { top: calc(37 * var(--t) - var(--b)); width: calc(46.28 * var(--t)); text-align: right; font: 400 calc(59 * var(--t))/calc(46.27 * var(--t)) 'Bebas Neue', var(--f-display); letter-spacing: calc(-1.157 * var(--t)); color: #fff4f9; text-shadow: 0 0 calc(16.2 * var(--t)) rgba(255, 111, 165, .32); }
+.hc-1 { left: calc(31.23 * var(--t) - var(--b)); } .hc-2 { left: calc(112.21 * var(--t) - var(--b)); } .hc-3 { left: calc(193.19 * var(--t) - var(--b)); }
+.hc-4 { left: calc(271.86 * var(--t) - var(--b)); width: calc(47.43 * var(--t)); }
+.hc-l, .hc-c { top: calc(85.29 * var(--t) - var(--b)); font: 500 calc(15.04 * var(--t))/calc(13.88 * var(--t)) 'Inter Tight', var(--f-body); color: rgba(205, 191, 214, .43); white-space: nowrap; }
+.hc-l1 { left: calc(38.18 * var(--t) - var(--b)); } .hc-l2 { left: calc(118 * var(--t) - var(--b)); } .hc-l4 { left: calc(287.9 * var(--t) - var(--b)); }
+.hc-l3 { left: calc(204.76 * var(--t) - var(--b)); top: calc(84.14 * var(--t) - var(--b)); }
+.hc-c { top: calc(50.9 * var(--t) - var(--b)); font-style: normal; color: #9284a3; }
+.hc-c1 { left: calc(92.55 * var(--t) - var(--b)); } .hc-c2 { left: calc(173.53 * var(--t) - var(--b)); } .hc-c3 { left: calc(254.51 * var(--t) - var(--b)); }
+.hc-line { left: calc(350.43 * var(--t) - var(--b)); top: calc(40.8 * var(--t) - var(--b)); width: var(--b); height: calc(32.39 * var(--t)); background: rgba(255, 222, 242, .15); }
+.hc-meta { left: calc(375.83 * var(--t) - var(--b)); top: calc(44.27 * var(--t) - var(--b)); font: 400 calc(17.35 * var(--t))/calc(24.21 * var(--t)) var(--f-body); color: #cdbfd6; white-space: nowrap; }
+/* коробка и диск: плашка продлена до 830 под неё. Коробка 108×137 под наклоном 5° выступает над плашкой;
+   на наведении коробка выпрямляется и приподнимается */
+.hc-pack { left: calc(686 * var(--t) - var(--b)); top: calc(-36 * var(--t) - var(--b)); width: calc(108 * var(--t)); height: calc(137 * var(--t)); }
+.hc-pack::before { content: ''; position: absolute; left: -40%; top: -10%; width: 200%; height: 120%; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(closest-side, rgba(255, 111, 165, .32), rgba(255, 111, 165, .1) 55%, rgba(255, 111, 165, 0)); }
+.hc-box { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; rotate: 5deg; border-radius: calc(3 * var(--t));
+  filter: drop-shadow(0 calc(14 * var(--t)) calc(16 * var(--t)) rgba(6, 2, 14, .6)) drop-shadow(0 0 calc(18 * var(--t)) rgba(255, 111, 165, .18));
+  transition: rotate .7s var(--ease-out), translate .7s var(--ease-out); }
+.hero-count:hover .hc-box { rotate: 1.5deg; translate: 0 calc(-5 * var(--t)); }
+
+/* ---------- блок 2: карточка-арт + карта ----------
+   По Figma ZlzQiYNm… «2 блок» 4033:817: координаты — от верха карточки-арта (y 974 кадра), всё в --u, мелкий текст в --t.
+   Арт со скруглением 72 наезжает на липкого героя; бухта, лого и девушка — слоями с параллаксом (--py ставит home.js).
+   Ниже — заголовок и упрощённая карта: легенда слева, карточка места справа, зум и перетаскивание, кнопка на полную карту. */
+.b2 { position: relative; z-index: 2; height: calc(1784 * var(--u)); }
+.b2::before { content: ''; position: absolute; z-index: -3; left: 0; right: 0; top: calc(300 * var(--u)); bottom: 0; background: var(--bg); }
+.b2 > [data-par] { will-change: transform; }
+.b2-art { position: absolute; z-index: -2; left: 0; top: 0; width: 100%; height: calc(980 * var(--u)); overflow: hidden; border-radius: calc(72 * var(--u)) calc(72 * var(--u)) 0 0; background: #8fc6d6; }
+/* бухта — с запасом по высоте под параллакс */
+.b2-bay { position: absolute; left: 0; right: 0; top: calc(-70 * var(--u)); height: calc(1120 * var(--u)); transform: translate3d(0, var(--py, 0), 0); will-change: transform; }
+.b2-bay img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+/* лого: слой 916×249 при (502, 65), свечение SVG выходит за слой на 18,59 % × 5,05 % */
+.b2-logo { position: absolute; z-index: -1; left: calc(455.74 * var(--u)); top: calc(18.71 * var(--u)); width: calc(1008.6 * var(--u)); height: calc(341.6 * var(--u)); max-width: none; pointer-events: none;
+  transform: translate3d(0, var(--py, 0), 0) scale(var(--ps, 1)); transform-origin: 50% 70%; will-change: transform; }
+/* девушка: слой 600×813 при (673, 170) — чуть обгоняет прокрутку (ближний план), лого за ней уходит вниз */
+.b2-woman { position: absolute; z-index: -1; left: calc(673 * var(--u)); top: calc(170 * var(--u)); width: calc(600 * var(--u)); height: calc(813 * var(--u)); max-width: none; pointer-events: none; transform: translate3d(0, var(--py, 0), 0); will-change: transform; }
+/* «тень 2» (0, 399) 1931×596: уход арта и девушки в фон — многоточечный спад вместо линейного */
+.b2-shade { position: absolute; z-index: -1; left: 0; right: 0; top: calc(399 * var(--u)); height: calc(596 * var(--u)); pointer-events: none;
+  background: linear-gradient(180deg, rgba(10, 7, 18, 0) 0%, rgba(10, 7, 18, .13) 10%, rgba(10, 7, 18, .27) 20%, rgba(10, 7, 18, .4) 30%, rgba(10, 7, 18, .54) 40%, rgba(10, 7, 18, .67) 50%, rgba(10, 7, 18, .78) 60%, rgba(10, 7, 18, .85) 70%, rgba(10, 7, 18, .9) 80%, rgba(10, 7, 18, .95) 90%, var(--bg) 100%); }
+/* свечения и листья вокруг карты — запечены из слоёв Figma (Ellipse 2/3 с layer blur 255, листья белые .15/.19 в overlay):
+   _tools/b2-bg.cjs, картинка от 300 блока и ниже него на 742 — лист не обрезается, низ уходит в цвет страницы под новостями */
+.b2-bg { position: absolute; z-index: -3; left: 0; top: calc(300 * var(--u)); width: 100%; height: calc(2226 * var(--u)); max-width: none; pointer-events: none; }
+
+.b2-kicker { position: absolute; left: calc(839 * var(--u)); top: calc(697 * var(--u)); }
+.b2-title { position: absolute; left: 0; right: 0; top: calc(721 * var(--u)); margin: 0; text-align: center; font: 600 calc(65 * var(--u))/.96 'Inter Tight', var(--f-body); letter-spacing: calc(-2 * var(--u)); color: #fff;
+  text-shadow: 0 0 calc(18.1 * var(--u)) rgba(255, 255, 255, .58); white-space: nowrap; }
+.b2-lead { position: absolute; left: calc(702 * var(--u)); top: calc(798 * var(--u)); width: calc(479 * var(--u)); margin: 0; text-align: center; font: 500 calc(17 * var(--t))/1.35 'Inter Tight', var(--f-body); color: #fff; }
+.b2-lead.rv.is-in { opacity: .48; }
+
+/* кнопка на полную карту: во всю ширину карты; низ подложки карты (без скругления) кончается на середине кнопки —
+   концы подложки прячутся за её скруглёнными краями (Figma). Проявляется вместе с картой, а не отдельно */
+.hb-open { --brand: #ff8db8; --ink-h: #0f0c1a; position: absolute; z-index: 3; left: calc(310 * var(--u)); top: calc(1576 * var(--u)); width: calc(1300 * var(--u)); justify-content: center; gap: calc(10 * var(--t));
+  border-radius: calc(28 * var(--t)); opacity: 0; translate: 0 26px; transition: color .45s var(--ease-out), box-shadow .6s var(--ease-out), opacity .9s var(--ease-out) .1s, translate 1.1s var(--ease-out) .1s; background: #ffc080; color: #0f0c1a; font: 500 calc(15 * var(--t))/1.35 'Inter Tight', var(--f-body); }
+.hb-open .arr { width: calc(16 * var(--t)); height: calc(16 * var(--t)); }
+
+/* ---------- мини-карта (Group 26, 1300×725 при (310, 887)) ---------- */
+.mm { --lg: rgba(255, 222, 242, .1); position: absolute; left: calc(310 * var(--u)); top: calc(887 * var(--u)); width: calc(1300 * var(--u)); height: calc(689 * var(--u) + 26 * var(--t));
+  border-radius: calc(44 * var(--u)) calc(44 * var(--u)) 0 0; border: 1px solid rgba(255, 222, 242, .1); overflow: hidden; isolation: isolate;
+  background: #120d1a url(../img/b2-card.webp) 0 0 / 100% calc(725 * var(--u)) no-repeat; } /* картинка 1300×725 со скруглёнными углами: низ уходит под кнопку */
+/* подложка (стекло + два свечения Group 26) запечена в b2-card.webp тем же _tools/b2-bg.cjs */
+
+/* окно карты: на всю карточку, тянется мышью; мир — картинка 1000 px, камеру ставит home.js */
+.mm-view { position: absolute; inset: 0; z-index: -1; cursor: grab; touch-action: none; }
+.mm-view.is-drag { cursor: grabbing; }
+.mm-world { position: absolute; left: 0; top: 0; width: 1000px; aspect-ratio: 3336 / 4784; transform-origin: 0 0; will-change: transform; }
+.mm-world.is-ease { transition: transform .6s cubic-bezier(.3, .7, .2, 1); }
+.mm-world > img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; pointer-events: none; user-select: none; }
+.mm-blips { position: absolute; inset: 0; }
+.mm-bp { position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; padding: 0; border-radius: 50%; display: grid; place-items: center; cursor: pointer;
+  background: #130b1d; border: 1.3px solid var(--c); color: var(--c); box-shadow: 0 0 0 2px rgba(6, 4, 11, .5), 0 0 10px color-mix(in srgb, var(--c) 40%, transparent);
+  transform: scale(var(--iz, 1)); transition: transform .3s var(--ease-out), background .2s, color .2s, opacity .3s; }
+.mm-bp svg { width: 13px; height: 13px; pointer-events: none; }
+.mm-bp:hover, .mm-bp.is-sel { background: var(--c); color: #130b1d; z-index: 3; }
+.mm-bp.is-sel { transform: scale(calc(var(--iz, 1) * 1.3)); box-shadow: 0 0 0 3px rgba(6, 4, 11, .55), 0 0 0 calc(5px) color-mix(in srgb, var(--c) 35%, transparent), 0 0 18px var(--c); }
+.mm-bp.is-found { opacity: .45; }
+.mm-bp.is-wp::after { content: ''; position: absolute; left: 50%; bottom: 100%; width: 2px; height: 14px; margin-left: -1px; background: #ff8db8; box-shadow: 0 0 6px #ff6fa5; }
+.mm-bp[hidden] { display: none; }
+/* общий план — упрощённо: точки цвета группы, значки раскрываются при приближении (×1.5) или под курсором */
+.mm.is-far .mm-bp:not(.is-sel):not(:hover) { background: var(--c); transform: scale(calc(var(--iz, 1) * .4)); box-shadow: 0 0 0 3px rgba(6, 4, 11, .45), 0 0 14px color-mix(in srgb, var(--c) 60%, transparent); }
+.mm.is-far .mm-bp:not(.is-sel):not(:hover) svg { opacity: 0; }
+.mm-bp svg { transition: opacity .2s; }
+.mm-bp b { position: absolute; left: calc(100% + 7px); top: 50%; translate: -4px -50%; padding: 5px 9px; border-radius: 7px; white-space: nowrap; pointer-events: none;
+  background: rgba(14, 9, 24, .92); border: 1px solid rgba(255, 222, 242, .15); font: 600 12px/1 var(--f-body); color: #fff; opacity: 0; transition: opacity .2s, translate .3s var(--ease-out); }
+.mm-bp:hover b { opacity: 1; translate: 0 -50%; }
+.mm-you { position: absolute; width: 20px; height: 20px; margin: -10px 0 0 -10px; color: #fff; transform: scale(var(--iz, 1)); filter: drop-shadow(0 0 6px rgba(255, 111, 165, .9)); pointer-events: none; z-index: 2; }
+.mm-you svg { width: 100%; height: 100%; transform: rotate(32deg); }
+
+/* легенда: 330×607 при (20, 34) */
+.mm-lg { position: absolute; left: calc(20 * var(--u)); top: calc(34 * var(--u)); width: calc(330 * var(--u)); height: calc(607 * var(--u)); display: flex; flex-direction: column; padding: calc(33 * var(--u)) 0 0 calc(25 * var(--u));
+  border-radius: calc(24 * var(--u)); border: 1px solid rgba(255, 222, 242, .1); background: rgba(18, 9, 32, .55); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); overflow: hidden; }
+.mm-lg > * { margin-right: calc(25 * var(--u)); }
+.mm-kicker { padding-left: calc(2 * var(--u)); font: 600 calc(10 * var(--t))/1.2 'Inter Tight', var(--f-body); letter-spacing: calc(6 * var(--t)); text-transform: uppercase; color: #ff6fa5; text-shadow: 0 0 8.4px rgba(255, 111, 165, .65); }
+.mm-title { margin: calc(14 * var(--u)) 0 0; font: 600 calc(35 * var(--u))/.96 'Inter Tight', var(--f-body); letter-spacing: calc(-2 * var(--u)); color: #fff; text-shadow: 0 0 18.1px rgba(255, 255, 255, .58); }
+.mm-track { display: block; margin-top: calc(28 * var(--u)); padding: calc(12 * var(--u)) 0 calc(14 * var(--u)); border-top: 1px solid var(--lg); border-bottom: 1px solid var(--lg); }
+.mm-track-row { display: flex; align-items: baseline; gap: calc(7 * var(--t)); }
+.mm-track-row b { font: italic 700 calc(26 * var(--t))/1 'Inter Tight', var(--f-body); letter-spacing: 1px; color: #f7eef5; font-variant-numeric: tabular-nums; }
+.mm-track-row > span { font-size: calc(13 * var(--t)); color: #9284a3; }
+.mm-track-row em { margin-left: auto; font: normal 600 calc(12.5 * var(--t))/1 var(--f-body); color: #ff8db8; }
+.mm-track:hover em { text-decoration: underline; text-underline-offset: 3px; }
+.mm-bar { display: block; height: 3px; margin-top: calc(9 * var(--u)); border-radius: 1.5px; background: rgba(255, 222, 242, .1); overflow: hidden; }
+.mm-bar span { display: block; width: 1.5%; height: 100%; background: linear-gradient(90deg, #ffb48a, #ff6fa5); transition: width .6s var(--ease-out); }
+.mm-search { display: flex; align-items: center; gap: calc(12 * var(--t)); height: calc(45.5 * var(--u)); margin-top: calc(6 * var(--u)); padding-left: calc(2 * var(--u)); border-bottom: 1px solid var(--lg); transition: border-color .3s; }
+.mm-search:focus-within { border-color: #ff8db8; }
+.mm-search svg { width: calc(12 * var(--t)); height: calc(12 * var(--t)); color: #9284a3; flex: none; }
+.mm-search input { flex: 1; min-width: 0; height: 100%; border: 0; background: none; outline: none; font: calc(14.5 * var(--t)) var(--f-body); color: #fff; }
+.mm-search input::placeholder { color: #645875; }
+.mm-quick { display: flex; align-items: center; gap: calc(14 * var(--t)); padding: calc(12 * var(--u)) 0 calc(6 * var(--u)); }
+.mm-quick button { border: 0; background: none; padding: 0; font: 600 calc(12.5 * var(--t))/1.55 var(--f-body); color: #cdbfd6; transition: color .2s; }
+.mm-quick button:hover { color: #fff; }
+.mm-count { margin-left: auto; font: 400 calc(11 * var(--t))/1 var(--f-body); letter-spacing: .04em; color: #645875; }
+.mm-count b { font-weight: 500; color: #cdbfd6; }
+/* список прокручивается внутри панели; низ гасится подложкой, без масок */
+.mm-list { position: relative; flex: 1; min-height: 0; margin-right: 0; padding: 0 calc(25 * var(--u)) calc(30 * var(--u)) 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; }
+.mm-list::-webkit-scrollbar { display: none; }
+.mm-lg::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: calc(48 * var(--u)); pointer-events: none; border-radius: 0 0 calc(24 * var(--u)) calc(24 * var(--u));
+  background: linear-gradient(180deg, rgba(22, 12, 37, 0), rgba(22, 12, 37, .7) 55%, rgba(22, 12, 37, .95)); }
+.mm-g { padding: calc(20 * var(--u)) 0 calc(4 * var(--u)); }
+.mm-g + .mm-g { border-top: 1px solid var(--lg); }
+.mm-gh { display: flex; align-items: center; gap: calc(10 * var(--t)); width: 100%; height: calc(17 * var(--t)); margin-bottom: calc(8 * var(--u)); padding: 0; border: 0; background: none; text-align: left; transition: opacity .25s; }
+.mm-gh::before { content: ''; flex: none; width: 3px; height: calc(16 * var(--t)); border-radius: 1.5px; background: var(--c); box-shadow: 0 0 5px var(--c); }
+.mm-gh > span { font: italic 700 calc(17 * var(--t))/1 'Inter Tight', var(--f-body); letter-spacing: .06em; text-transform: uppercase; color: #f7eef5; }
+.mm-gh i { margin-left: auto; font: normal 400 calc(11 * var(--t))/1 var(--f-body); color: #9284a3; }
+.mm-gh.is-off { opacity: .4; }
+.mm-i { display: flex; align-items: center; gap: calc(11 * var(--t)); width: 100%; height: calc(34 * var(--u)); min-height: calc(30 * var(--t)); padding: 0 0 0 calc(2 * var(--u)); border: 0; background: none; text-align: left;
+  font: 400 calc(13.5 * var(--t))/1.55 var(--f-body); color: #cdbfd6; transition: color .2s, opacity .25s; }
+.mm-i .mini { width: calc(22 * var(--t)); height: calc(22 * var(--t)); border-radius: 50%; display: grid; place-items: center; flex: none; background: #130b1d; border: 1px solid var(--c); color: var(--c); transition: background .2s, color .2s; }
+.mm-i .mini svg { width: calc(12 * var(--t)); height: calc(12 * var(--t)); }
+.mm-i:hover { color: #fff; }
+.mm-i:hover .mini { background: var(--c); color: #130b1d; }
+.mm-i i { margin-left: auto; font: normal 500 calc(11 * var(--t))/1 'Inter Tight', var(--f-body); letter-spacing: .44px; color: #645875; }
+.mm-i.is-off { opacity: .35; }
+.mm-i.is-off .mini { background: transparent; border-style: dashed; }
+.mm-i[hidden], .mm-g[hidden] { display: none; }
+
+/* карточка места: 372×524 при (906, 34) */
+.mm-card { --c: #f3e3ec; position: absolute; left: calc(906 * var(--u)); top: calc(34 * var(--u)); width: calc(372 * var(--u)); padding: calc(25 * var(--u)) calc(25 * var(--u)) calc(20 * var(--u));
+  border-radius: calc(24 * var(--u)); border: 1px solid rgba(255, 222, 242, .12); background: rgba(18, 9, 32, .8); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); overflow: hidden;
+  transition: opacity .35s var(--ease-out), transform .45s var(--ease-out); }
+.mm-card[hidden] { display: block; opacity: 0; transform: translateX(calc(16 * var(--u))); pointer-events: none; }
+.mm-card::before { content: ''; position: absolute; z-index: -1; right: calc(-84 * var(--u)); top: calc(-160 * var(--u)); width: calc(378 * var(--u)); height: calc(328 * var(--u)); border-radius: 50%; pointer-events: none;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--c) 22%, transparent), transparent); }
+.mm-card-top { position: absolute; left: 1px; right: 1px; top: 1px; height: 3px; border-radius: 3px 3px 0 0; background: var(--c); box-shadow: 0 0 8px var(--c); }
+.mm-esc { position: absolute; right: calc(17 * var(--u)); top: calc(17 * var(--u)); height: calc(24 * var(--t)); padding: 0 calc(7 * var(--t)); border-radius: 6px; border: 1px solid rgba(255, 222, 242, .2); border-bottom-width: 2px;
+  background: rgba(6, 4, 11, .6); font: 500 calc(10.5 * var(--t))/1 var(--f-body); color: #9284a3; transition: color .2s, border-color .2s; }
+.mm-esc:hover { color: #fff; border-color: rgba(255, 222, 242, .4); }
+.mm-ch { display: grid; grid-template-columns: calc(56 * var(--u)) 1fr; column-gap: calc(16 * var(--u)); align-items: center; min-height: calc(66 * var(--u)); padding-right: calc(50 * var(--u)); }
+.mm-ic { grid-row: span 2; width: calc(56 * var(--u)); height: calc(56 * var(--u)); border-radius: 50%; display: grid; place-items: center; background: var(--c); color: #130b1d;
+  box-shadow: 0 0 15px color-mix(in srgb, var(--c) 50%, transparent), 0 0 0 4px color-mix(in srgb, var(--c) 18%, transparent); }
+.mm-ic svg { width: calc(24 * var(--u)); height: calc(24 * var(--u)); }
+.mm-cat { align-self: end; font: 500 calc(10.5 * var(--t))/1.4 'Inter Tight', var(--f-body); letter-spacing: .12em; text-transform: uppercase; color: rgba(243, 227, 236, .49); }
+.mm-name { align-self: start; margin: calc(4 * var(--u)) 0 0; font: 600 calc(28 * var(--u))/1.12 'Inter Tight', var(--f-body); letter-spacing: .03em; color: #fff; text-shadow: 0 1px 16px rgba(255, 255, 255, .25); }
+.mm-where { display: flex; align-items: center; gap: calc(11 * var(--t)); height: calc(46.7 * var(--u)); margin-top: calc(23 * var(--u)); border-top: 1px solid var(--lg); border-bottom: 1px solid var(--lg); }
+.mm-where svg { width: calc(12 * var(--t)); height: calc(12 * var(--t)); color: #9284a3; flex: none; }
+.mm-rg { font: 500 calc(14 * var(--t))/1 var(--f-body); color: #f7eef5; }
+.mm-dist { margin-left: auto; font: 500 calc(12 * var(--t))/1 'Inter Tight', var(--f-body); letter-spacing: .46px; color: #9284a3; }
+.mm-desc { margin: calc(16 * var(--u)) 0 0; font: 400 calc(15 * var(--t))/1.55 var(--f-body); color: #cdbfd6; }
+.mm-acts { display: flex; gap: calc(10 * var(--u)); margin-top: calc(30 * var(--u)); }
+.mm-acts button { display: inline-flex; align-items: center; justify-content: center; gap: calc(9 * var(--t)); height: calc(46 * var(--u)); padding: 0 calc(16 * var(--u)); border-radius: calc(12 * var(--u));
+  font: 600 calc(14 * var(--t))/1 var(--f-body); white-space: nowrap; transition: background .3s, border-color .3s, color .3s, box-shadow .4s; }
+.mm-acts svg { width: calc(14 * var(--t)); height: calc(14 * var(--t)); flex: none; }
+.mm-wp { flex: 1.25; border: 0; color: #23081a; background: linear-gradient(90deg, #e8a6ff, #ffb3d4); box-shadow: 0 8px 15px -10px rgba(224, 139, 255, .7); }
+.mm-wp:hover { box-shadow: 0 10px 24px -8px rgba(224, 139, 255, .85); }
+.mm-fd { flex: 1; border: 1px solid rgba(255, 222, 242, .15); color: #f7eef5; background: rgba(255, 236, 248, .06); }
+.mm-fd:hover { border-color: rgba(255, 222, 242, .35); background: rgba(255, 236, 248, .1); }
+.mm-fd.is-on { border-color: color-mix(in srgb, #73d9ad 60%, transparent); color: #73d9ad; }
+.mm-near-h { display: block; margin-top: calc(21 * var(--u)); font: 500 calc(10.5 * var(--t))/1 var(--f-body); letter-spacing: .14em; text-transform: uppercase; color: #9284a3; }
+.mm-near { list-style: none; margin: calc(7 * var(--u)) 0 0; padding: 0; }
+.mm-near button { display: flex; align-items: center; gap: calc(11 * var(--t)); width: 100%; height: calc(42 * var(--u)); padding: 0; border: 0; border-top: 1px solid var(--lg); background: none; text-align: left;
+  font: 400 calc(13.5 * var(--t))/1 var(--f-body); color: #cdbfd6; transition: color .2s; }
+.mm-near .mini { width: calc(24 * var(--t)); height: calc(24 * var(--t)); border-radius: 50%; display: grid; place-items: center; flex: none; background: #130b1d; border: 1px solid var(--c); color: var(--c); transition: background .2s, color .2s; }
+.mm-near .mini svg { width: calc(12 * var(--t)); height: calc(12 * var(--t)); }
+.mm-near i { margin-left: auto; font: normal 500 calc(12 * var(--t))/1 'Inter Tight', var(--f-body); letter-spacing: .44px; color: #786693; }
+.mm-near button:hover { color: #fff; }
+.mm-near button:hover .mini { background: var(--c); color: #130b1d; }
+
+/* зум: столбик справа снизу, над кнопкой «Open map» */
+.mm-zoom { position: absolute; right: calc(22 * var(--u)); bottom: calc(60 * var(--u)); display: flex; flex-direction: column; align-items: center; padding: calc(4 * var(--t)); border-radius: calc(14 * var(--t));
+  border: 1px solid rgba(255, 222, 242, .12); background: rgba(18, 9, 32, .7); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.mm-zoom button { width: calc(36 * var(--t)); height: calc(36 * var(--t)); display: grid; place-items: center; padding: 0; border: 0; border-radius: calc(10 * var(--t)); background: none; color: #cdbfd6; transition: background .2s, color .2s; }
+.mm-zoom button:hover { background: rgba(255, 236, 248, .1); color: #fff; }
+.mm-zoom button:disabled { opacity: .3; pointer-events: none; }
+.mm-zoom svg { width: calc(15 * var(--t)); height: calc(15 * var(--t)); }
+.mm-zoom [data-z="fit"] { margin-top: calc(4 * var(--t)); border-top: 1px solid rgba(255, 222, 242, .1); border-radius: 0 0 calc(10 * var(--t)) calc(10 * var(--t)); }
+.mm-zl { padding: calc(3 * var(--t)) 0; font: 500 calc(11 * var(--t))/1 'Inter Tight', var(--f-body); color: #9284a3; font-variant-numeric: tabular-nums; }
+/* подсказка: всплывает, если крутят колесо без Ctrl */
+.mm-hint { position: absolute; left: 50%; bottom: calc(64 * var(--u)); translate: -50% 8px; display: flex; align-items: center; gap: calc(6 * var(--t)); padding: calc(8 * var(--t)) calc(14 * var(--t)); border-radius: calc(12 * var(--t));
+  background: rgba(14, 9, 24, .88); border: 1px solid rgba(255, 222, 242, .14); font: 500 calc(12.5 * var(--t))/1 var(--f-body); color: #cdbfd6; opacity: 0; pointer-events: none; transition: opacity .3s, translate .4s var(--ease-out); }
+.mm-hint.is-on { opacity: 1; translate: -50% 0; }
+
+/* ---------- новости на главной: «лента» ----------
+   Колонка 1300 от 310; главная история — арт 44 (.ls из v2.css), три карточки наезжают на её низ, как «Open map» на карту.
+   Вокруг — свечения из Figma и лист в overlay, как фон блока 2 */
+.wire { position: relative; z-index: 2; isolation: isolate; width: calc(1300 * var(--u)); margin-left: calc(310 * var(--u)); padding-top: calc(40 * var(--u)); }
+.wire-fx-v { left: calc(-780 * var(--u)); top: calc(300 * var(--u)); }
+.wire-fx-p { right: calc(-640 * var(--u)); top: calc(620 * var(--u)); }
+.wire-leaf { left: calc(-470 * var(--u)); top: calc(560 * var(--u)); rotate: -24deg; opacity: .7; }
+.wire .ls { height: calc(660 * var(--u)); margin-top: calc(48 * var(--u)); }
+.wire .ls-dek { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.wire-row { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(3, 1fr); gap: calc(20 * var(--u)); margin-top: calc(-118 * var(--u)); padding: 0 calc(48 * var(--u)); }
+
+.mm.is-in ~ .hb-open { opacity: 1; translate: 0 0; }

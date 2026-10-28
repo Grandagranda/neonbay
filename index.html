@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NeonBay — Everything about GTA 6 in one place</title>
+<meta name="description" content="Fact-checked news, an interactive Vice City map with every collectible, and a completion tracker.">
+<link rel="icon" href="img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,300..800;1,400..800&family=Bebas+Neue&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/v2.css">
+<link rel="stylesheet" href="css/home.css">
+</head>
+<body class="p-home v2">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-arrow" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-ext" viewBox="0 0 16 16"><path d="M5 11 11 5M6 5h5v5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-tg" viewBox="0 0 24 24"><path fill="currentColor" d="M21.4 3.6 2.9 10.7c-1.3.5-1.3 1.2-.2 1.6l4.7 1.5 1.8 5.5c.2.6.4.9.9.9.4 0 .6-.2.9-.5l2.3-2.2 4.8 3.5c.9.5 1.5.2 1.7-.8l3.1-14.8c.3-1.3-.5-1.9-1.5-1.8ZM9.8 14.6l-.4 4 -1.5-4.6 10.4-6.6c.5-.3.9-.1.5.2l-9 7Z"/></symbol>
+  <symbol id="i-dc" viewBox="0 0 24 24"><path fill="currentColor" d="M19.6 5.2A17.4 17.4 0 0 0 15.3 4l-.5 1.1a16 16 0 0 0-5.6 0L8.7 4a17.4 17.4 0 0 0-4.3 1.3C1.7 9.3 1 13.3 1.3 17.2a17.6 17.6 0 0 0 5.3 2.7l1.2-1.8c-.7-.3-1.3-.6-1.9-1l.5-.4a12.4 12.4 0 0 0 11.2 0l.5.4c-.6.4-1.2.7-1.9 1l1.2 1.8a17.5 17.5 0 0 0 5.3-2.7c.4-4.5-.7-8.5-3.1-12ZM8.5 14.8c-1 0-1.9-1-1.9-2.2s.8-2.2 1.9-2.2 1.9 1 1.9 2.2-.8 2.2-1.9 2.2Zm7 0c-1 0-1.9-1-1.9-2.2s.8-2.2 1.9-2.2 1.9 1 1.9 2.2-.8 2.2-1.9 2.2Z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 16 16"><path d="m3.5 8.5 3 3 6-7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-search" viewBox="0 0 16 16"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m10.5 10.5 3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 16 16"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 16 16"><path d="M3 8h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="i-fit" viewBox="0 0 16 16"><path d="M2.5 6V2.5H6M10 2.5h3.5V6M13.5 10v3.5H10M6 13.5H2.5V10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 16 16"><path d="m4.5 6.5 3.5 3.5 3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 16 16"><path d="M1.5 8S4 3.5 8 3.5 14.5 8 14.5 8 12 12.5 8 12.5 1.5 8 1.5 8Z" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="8" r="2" fill="none" stroke="currentColor" stroke-width="1.4"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 16 16"><path d="M8 14.5s-4.5-4.2-4.5-7.6a4.5 4.5 0 0 1 9 0c0 3.4-4.5 7.6-4.5 7.6Z" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="6.8" r="1.6" fill="currentColor"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 16 16"><path d="M4 11V7a4 4 0 0 1 8 0v4l1 1.5H3L4 11ZM6.5 14h3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-tg-s" viewBox="0 0 15.8 13.24"><path fill="currentColor" d="M14.63.01.75 5.33c-.98.38-.98.9-.15 1.2l3.53 1.13 1.35 4.12c.15.45.3.68.67.68.3 0 .45-.15.68-.38l1.72-1.65 3.6 2.63c.68.37 1.13.15 1.28-.6L15.75 1.36C15.98.38 15.38-.07 14.63.01ZM5.93 8.26l-.3 3-1.13-3.45 7.8-4.95c.38-.23.68-.08.38.15L5.93 8.26Z"/></symbol>
+  <symbol id="i-dc-s" viewBox="0 0 18.4 11.93"><path fill="currentColor" d="M15.69.9A15.6 15.6 0 0 0 12.01 0l-.42.83a15.8 15.8 0 0 0-4.79 0L6.38 0a16 16 0 0 0-3.68.98C.4 3.98-.2 6.98.06 9.9a15.4 15.4 0 0 0 4.52 2.03l1.03-1.35c-.6-.23-1.11-.45-1.62-.75l.43-.3a11.9 11.9 0 0 0 9.57 0l.43.3c-.51.3-1.03.52-1.63.75l1.03 1.35a15.4 15.4 0 0 0 4.52-2.03c.34-3.38-.6-6.38-2.65-9ZM6.2 8.1c-.85 0-1.62-.75-1.62-1.65S5.27 4.8 6.2 4.8s1.62.75 1.62 1.65S7.15 8.1 6.2 8.1Zm5.98 0c-.85 0-1.62-.75-1.62-1.65s.68-1.65 1.62-1.65 1.63.75 1.63 1.65-.69 1.65-1.63 1.65Z"/></symbol>
+  <symbol id="i-q" viewBox="0 0 16 16"><path d="M6 6.2a2.1 2.1 0 1 1 3.2 1.8c-.7.4-1.2.9-1.2 1.7v.4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="8" cy="12.6" r="1" fill="currentColor"/></symbol>
+  <symbol id="i-x" viewBox="0 0 16 16"><path d="m4.5 4.5 7 7m0-7-7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-info" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M8 7.3v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="8" cy="4.9" r=".95" fill="currentColor"/></symbol>
+  <symbol id="i-link" viewBox="0 0 16 16"><path d="M6.8 9.2a2.8 2.8 0 0 0 4 0l2-2a2.8 2.8 0 0 0-4-4l-.8.8M9.2 6.8a2.8 2.8 0 0 0-4 0l-2 2a2.8 2.8 0 0 0 4 4l.8-.8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-xlogo" viewBox="0 0 16 16"><path fill="currentColor" d="M12.2 1.5h2.2L9.6 7l5.6 7.5h-4.4L7.4 10l-3.9 4.5H1.3l5.1-5.9L1 1.5h4.5l3.1 4.1 3.6-4.1Zm-.8 11.7h1.2L4.7 2.7H3.4l8 10.5Z"/></symbol>
+  <symbol id="i-up" viewBox="0 0 16 16"><path d="M8 13V3M4 7l4-4 4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<header class="hdr " id="hdr">
+  <div class="wrap">
+    <a class="logo" href="index.html" aria-label="NeonBay — home"><img src="img/logo.svg" alt="NeonBay" width="126" height="35"></a>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html" data-nav="home" class="is-active" aria-current="page">Home</a>
+      <a href="news.html" data-nav="news">News</a>
+      <a href="map.html" data-nav="map">Map</a>
+      <a href="#" data-nav="guides">Guides</a>
+      <a href="#" data-nav="achievements">Achievements</a>
+    </nav>
+    <div class="hdr-tools">
+      <div class="lang" role="group" aria-label="Language">
+        <button class="is-on" type="button">EN</button><button type="button">RU</button>
+      </div>
+      <a class="btn btn-primary btn-sm hdr-cta" href="login.html">Sign in</a>
+      <button class="burger" type="button" aria-label="Menu" aria-expanded="false" id="burger"><span></span></button>
+    </div>
+  </div>
+</header>
+
+<nav class="mnav" aria-label="Mobile">
+  <a class="m-link is-active" href="index.html" data-nav="home" aria-current="page">Home</a>
+  <a class="m-link" href="news.html" data-nav="news">News</a>
+  <a class="m-link" href="map.html" data-nav="map">Map</a>
+  <a class="m-link" href="#" data-nav="guides">Guides</a>
+  <a class="m-link" href="#" data-nav="achievements">Achievements</a>
+  <a class="btn btn-primary btn-block" href="login.html">Sign in</a>
+</nav>
+
+<!-- Блипы карты: 24×24, контур 2px currentColor (заливка — где силуэт читается лучше) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <style>.bs{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.bf{fill:currentColor}</style>
+  </defs>
+  <!-- Collectibles -->
+  <symbol id="b-fragment" viewBox="0 0 24 24"><path class="bs" d="M12 3 19 10 12 21 5 10Z M5 10h14 M12 3 9.5 10 12 21 14.5 10Z"/></symbol>
+  <symbol id="b-letter" viewBox="0 0 24 24"><path class="bs" d="M4 6.5h16v11H4z M4.5 7.5 12 13l7.5-5.5"/></symbol>
+  <symbol id="b-case" viewBox="0 0 24 24"><path class="bs" d="M3.5 8.5h17v10h-17z M9 8.5V6h6v2.5 M3.5 13h17 M12 12v2"/></symbol>
+  <symbol id="b-barrel" viewBox="0 0 24 24"><path class="bs" d="M7 3.5h10M7 20.5h10M7.5 3.5c-1.4 5.7-1.4 11.3 0 17M16.5 3.5c1.4 5.7 1.4 11.3 0 17M6.6 9h10.8M6.6 15h10.8"/></symbol>
+  <symbol id="b-plant" viewBox="0 0 24 24"><path class="bs" d="M12 21V11 M12 12C12 7 9 4.5 4 4.5c0 5 3 7.5 8 7.5Z M12 14.5c0-4 2.8-6.5 8-6.5 0 4-2.8 6.5-8 6.5Z"/></symbol>
+  <!-- Activities -->
+  <symbol id="b-jump" viewBox="0 0 24 24"><path class="bs" d="M2.5 19.5h19 M5 19.5 18 12v7.5 M6 10.5C9 5.5 14 4 19.5 5 M19.5 5l-2.6-2 M19.5 5l-1.8 2.8"/></symbol>
+  <symbol id="b-bridge" viewBox="0 0 24 24"><path class="bs" d="M2 8h20 M3.5 8v12 M20.5 8v12 M7 20a5 5 0 0 1 10 0 M8.5 8v3.5 M15.5 8v3.5 M12 8v2.5"/></symbol>
+  <symbol id="b-flight" viewBox="0 0 24 24"><path class="bf" d="M21 11.6 13.4 9V4.6a1.4 1.4 0 0 0-2.8 0V9L3 11.6V13l7.6-1.4v3.5L8.7 16.5V18l3.3-.9 3.3.9v-1.5l-1.9-1.4v-3.5L21 13Z"/><path class="bs" d="M3 21h18"/></symbol>
+  <!-- World & Services -->
+  <symbol id="b-weapon" viewBox="0 0 24 24"><path class="bf" d="M3 7.5h15.5l2 1.8v2.2h-6.2l-.9 1.9h-2.9l-.9 1.6V20H5.3v-4.6l.9-2.9H3Z"/><path d="M11 13.4c.2 1.1 1.2 1.6 2.3 1.4" fill="none" stroke="#130b1d" stroke-width="1.4" stroke-linecap="round"/></symbol>
+  <symbol id="b-clothes" viewBox="0 0 24 24"><path class="bf" d="M8.2 4 3.8 6.3 2.3 11l3.2 1.4 1.4-2.1V20h10.2v-9.7l1.4 2.1 3.2-1.4-1.5-4.7L15.8 4c-.5 1.6-2 2.6-3.8 2.6S8.7 5.6 8.2 4Z"/></symbol>
+  <symbol id="b-tuning" viewBox="0 0 24 24"><path class="bf" d="M15 3.2a5 5 0 0 0-4.7 6.7l-6.9 6.9a1.8 1.8 0 0 0 0 2.6l1.2 1.2a1.8 1.8 0 0 0 2.6 0l6.9-6.9a5 5 0 0 0 6.6-5.7l-3.1 3.1-2.9-.8-.8-2.9 3.1-3.1a5 5 0 0 0-2-.1Z"/></symbol>
+  <symbol id="b-gas" viewBox="0 0 24 24"><path class="bs" d="M5 20.5V4.5h9v16 M3.5 20.5h12 M7.2 7.5h4.6v3.5H7.2z M14 9h2.2l2.3 2.3v6.2a1.3 1.3 0 0 0 2.6 0V9.4L18.4 6.6"/></symbol>
+  <symbol id="b-safehouse" viewBox="0 0 24 24"><path class="bs" d="M3 11.2 12 4l9 7.2 M5.5 9.5V20h13V9.5 M10 20v-5.2h4V20"/></symbol>
+  <symbol id="b-property" viewBox="0 0 24 24"><circle class="bs" cx="7.5" cy="12" r="3.8"/><path class="bs" d="M11.3 12H21 M18 12v3 M21 12v2.4"/></symbol>
+  <!-- Vehicles -->
+  <symbol id="b-car" viewBox="0 0 24 24"><path class="bs" d="M3 16.5V13l2.2-5h13.6L21 13v3.5Z M5 13h14 M4.5 16.5V19h3v-2.5 M16.5 16.5V19h3v-2.5"/><circle class="bf" cx="7" cy="14.8" r="1"/><circle class="bf" cx="17" cy="14.8" r="1"/></symbol>
+  <symbol id="b-boat" viewBox="0 0 24 24"><circle class="bs" cx="12" cy="5" r="2"/><path class="bs" d="M12 7v14 M8 11h8 M4 13.5c.5 4.3 3.8 7.5 8 7.5s7.5-3.2 8-7.5 M4 13.5l-1.5 1.5 M20 13.5l1.5 1.5"/></symbol>
+  <symbol id="b-plane" viewBox="0 0 24 24"><path class="bf" d="M21.5 13.4 13.6 10.2V4.5a1.6 1.6 0 0 0-3.2 0v5.7l-7.9 3.2V15l7.9-1.7v4.4l-2.1 1.6v1.6l3.7-1 3.7 1v-1.6l-2.1-1.6v-4.4l7.9 1.7Z"/></symbol>
+  <!-- Secrets -->
+  <symbol id="b-egg" viewBox="0 0 24 24"><path class="bs" d="M2.8 13.6c0-2 4.1-3.6 9.2-3.6s9.2 1.6 9.2 3.6-4.1 3.6-9.2 3.6-9.2-1.6-9.2-3.6Z M7.8 10.6c.1-2.6 1.9-4.6 4.2-4.6s4.1 2 4.2 4.6 M7 19.2l-1 2 M17 19.2l1 2 M12 17.5v3.5"/></symbol>
+  <symbol id="b-mission" viewBox="0 0 24 24"><path d="M12 4.5v9.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><circle class="bf" cx="12" cy="19" r="1.9"/></symbol>
+  <symbol id="b-stranger" viewBox="0 0 24 24"><path d="M8.6 8.6a3.5 3.5 0 1 1 5.2 3c-1.1.7-1.8 1.5-1.8 2.8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><circle class="bf" cx="12" cy="19" r="1.8"/></symbol>
+  <!-- Leonida -->
+  <symbol id="b-fish" viewBox="0 0 24 24"><path class="bs" d="M3.5 12c3-3.8 6.8-5 10.5-5 3 0 5.2 2 6.5 5-1.3 3-3.5 5-6.5 5-3.7 0-7.5-1.2-10.5-5Z M3.5 12 2 9 M3.5 12 2 15"/><circle class="bf" cx="16.2" cy="11" r="1"/></symbol>
+  <symbol id="b-dive" viewBox="0 0 24 24"><path class="bs" d="M3 9h16v4.6a3 3 0 0 1-3 3h-2.4L11 14l-2.6 2.6H6a3 3 0 0 1-3-3Z M21.5 3.5v9.5a3 3 0 0 1-3 3"/></symbol>
+  <symbol id="b-wildlife" viewBox="0 0 24 24"><ellipse class="bf" cx="12" cy="16" rx="4.6" ry="3.8"/><circle class="bf" cx="6" cy="10.5" r="2"/><circle class="bf" cx="9.6" cy="6.6" r="2"/><circle class="bf" cx="14.4" cy="6.6" r="2"/><circle class="bf" cx="18" cy="10.5" r="2"/></symbol>
+  <symbol id="b-island" viewBox="0 0 24 24"><path class="bs" d="M3 20.5h18 M12.5 20.5c0-4.5.5-8.2 1.6-11.2 M14.1 9.3C12.3 6.6 8.6 6.4 6.5 8.4 M14.1 9.3c.9-2.9 4.4-3.9 6.6-2.3 M14.1 9.3c-2.9.1-5 2.2-5.1 5 M14.1 9.3c2.8.2 4.8 2.2 5 5"/></symbol>
+  <!-- Online -->
+  <symbol id="b-weekly" viewBox="0 0 24 24"><path class="bf" d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9Z"/></symbol>
+  <symbol id="b-business" viewBox="0 0 24 24"><path class="bs" d="M16.2 7.6C15.6 6 14 5 12 5c-2.6 0-4.2 1.4-4.2 3.2s1.6 2.7 4.2 3.1c2.6.4 4.2 1.3 4.2 3.2S14.8 18 12 18c-2.1 0-3.7-1-4.2-2.6 M12 2.8v18.4"/></symbol>
+  <symbol id="b-heist" viewBox="0 0 24 24"><path class="bs" d="M4.5 9.5C4.5 5.4 7.8 3 12 3s7.5 2.4 7.5 6.5V16c0 2.8-3 5-7.5 5s-7.5-2.2-7.5-5Z M7 10.5h3.6M13.4 10.5H17 M9.5 16h5"/></symbol>
+  <!-- служебные -->
+  <symbol id="b-waypoint" viewBox="0 0 24 24"><path class="bf" d="M12 2.5c-4 0-7 3-7 6.9 0 5 7 12.1 7 12.1s7-7.1 7-12.1c0-3.9-3-6.9-7-6.9Z"/><circle cx="12" cy="9.4" r="2.6" fill="#130b1d"/></symbol>
+  <symbol id="b-you" viewBox="0 0 24 24"><path class="bf" d="M12 2.5 19.5 21 12 16.8 4.5 21Z"/></symbol>
+</svg>
+
+
+<main>
+  <!-- герой липнет, блок карты наезжает на него и гасит (как в Байкале); стопка кончается вместе с блоком карты -->
+  <div class="stack" data-stack>
+  <!-- ГЕРОЙ по Figma ZlzQiYNm… кадр «home» 4030:690 (прежде s8aXHdn1… 139:21), 1920×954: петля видео, затемнения, отсчёт. Единица --u = 100vw/1920 -->
+  <section class="hero" data-hero>
+    <div class="hero-media" aria-hidden="true"><video class="hero-video" src="video/hero.mp4" poster="video/hero.jpg" muted loop playsinline autoplay preload="auto"></video></div>
+    <div class="hero-shade" aria-hidden="true"></div>
+    <div class="hero-fade" aria-hidden="true"></div>
+    <img class="hero-bill" src="img/hero-bill.webp" alt="" aria-hidden="true">
+    <span class="hero-bill2" aria-hidden="true"><img src="img/hero-bill-2.webp" alt=""></span>
+
+    <div class="hero-in">
+      <span class="hero-kicker rv">Vice City · Leonida · Fan hub</span>
+      <h1 class="rv" style="--d:.08s">Everything about<br>GTA&nbsp;6 in one place</h1>
+      <p class="hero-lead rv" style="--d:.16s">Fact-checked news, an interactive Vice City map with every collectible, and a completion tracker</p>
+      <div class="hero-cta rv" style="--d:.24s">
+        <a class="hb hb-tg" href="#" rel="noopener"><svg viewBox="0 0 15.8 13.24"><use href="#i-tg-s"/></svg><span class="hb-t"><span data-t="Telegram">Telegram</span></span></a>
+        <a class="hb hb-dc" href="#" rel="noopener"><svg viewBox="0 0 18.4 11.93"><use href="#i-dc-s"/></svg><span class="hb-t"><span data-t="Discord">Discord</span></span></a>
+      </div>
+    </div>
+
+    <div class="hero-count rv" style="--d:.34s" data-countdown aria-label="Time until launch">
+      <b class="hc-d hc-1" data-u="d">22</b><span class="hc-l hc-l1">days</span><i class="hc-c hc-c1">:</i>
+      <b class="hc-d hc-2" data-u="h">21</b><span class="hc-l hc-l2">hours</span><i class="hc-c hc-c2">:</i>
+      <b class="hc-d hc-3" data-u="m">59</b><span class="hc-l hc-l3">min</span><i class="hc-c hc-c3">:</i>
+      <b class="hc-d hc-4" data-u="s">19</b><span class="hc-l hc-l4">sec</span>
+      <span class="hc-line"></span>
+      <span class="hc-meta">Nov 19, 2026 · PS5 · Xbox Series X|S</span>
+      <!-- коробка PS5 (Figma 4036:1200) выступает над плашкой -->
+      <span class="hc-pack">
+        <img class="hc-box" src="img/gta6-box.webp" width="420" height="533" alt="Grand Theft Auto VI for PlayStation 5 — box art">
+      </span>
+    </div>
+    <div class="hero-dim" aria-hidden="true"></div>
+  </section>
+
+  <!-- БЛОК 2 по Figma ZlzQiYNm… 4033:817 («2 блок») и 4033:754 («скролл»): карточка-арт со скруглением наезжает
+       на героя, герой постепенно размывается; лого, девушка и бухта — с лёгким параллаксом по скроллу (data-par).
+       Ниже — заголовок и упрощённая живая карта (легенда, карточка места, зум), широкая кнопка на полную карту -->
+  <section class="b2" id="map" data-sheet>
+    <div class="b2-art" aria-hidden="true">
+      <div class="b2-bay" data-par=".08"><img src="img/b2-bay.webp" alt=""></div>
+    </div>
+    <img class="b2-logo" data-par=".22" data-at=".35" data-lo="-12" data-hi="220" data-ps=".00045" src="img/b2-logo.svg" alt="" aria-hidden="true">
+    <img class="b2-woman" data-par="-.07" data-lo="-18" data-hi="70" src="img/b2-woman.webp" alt="" aria-hidden="true">
+    <div class="b2-shade" aria-hidden="true"></div>
+    <img class="b2-bg" src="img/b2-bg.webp" alt="" aria-hidden="true">
+
+    <span class="hero-kicker b2-kicker rv">Interactive map</span>
+    <h2 class="b2-title rv" style="--d:.06s">Vice City. Every collectible.</h2>
+    <p class="b2-lead rv" style="--d:.12s">27 categories across Leonida — from hidden fragments to heist setups. Mark what you've found, and it syncs with your account.</p>
+
+    <div class="mm rv" style="--d:.1s" data-mm>
+      <div class="mm-view" data-view>
+        <div class="mm-world" draggable="false">
+          <img src="img/map-neon.webp" alt="Map of Leonida" draggable="false" loading="lazy">
+          <span class="mm-blips"></span>
+        </div>
+      </div>
+
+      <aside class="mm-lg" aria-label="Legend">
+        <span class="mm-kicker">Interactive map</span>
+        <h3 class="mm-title">Leonida</h3>
+        <a class="mm-track" href="login.html">
+          <span class="mm-track-row"><b data-found>0</b><span>/ 349 found</span><em>Sign in to track</em></span>
+          <span class="mm-bar"><span data-bar></span></span>
+        </a>
+        <label class="mm-search"><svg><use href="#i-search"/></svg><input type="search" placeholder="Find a place or type" aria-label="Search" data-q></label>
+        <div class="mm-quick"><button type="button" data-all="on">Show all</button><button type="button" data-all="off">Hide all</button><span class="mm-count"><b data-shown>0</b> on map</span></div>
+        <div class="mm-list" data-list></div>
+      </aside>
+
+      <article class="mm-card" data-card hidden>
+        <i class="mm-card-top"></i>
+        <button class="mm-esc" type="button" data-close aria-label="Close">Esc</button>
+        <header class="mm-ch"><span class="mm-ic"><svg><use href=""/></svg></span><span class="mm-cat"></span><h4 class="mm-name"></h4></header>
+        <div class="mm-where"><svg><use href="#i-pin"/></svg><span class="mm-rg"></span><span class="mm-dist"></span></div>
+        <p class="mm-desc"></p>
+        <div class="mm-acts">
+          <button class="mm-wp" type="button" data-wp><svg><use href="#i-pin"/></svg><span>Set waypoint</span></button>
+          <button class="mm-fd" type="button" data-fd><svg><use href="#i-check"/></svg><span>Mark found</span></button>
+        </div>
+        <span class="mm-near-h">Nearby</span>
+        <ul class="mm-near" data-near></ul>
+      </article>
+
+      <div class="mm-zoom" role="group" aria-label="Zoom">
+        <button type="button" data-z="in" aria-label="Zoom in"><svg><use href="#i-plus"/></svg></button>
+        <span class="mm-zl" data-zl>1.0×</span>
+        <button type="button" data-z="out" aria-label="Zoom out"><svg><use href="#i-minus"/></svg></button>
+        <button type="button" data-z="fit" aria-label="Show whole map"><svg><use href="#i-fit"/></svg></button>
+      </div>
+      <div class="mm-hint" data-hint><kbd>Ctrl</kbd> + scroll to zoom · drag to move</div>
+    </div>
+    <a class="hb hb-open" href="map.html"><span class="hb-t"><span data-t="Open map">Open map</span></span><svg class="arr"><use href="#i-arrow"/></svg></a>
+  </section>
+  </div>
+
+  <!-- НОВОСТИ — «лента»: в языке блоков 1–2. Главная история — арт 44 с размытым эмбиентом и окном обложки,
+       три стеклянные карточки наезжают на её низ (как кнопка «Open map» на карту). Разметка — из src/data/news.cjs -->
+  <section class="wire" id="news">
+    <img class="fx fx-v wire-fx-v" src="img/glow-violet.webp" alt="" aria-hidden="true" loading="lazy">
+    <img class="fx fx-p wire-fx-p" src="img/glow-plum.webp" alt="" aria-hidden="true" loading="lazy">
+    <img class="fx fx-leaf wire-leaf" src="img/leaf-o2.svg" alt="" aria-hidden="true">
+    <div class="sh">
+      <div>
+        <span class="hero-kicker rv">Fact-checked wire</span>
+        <h2 class="sh-t rv" style="--d:.06s">Latest news</h2>
+        <p class="sh-lead rv" style="--d:.12s">Every story checked before it goes out. Every leak labeled, every debunk kept on record.</p>
+      </div>
+      <a class="hb hb-sun rv" style="--d:.18s" href="news.html"><span class="hb-t"><span data-t="All news">All news</span></span><svg class="arr"><use href="#i-arrow"/></svg></a>
+    </div>
+    <a class="ls rv" href="news-vinyl-records.html" data-k="news" data-q="rockstar has officially announced the release of vinyl records for gta vi. the soundtrack is getting a physical release. here is what is confirmed, what is not, and how to avoid the fake pre-order pages that showed up within an hour. news" style="--arn:1">
+        <img class="ls-amb" src="img/news/vinyl-records-amb.webp" alt="">
+        <img class="fx fx-leaf ls-leaf" src="img/leaf-o1.svg" alt="">
+        <span class="ls-cover"><img src="img/news/vinyl-records-cover.webp" alt="Rockstar has officially announced the release of vinyl records for GTA VI." style="object-position:50% 40%"></span>
+        <span class="ls-in">
+          <span class="ls-meta"><span class="kk">Top story · News</span><span class="st st-confirmed"><svg><use href="#i-check"/></svg>Confirmed</span></span>
+          <span class="ls-h">Rockstar has officially announced the release of vinyl records for GTA VI.</span>
+          <span class="ls-dek">The soundtrack is getting a physical release. Here is what is confirmed, what is not, and how to avoid the fake pre-order pages that showed up within an hour.</span>
+          <span class="ls-foot">
+            <span class="hb hb-sun ls-read"><span class="hb-t"><span data-t="Read story">Read story</span></span><svg class="arr"><use href="#i-arrow"/></svg></span>
+            <span class="by"><span class="av">M</span><span class="by-t"><b>moonrock445</b><span>Editor · Oct 10, 2026</span></span></span>
+          </span>
+        </span>
+      </a>
+      <div class="wire-row">
+        <a class="sc rv" style="--d:0.08s" href="news-album-spotify.html" data-k="news" data-q="rockstar has released the gta vi album on spotify. the official playlist is live. we listened through it, matched it to the trailers and flagged the uploads that only pretend to be official. news">
+          <span class="sc-img"><img src="img/news/album-spotify-card.webp" alt="" loading="lazy" style="object-position:30% 30%"></span>
+          <span class="sc-body">
+            <span class="sc-meta"><span class="kk">News</span><span class="st st-confirmed"><svg><use href="#i-check"/></svg>Confirmed</span></span>
+            <span class="sc-h">Rockstar has released the GTA VI album on Spotify.</span>
+            <span class="sc-foot"><span>Oct 10 · 2 min read</span><span class="go"><svg><use href="#i-arrow"/></svg></span></span>
+          </span>
+        </a>
+        <a class="sc rv" style="--d:0.16s" href="news-ultimate-edition.html" data-k="news" data-q="rockstar has revealed the contents of gta vi: ultimate edition. a breakdown of what the ultimate edition adds over the standard game — and which bonuses are only cosmetic. news">
+          <span class="sc-img"><img src="img/news/ultimate-edition-card.webp" alt="" loading="lazy" style="object-position:20% 50%"></span>
+          <span class="sc-body">
+            <span class="sc-meta"><span class="kk">News</span><span class="st st-confirmed"><svg><use href="#i-check"/></svg>Confirmed</span></span>
+            <span class="sc-h">Rockstar has revealed the contents of GTA VI: Ultimate Edition.</span>
+            <span class="sc-foot"><span>Oct 10 · 3 min read</span><span class="go"><svg><use href="#i-arrow"/></svg></span></span>
+          </span>
+        </a>
+        <a class="sc rv" style="--d:0.24s" href="news-leonida-regions.html" data-k="explainer" data-q="six regions of leonida, explained — and where the collectibles hide. from vice city to the keys: a quick tour of the state, region by region, with links to every marker on our interactive map. explainer">
+          <span class="sc-img"><img src="img/news/leonida-regions-card.webp" alt="" loading="lazy" style="object-position:50% 50%"></span>
+          <span class="sc-body">
+            <span class="sc-meta"><span class="kk">Explainer</span></span>
+            <span class="sc-h">Six regions of Leonida, explained — and where the collectibles hide.</span>
+            <span class="sc-foot"><span>Oct 8 · 5 min read</span><span class="go"><svg><use href="#i-arrow"/></svg></span></span>
+          </span>
+        </a>
+      </div>
+  </section>
+
+  <!-- «Join the crew» (Figma 4048:1305): фото заправки XERON на всю ширину, трое из баннера Discord выходят за верхний край
+       (параллакс по скроллу), размытые купюры по краям; кнопки-плашки Telegram/Discord в стекле отсчёта -->
+  <section class="crew" data-par-root aria-labelledby="crew-t">
+    <div class="crew-bg" aria-hidden="true"><img src="img/hero-station.jpg" alt="" loading="lazy" data-par=".2" data-at=".5" data-lo="-120" data-hi="220"></div>
+    <div class="crew-cast" aria-hidden="true">
+      <img class="crew-gun" src="img/char-gun.webp" alt="" loading="lazy" data-par="-.07" data-at=".5" data-lo="-45" data-hi="60">
+      <img class="crew-girl" src="img/char-girl.webp" alt="" loading="lazy" data-par="-.1" data-at=".5" data-lo="-60" data-hi="80">
+      <img class="crew-suit" src="img/char-suit.webp" alt="" loading="lazy" data-par="-.04" data-at=".5" data-lo="-30" data-hi="40">
+    </div>
+    <span class="crew-bill crew-bill-1" aria-hidden="true"><img src="img/bill-1.webp" alt="" loading="lazy"></span>
+    <span class="crew-bill crew-bill-2" aria-hidden="true"><img src="img/bill-3.webp" alt="" loading="lazy"></span>
+    <div class="crew-in">
+      <span class="hero-kicker rv">Community</span>
+      <h2 class="crew-t rv" style="--d:.06s" id="crew-t">Join the crew.</h2>
+      <p class="crew-lead rv" style="--d:.12s">News the minute it drops on Telegram. Theories, map hunts and launch-night crews on Discord.</p>
+      <div class="crew-ctas">
+        <a class="cta rv" style="--d:.18s" href="#" rel="noopener"><span class="cta-ic"><svg viewBox="0 0 15.8 13.24"><use href="#i-tg-s"/></svg></span><span class="cta-t"><b>Telegram</b><span>Breaking news alerts · t.me/neonbay</span></span><span class="go"><svg><use href="#i-arrow"/></svg></span></a>
+        <a class="cta cta-dc rv" style="--d:.24s" href="#" rel="noopener"><span class="cta-ic"><svg viewBox="0 0 18.4 11.93"><use href="#i-dc-s"/></svg></span><span class="cta-t"><b>Discord</b><span>Crews and map hunts · discord.gg/neonbay</span></span><span class="go"><svg><use href="#i-arrow"/></svg></span></a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- подвал по Figma 4048:1348: «See you in Vice City» с отсчётом поверх клуба в глубокой тени, свечения и купюры;
+     внизу лого, меню, «наверх» и юридическая строка. Единицы свои (--fu/--ft): подвал стоит и на старых страницах -->
+<footer class="ftr">
+  <div class="ftr-art" aria-hidden="true"><img src="img/ftr-club.webp" alt="" loading="lazy"></div>
+  <img class="ftr-fx ftr-fx-v" src="img/glow-violet.webp" alt="" aria-hidden="true" loading="lazy">
+  <img class="ftr-fx ftr-fx-p" src="img/glow-plum.webp" alt="" aria-hidden="true" loading="lazy">
+  <span class="ftr-bill ftr-bill-1" aria-hidden="true"><img src="img/hero-bill.webp" alt="" loading="lazy"></span>
+  <span class="ftr-bill ftr-bill-2" aria-hidden="true"><img src="img/hero-bill-2.webp" alt="" loading="lazy"></span>
+
+  <div class="ftr-stage">
+    <span class="hero-kicker">Nov 19, 2026 · PS5 · Xbox Series X|S</span>
+    <h2 class="ftr-t">See you in Vice City.</h2>
+    <p class="ftr-lead">The map, the tracker and every fact-checked story — ready before you land.</p>
+    <div class="cd" data-countdown aria-label="Time until launch">
+      <span class="cd-i"><b data-u="d">22</b><span>days</span></span><i>:</i>
+      <span class="cd-i"><b data-u="h">21</b><span>hours</span></span><i>:</i>
+      <span class="cd-i"><b data-u="m">59</b><span>min</span></span><i>:</i>
+      <span class="cd-i"><b data-u="s">19</b><span>sec</span></span>
+    </div>
+    <div class="ftr-cta">
+      <a class="hb hb-tg" href="#" rel="noopener"><svg viewBox="0 0 15.8 13.24"><use href="#i-tg-s"/></svg><span class="hb-t"><span data-t="Telegram">Telegram</span></span></a>
+      <a class="hb hb-dc" href="#" rel="noopener"><svg viewBox="0 0 18.4 11.93"><use href="#i-dc-s"/></svg><span class="hb-t"><span data-t="Discord">Discord</span></span></a>
+    </div>
+  </div>
+
+  <a class="ftr-logo" href="index.html" aria-label="NeonBay — home"><img src="img/logo.svg" alt="NeonBay" width="126" height="35" loading="lazy"></a>
+  <nav class="ftr-nav" aria-label="Footer">
+    <a href="index.html">Home</a><a href="news.html">News</a><a href="map.html">Map</a><a href="#">Guides</a><a href="#">Achievements</a>
+  </nav>
+  <button class="ftr-up" type="button" onclick="window.NB_LENIS ? NB_LENIS.scrollTo(0, { duration: 1.6 }) : scrollTo({ top: 0, behavior: 'smooth' })">Back to top<svg><use href="#i-up"/></svg></button>
+  <div class="ftr-legal">
+    <span>Unofficial fan project. Not affiliated with, endorsed or sponsored by Rockstar Games or Take-Two Interactive.</span>
+    <span>© 2026 NeonBay</span>
+  </div>
+</footer>
+
+<script src="js/vendor/lenis.min.js"></script>
+<script src="js/site.js"></script>
+<script src="js/map-data.js"></script>
+<script src="js/pins.js"></script>
+<script src="js/v2.js"></script>
+<script src="js/home.js"></script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign in — NeonBay</title>
+<link rel="icon" href="img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,300..800;1,400..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-arrow" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-ext" viewBox="0 0 16 16"><path d="M5 11 11 5M6 5h5v5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-tg" viewBox="0 0 24 24"><path fill="currentColor" d="M21.4 3.6 2.9 10.7c-1.3.5-1.3 1.2-.2 1.6l4.7 1.5 1.8 5.5c.2.6.4.9.9.9.4 0 .6-.2.9-.5l2.3-2.2 4.8 3.5c.9.5 1.5.2 1.7-.8l3.1-14.8c.3-1.3-.5-1.9-1.5-1.8ZM9.8 14.6l-.4 4 -1.5-4.6 10.4-6.6c.5-.3.9-.1.5.2l-9 7Z"/></symbol>
+  <symbol id="i-dc" viewBox="0 0 24 24"><path fill="currentColor" d="M19.6 5.2A17.4 17.4 0 0 0 15.3 4l-.5 1.1a16 16 0 0 0-5.6 0L8.7 4a17.4 17.4 0 0 0-4.3 1.3C1.7 9.3 1 13.3 1.3 17.2a17.6 17.6 0 0 0 5.3 2.7l1.2-1.8c-.7-.3-1.3-.6-1.9-1l.5-.4a12.4 12.4 0 0 0 11.2 0l.5.4c-.6.4-1.2.7-1.9 1l1.2 1.8a17.5 17.5 0 0 0 5.3-2.7c.4-4.5-.7-8.5-3.1-12ZM8.5 14.8c-1 0-1.9-1-1.9-2.2s.8-2.2 1.9-2.2 1.9 1 1.9 2.2-.8 2.2-1.9 2.2Zm7 0c-1 0-1.9-1-1.9-2.2s.8-2.2 1.9-2.2 1.9 1 1.9 2.2-.8 2.2-1.9 2.2Z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 16 16"><path d="m3.5 8.5 3 3 6-7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-search" viewBox="0 0 16 16"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m10.5 10.5 3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 16 16"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 16 16"><path d="M3 8h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="i-fit" viewBox="0 0 16 16"><path d="M2.5 6V2.5H6M10 2.5h3.5V6M13.5 10v3.5H10M6 13.5H2.5V10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 16 16"><path d="m4.5 6.5 3.5 3.5 3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 16 16"><path d="M1.5 8S4 3.5 8 3.5 14.5 8 14.5 8 12 12.5 8 12.5 1.5 8 1.5 8Z" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="8" r="2" fill="none" stroke="currentColor" stroke-width="1.4"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 16 16"><path d="M8 14.5s-4.5-4.2-4.5-7.6a4.5 4.5 0 0 1 9 0c0 3.4-4.5 7.6-4.5 7.6Z" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="6.8" r="1.6" fill="currentColor"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 16 16"><path d="M4 11V7a4 4 0 0 1 8 0v4l1 1.5H3L4 11ZM6.5 14h3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-tg-s" viewBox="0 0 15.8 13.24"><path fill="currentColor" d="M14.63.01.75 5.33c-.98.38-.98.9-.15 1.2l3.53 1.13 1.35 4.12c.15.45.3.68.67.68.3 0 .45-.15.68-.38l1.72-1.65 3.6 2.63c.68.37 1.13.15 1.28-.6L15.75 1.36C15.98.38 15.38-.07 14.63.01ZM5.93 8.26l-.3 3-1.13-3.45 7.8-4.95c.38-.23.68-.08.38.15L5.93 8.26Z"/></symbol>
+  <symbol id="i-dc-s" viewBox="0 0 18.4 11.93"><path fill="currentColor" d="M15.69.9A15.6 15.6 0 0 0 12.01 0l-.42.83a15.8 15.8 0 0 0-4.79 0L6.38 0a16 16 0 0 0-3.68.98C.4 3.98-.2 6.98.06 9.9a15.4 15.4 0 0 0 4.52 2.03l1.03-1.35c-.6-.23-1.11-.45-1.62-.75l.43-.3a11.9 11.9 0 0 0 9.57 0l.43.3c-.51.3-1.03.52-1.63.75l1.03 1.35a15.4 15.4 0 0 0 4.52-2.03c.34-3.38-.6-6.38-2.65-9ZM6.2 8.1c-.85 0-1.62-.75-1.62-1.65S5.27 4.8 6.2 4.8s1.62.75 1.62 1.65S7.15 8.1 6.2 8.1Zm5.98 0c-.85 0-1.62-.75-1.62-1.65s.68-1.65 1.62-1.65 1.63.75 1.63 1.65-.69 1.65-1.63 1.65Z"/></symbol>
+  <symbol id="i-q" viewBox="0 0 16 16"><path d="M6 6.2a2.1 2.1 0 1 1 3.2 1.8c-.7.4-1.2.9-1.2 1.7v.4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="8" cy="12.6" r="1" fill="currentColor"/></symbol>
+  <symbol id="i-x" viewBox="0 0 16 16"><path d="m4.5 4.5 7 7m0-7-7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-info" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M8 7.3v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="8" cy="4.9" r=".95" fill="currentColor"/></symbol>
+  <symbol id="i-link" viewBox="0 0 16 16"><path d="M6.8 9.2a2.8 2.8 0 0 0 4 0l2-2a2.8 2.8 0 0 0-4-4l-.8.8M9.2 6.8a2.8 2.8 0 0 0-4 0l-2 2a2.8 2.8 0 0 0 4 4l.8-.8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-xlogo" viewBox="0 0 16 16"><path fill="currentColor" d="M12.2 1.5h2.2L9.6 7l5.6 7.5h-4.4L7.4 10l-3.9 4.5H1.3l5.1-5.9L1 1.5h4.5l3.1 4.1 3.6-4.1Zm-.8 11.7h1.2L4.7 2.7H3.4l8 10.5Z"/></symbol>
+  <symbol id="i-up" viewBox="0 0 16 16"><path d="M8 13V3M4 7l4-4 4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<header class="hdr " id="hdr">
+  <div class="wrap">
+    <a class="logo" href="index.html" aria-label="NeonBay — home"><img src="img/logo.svg" alt="NeonBay" width="126" height="35"></a>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html" data-nav="home">Home</a>
+      <a href="news.html" data-nav="news">News</a>
+      <a href="map.html" data-nav="map">Map</a>
+      <a href="#" data-nav="guides">Guides</a>
+      <a href="#" data-nav="achievements">Achievements</a>
+    </nav>
+    <div class="hdr-tools">
+      <div class="lang" role="group" aria-label="Language">
+        <button class="is-on" type="button">EN</button><button type="button">RU</button>
+      </div>
+      
+      <button class="burger" type="button" aria-label="Menu" aria-expanded="false" id="burger"><span></span></button>
+    </div>
+  </div>
+</header>
+
+<nav class="mnav" aria-label="Mobile">
+  <a class="m-link" href="index.html" data-nav="home">Home</a>
+  <a class="m-link" href="news.html" data-nav="news">News</a>
+  <a class="m-link" href="map.html" data-nav="map">Map</a>
+  <a class="m-link" href="#" data-nav="guides">Guides</a>
+  <a class="m-link" href="#" data-nav="achievements">Achievements</a>
+  <a class="btn btn-primary btn-block" href="login.html">Sign in</a>
+</nav>
+
+
+<main class="auth">
+  <section class="auth-art">
+    <img src="img/ocean-drive.jpg" alt="" fetchpriority="high">
+    <div class="auth-pitch">
+      <h1 class="rv">Your Vice City,<br><span class="sun">tracked.</span></h1>
+      <p class="rv" style="--d:.08s">An account keeps your found collectibles across devices and lets you propose points and story topics to the team. No feeds, no leaderboards — just your progress.</p>
+      <ul class="rv" style="--d:.16s">
+        <li><svg><use href="#i-check"/></svg>Completion tracker synced with the map</li>
+        <li><svg><use href="#i-check"/></svg>Propose points — every one is reviewed by a moderator</li>
+        <li><svg><use href="#i-check"/></svg>See the decision and the reason, always</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="auth-side">
+    <div class="auth-box rv" style="--d:.1s">
+      <div class="seg" role="tablist" data-seg>
+        <span class="seg-ind" aria-hidden="true"></span>
+        <button class="is-on" type="button" role="tab" data-tab="in">Sign in</button>
+        <button type="button" role="tab" data-tab="up">Create account</button>
+      </div>
+
+      <form class="auth-form" data-pane="in" action="account.html">
+        <div class="auth-h">
+          <h2>Welcome back</h2>
+          <p>Pick up where you left off on the map.</p>
+        </div>
+        <div class="field"><label for="in-email">Email</label><input class="input" id="in-email" type="email" placeholder="you@email.com" autocomplete="email" required></div>
+        <div class="field">
+          <label for="in-pass">Password</label>
+          <div class="pass"><input class="input" id="in-pass" type="password" placeholder="••••••••" autocomplete="current-password" required><button type="button" class="pass-eye" aria-label="Show password"><svg><use href="#i-eye"/></svg></button></div>
+        </div>
+        <div class="auth-row">
+          <label class="check"><input type="checkbox" checked><span></span>Remember me</label>
+          <a class="auth-link" href="#">Forgot password?</a>
+        </div>
+        <button class="btn btn-primary btn-block" type="submit">Sign in</button>
+      </form>
+
+      <form class="auth-form" data-pane="up" action="account.html" hidden>
+        <div class="auth-h">
+          <h2>Join NeonBay</h2>
+          <p>Free. Your progress stays yours.</p>
+        </div>
+        <div class="field"><label for="up-name">Display name</label><input class="input" id="up-name" type="text" placeholder="vicefan" autocomplete="username" required></div>
+        <div class="field"><label for="up-email">Email</label><input class="input" id="up-email" type="email" placeholder="you@email.com" autocomplete="email" required></div>
+        <div class="field">
+          <label for="up-pass">Password</label>
+          <div class="pass"><input class="input" id="up-pass" type="password" placeholder="At least 8 characters" autocomplete="new-password" minlength="8" required><button type="button" class="pass-eye" aria-label="Show password"><svg><use href="#i-eye"/></svg></button></div>
+          <div class="meter" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        </div>
+        <label class="check"><input type="checkbox" required><span></span>I agree to the <a class="auth-link" href="#">Terms</a> and <a class="auth-link" href="#">Privacy</a></label>
+        <button class="btn btn-primary btn-block" type="submit">Create account</button>
+      </form>
+    </div>
+    <p class="auth-legal mono">Unofficial fan project. Not affiliated with Rockstar Games or Take-Two Interactive.</p>
+  </section>
+</main>
+
+<script src="js/vendor/lenis.min.js"></script>
+<script src="js/site.js"></script>
+<script>
+  // переключение вкладок + бегунок
+  const seg = document.querySelector('[data-seg]'), ind = seg.querySelector('.seg-ind');
+  const move = b => { ind.style.width = b.offsetWidth + 'px'; ind.style.transform = `translateX(${b.offsetLeft - 4}px)`; };
+  seg.addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    seg.querySelectorAll('button').forEach(x => x.classList.toggle('is-on', x === b));
+    document.querySelectorAll('[data-pane]').forEach(p => p.hidden = p.dataset.pane !== b.dataset.tab);
+    move(b);
+  });
+  addEventListener('load', () => move(seg.querySelector('.is-on')));
+  if (location.hash === '#signup') seg.querySelector('[data-tab="up"]').click();
+  // показать пароль
+  document.querySelectorAll('.pass-eye').forEach(b => b.addEventListener('click', () => {
+    const i = b.previousElementSibling; i.type = i.type === 'password' ? 'text' : 'password';
+    b.classList.toggle('is-on', i.type === 'text');
+  }));
+  // сила пароля
+  const up = document.getElementById('up-pass'), bars = document.querySelectorAll('.meter i');
+  up.addEventListener('input', () => {
+    const v = up.value; let s = 0;
+    if (v.length >= 8) s++; if (/[A-Z]/.test(v) && /[a-z]/.test(v)) s++; if (/\d/.test(v)) s++; if (/[^\w]/.test(v) || v.length >= 14) s++;
+    bars.forEach((b, i) => b.classList.toggle('is-on', i < s));
+    up.closest('.field').dataset.s = s;
+  });
+</script>
+</body>
+</html>
