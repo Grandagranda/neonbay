@@ -18,6 +18,30 @@
   const off = new Set(), found = new Set();
   let q = '', sel = null, wp = null;
 
+  // телефон: заставка вместо живой карты — весь остров, блипы точками, переход на полную карту; ниже лента регионов.
+  // Точки строятся на подходе к блоку: первому экрану они не нужны
+  if (window.NB_MOB && NB_MOB.matches) {
+    const place = () => {
+      const w = mm.clientWidth, h = mm.clientHeight, k = Math.max(w / WW, (h * .9) / WH);
+      // портрет — остров от верхнего края, снизу его закрывает подпись; широкая карточка на планшете и на боку — по середине, на Вайс-Сити
+      const ty = w > h * 1.2 ? (h - WH * k) / 2 : -WH * k * .035;
+      world.style.transform = `translate(${((w - WW * k) / 2).toFixed(1)}px, ${ty.toFixed(1)}px) scale(${k.toFixed(4)})`;
+      world.style.setProperty('--iz', (1 / k).toFixed(4));
+    };
+    mm.classList.add('is-far'); place();
+    new ResizeObserver(place).observe(mm);
+    const rg = document.querySelector('[data-regions]');
+    if (rg) rg.innerHTML = D.regions.map(r => `<a class="b2-rt" href="map.html#${r.id}" style="--g0:${r.g[0]};--g1:${r.g[1]}">
+      <span class="b2-rt-map"><img src="img/regions/${r.id}.webp" alt="" width="46" height="64" loading="lazy"></span>
+      <span class="b2-rt-t"><b>${r.name}</b><span><i>${(window.PINS || []).filter(p => p.r === r.id).length}</i>points</span></span></a>`).join('');
+    new IntersectionObserver(([e], io) => {
+      if (!e.isIntersecting) return;
+      io.disconnect();
+      $('.mm-blips').innerHTML = (window.PINS || []).map(p => `<i class="mm-bp" data-cat="${SUB[p.k].g.id}" style="left:${p.x}%;top:${p.y}%"></i>`).join('');
+    }, { rootMargin: '300px 0px' }).observe(mm);
+    return;
+  }
+
   // блипы
   const blips = $('.mm-blips');
   const pins = (window.PINS || []).map((p, i) => {

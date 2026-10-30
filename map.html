@@ -1,16 +1,25 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta name="robots" content="noindex, nofollow">
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
 <title>Interactive Vice City map — NeonBay</title>
 <meta name="description" content="Weapon shops, vehicles, safehouses, collectibles and secrets across Vice City and Leonida — on one map.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0a0712">
 <link rel="icon" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/touch-icon.png">
+<!-- основной шрифт — свой (тот же файл, что отдаёт Google, css/base.css); курсив и Bebas подключаются, не блокируя первый показ страницы -->
+<link rel="preload" href="fonts/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,300..800;1,400..800&family=Bebas+Neue&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@1,400..800&family=Bebas+Neue&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@1,400..800&family=Bebas+Neue&display=swap"></noscript>
+
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/map.css">
+<link rel="stylesheet" href="css/v2.css" media="(max-width: 900px), (max-width: 1100px) and (max-height: 520px)">
+<link rel="stylesheet" href="css/mobile.css" media="(max-width: 900px), (max-width: 1100px) and (max-height: 520px)">
+<link rel="stylesheet" href="css/map-m.css" media="(max-width: 900px), (max-width: 1100px) and (max-height: 520px)">
 </head>
 <body class="is-app" data-mode="neon">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -52,18 +61,36 @@
         <button class="is-on" type="button">EN</button><button type="button">RU</button>
       </div>
       <a class="btn btn-primary btn-sm hdr-cta" href="login.html">Sign in</a>
-      <button class="burger" type="button" aria-label="Menu" aria-expanded="false" id="burger"><span></span></button>
+      <button class="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="mnav" id="burger"><span></span></button>
     </div>
   </div>
 </header>
 
-<nav class="mnav" aria-label="Mobile">
-  <a class="m-link" href="index.html" data-nav="home">Home</a>
-  <a class="m-link" href="news.html" data-nav="news">News</a>
-  <a class="m-link is-active" href="map.html" data-nav="map" aria-current="page">Map</a>
-  <a class="m-link" href="#" data-nav="guides">Guides</a>
-  <a class="m-link" href="#" data-nav="achievements">Achievements</a>
-  <a class="btn btn-primary btn-block" href="login.html">Sign in</a>
+<!-- меню телефона — как меню паузы: крупные пункты, отсчёт до релиза, вход и каналы; открывает js/site.js -->
+<nav class="mnav" id="mnav" aria-label="Mobile" inert>
+  <div class="mnav-fx" aria-hidden="true"></div>
+  <div class="mnav-in">
+    <div class="mnav-links">
+      <a class="m-link" href="index.html" data-nav="home">Home</a>
+      <a class="m-link" href="news.html" data-nav="news">News</a>
+      <a class="m-link is-active" href="map.html" data-nav="map" aria-current="page">Map</a>
+      <a class="m-link" href="#" data-nav="guides">Guides</a>
+      <a class="m-link" href="#" data-nav="achievements">Achievements</a>
+    </div>
+    <div class="mnav-foot">
+      <div class="mnav-count" data-countdown>
+        <span class="mnav-count-k">Launch in</span><b data-u="d">22</b><span>days</span><b data-u="h">21</b><span>hours</span>
+      </div>
+      <a class="hb hb-sun mnav-cta" href="login.html"><span class="hb-t"><span data-t="Sign in">Sign in</span></span><svg class="arr"><use href="#i-arrow"/></svg></a>
+      <div class="mnav-row">
+        <a class="hb hb-tg" href="#" rel="noopener"><svg viewBox="0 0 15.8 13.24"><use href="#i-tg-s"/></svg><span class="hb-t"><span data-t="Telegram">Telegram</span></span></a>
+        <a class="hb hb-dc" href="#" rel="noopener"><svg viewBox="0 0 18.4 11.93"><use href="#i-dc-s"/></svg><span class="hb-t"><span data-t="Discord">Discord</span></span></a>
+      </div>
+      <div class="lang" role="group" aria-label="Language">
+        <button class="is-on" type="button">EN</button><button type="button">RU</button>
+      </div>
+    </div>
+  </div>
 </nav>
 
 <!-- Блипы карты: 24×24, контур 2px currentColor (заливка — где силуэт читается лучше) -->
@@ -124,8 +151,9 @@
       <img class="palm leaf-b" data-k=".03" src="img/leaf-b.svg" alt="">
     </div>
     <div class="world" id="world">
-      <img class="lay-neon" src="img/map-neon.webp" alt="Vice City and the state of Leonida" draggable="false">
-      <img class="lay-atlas" src="img/map-atlas.webp" alt="" draggable="false" loading="lazy">
+      <img class="lay-neon" src="img/map-neon.webp" srcset="img/m/map/neon.webp 1668w, img/map-neon.webp 3336w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 3336px" alt="Vice City and the state of Leonida" draggable="false">
+      <img class="lay-atlas" alt="" draggable="false">
+      <div class="tiles" id="tiles" aria-hidden="true" hidden></div>
       <svg class="route" id="route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><line id="routeGlow" x1="0" y1="0" x2="0" y2="0"/><line id="routeLine" x1="0" y1="0" x2="0" y2="0"/></svg>
       <div class="blips" id="blips"></div>
       <div class="labels" id="labels"></div>
@@ -135,6 +163,7 @@
 
   <!-- ЛЕГЕНДА: счёт находок цифрами отсчёта, поиск мест с подсказками, фильтр типов -->
   <aside class="legend" id="legend" aria-label="Legend">
+    <span class="sheet-grip" data-m aria-hidden="true"></span>
     <div class="lg-head">
       <span class="lg-kicker">Interactive map</span>
       <h1 class="lg-title">Leonida</h1>
@@ -170,7 +199,7 @@
 
   <!-- ОБЗОР: весь остров, рамка — видимая часть; клик или перетаскивание — туда -->
   <div class="ov" id="ov" role="button" tabindex="0" aria-label="Overview — click to move the map">
-    <img src="img/map-neon.webp" alt="" draggable="false">
+    <img src="img/map-neon.webp" srcset="img/m/map-neon-s.webp 860w, img/map-neon.webp 3336w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 3336px" alt="" draggable="false" loading="lazy">
     <i class="ov-view" id="ovView"></i>
     <i class="ov-you"></i>
     <i class="ov-wp" id="ovWp" hidden></i>
@@ -204,6 +233,7 @@
 
   <!-- КАРТОЧКА МЕСТА -->
   <article class="info" id="info" hidden>
+    <span class="sheet-grip" data-m aria-hidden="true"></span>
     <button class="info-x" type="button" data-close aria-label="Close">Esc</button>
     <div class="info-top">
       <span class="info-blip" id="iBlip"><svg><use href="#b-weapon"/></svg></span>

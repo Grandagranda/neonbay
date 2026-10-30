@@ -24,7 +24,8 @@
    Ролик уже обрезан по видимой ширине (с 120-го px исходника) — коробка от −3,25 шириной 1927,9;
    низ у 945, в высоком окне коробка дорастает вниз вместе с героем */
 .hero-media { position: absolute; z-index: -4; left: calc(-3.25 * var(--u)); top: calc(-81 * var(--u)); width: calc(1927.9 * var(--u)); bottom: calc(9 * var(--u)); overflow: hidden; }
-.hero-video { display: block; width: 100%; height: auto; scale: calc(1 + var(--p, 0) * .04); }
+.hero-poster { position: absolute; left: 0; top: 0; width: 100%; height: auto; }
+.hero-video { position: relative; display: block; width: 100%; height: auto; scale: calc(1 + var(--p, 0) * .04); }
 /* «тень» — затемнение слева под текст, .44 */
 .hero-shade { position: absolute; z-index: -3; pointer-events: none; opacity: .44;
   left: calc(-372 * var(--u)); top: calc(-96 * var(--u)); width: calc(2303 * var(--u)); height: calc(1024 * var(--u) + var(--ex) * 2);

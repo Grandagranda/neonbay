@@ -1,10 +1,13 @@
 // Карта Леониды: панорама/зум, блипы, легенда-фильтр, поиск мест с подсказками, карточка места, метка пути с навигатором,
 // обзорная мини-карта, подпись района как в GTA, открытки регионов с фокусом на регион.
+// Телефон: щипок, инерция, выбор ближайшей точки касанием, нижние листы вместо панелей, плитки полного разрешения при приближении.
 (() => {
   const D = window.MAP, $ = s => document.querySelector(s);
   const palms = [...document.querySelectorAll('.palm')];
-  const stage = $('#stage'), world = $('#world'), blipsEl = $('#blips'), info = $('#info'), atlas = $('.atlas');
+  const stage = $('#stage'), world = $('#world'), blipsEl = $('#blips'), info = $('#info'), atlas = $('.atlas'), legend = $('#legend');
   const WW = 1000, WH = WW * D.aspect, KM_X = D.kmPerMap, KM_Y = D.kmPerMap * D.aspect;
+  const MOB = !!(window.NB_MOB && NB_MOB.matches), PORTRAIT = matchMedia('(orientation: portrait) and (max-width: 640px)');
+  const sheets = () => MOB && PORTRAIT.matches;
 
   // ---- справочники ----
   const SUB = {}, GROUP = {};
@@ -86,8 +89,10 @@
     refresh();
   });
   // наведение на строку легенды подсвечивает её блипы
-  $('#list').addEventListener('mouseover', e => { const it = e.target.closest('.lg-i'); hoverK = it ? it.dataset.k : null; dim(); });
-  $('#list').addEventListener('mouseleave', () => { hoverK = null; dim(); });
+  if (!MOB) {
+    $('#list').addEventListener('mouseover', e => { const it = e.target.closest('.lg-i'); hoverK = it ? it.dataset.k : null; dim(); });
+    $('#list').addEventListener('mouseleave', () => { hoverK = null; dim(); });
+  }
   document.querySelector('.lg-quick').addEventListener('click', e => {
     const b = e.target.closest('[data-all]'); if (!b) return;
     if (b.dataset.all === 'on') off.clear(); else Object.keys(SUB).forEach(k => off.add(k));
@@ -113,7 +118,7 @@
   const pick = i => { qIn.value = ''; q = ''; res.hidden = true; qIn.blur(); dim(); refresh(); open(pins[i]); };
   const setAct = j => { act = (j + found.length) % found.length; res.querySelectorAll('button').forEach((b, k) => b.classList.toggle('is-act', k === act)); };
   qIn.addEventListener('input', () => { q = qIn.value.trim().toLowerCase(); dim(); refresh(); showRes(); });
-  qIn.addEventListener('focus', showRes);
+  qIn.addEventListener('focus', () => { showRes(); if (sheets()) sheetL.go(2); });
   qIn.addEventListener('keydown', e => {
     if (res.hidden || !found.length) return;
     if (e.key === 'ArrowDown') { e.preventDefault(); setAct(act + 1); }
@@ -127,7 +132,16 @@
   // ---- панорама и зум ----
   let x = 0, y = 0, z = 1, fitZ = 1;
   const box = (bare) => { // видимая часть карты: за вычетом легенды, шапки, дока регионов и карточки (bare — без карточки)
-    const r = stage.getBoundingClientRect(), right = !bare && atlas.classList.contains('has-info') ? 480 : 190;
+    const r = stage.getBoundingClientRect(), hasInfo = !bare && atlas.classList.contains('has-info');
+    if (sheets()) { // телефон: между лентой регионов и нижним листом
+      const t = $('#cards').offsetTop + 46, b = (hasInfo ? peekI() : peekL()) + 8;
+      return { l: 0, t, w: r.width, h: r.height - t - b, W: r.width, H: r.height };
+    }
+    if (MOB) { // телефон на боку и планшет: панели по краям, карточка закрывает легенду
+      const t = $('#cards').offsetTop + 46, l = hasInfo ? 8 : legend.offsetLeft + legend.offsetWidth + 8, rt = hasInfo ? info.offsetWidth + 60 : 60;
+      return { l, t, w: r.width - l - rt, h: r.height - t - 8, W: r.width, H: r.height };
+    }
+    const right = hasInfo ? 480 : 190;
     return { l: 385, t: 110, w: r.width - 385 - right, h: r.height - 110 - 120, W: r.width, H: r.height };
   };
   // подпись района и обзор
@@ -150,16 +164,52 @@
     ovView.style.cssText = `left:${(cl * 100).toFixed(2)}%;top:${(ct * 100).toFixed(2)}%;width:${Math.max(0, (cr - cl) * 100).toFixed(2)}%;height:${Math.max(0, (cb - ct) * 100).toFixed(2)}%`;
     ov.classList.toggle('is-whole', vw >= 1 && vh >= 1);
   };
+  let izOf = 0, hudT = 0, frame = 0;
   const apply = () => {
+    if (MOB) { // остров не уводим из окна: центр экрана всегда над картой
+      const W = stage.clientWidth, H = stage.clientHeight, mw = WW * z, mh = WH * z;
+      x = Math.min(W / 2, Math.max(W / 2 - mw, x)); y = Math.min(H / 2, Math.max(H / 2 - mh, y));
+    }
     world.style.transform = `translate(${x}px, ${y}px) scale(${z})`;
-    world.style.setProperty('--iz', (1 / z).toFixed(4));
-    const rel = z / fitZ;
-    world.classList.toggle('is-far', rel < 1.7);
-    world.classList.toggle('is-near', rel >= 1.7);
-    world.classList.toggle('is-close', rel >= 3.4);
-    $('#zl').textContent = rel.toFixed(1) + '×';
+    // при панораме масштаб не меняется — стили 139 блипов не пересчитываем
+    if (z !== izOf) {
+      izOf = z;
+      world.style.setProperty('--iz', (1 / z).toFixed(4));
+      const rel = z / fitZ;
+      world.classList.toggle('is-far', rel < 1.7);
+      world.classList.toggle('is-near', rel >= 1.7);
+      world.classList.toggle('is-close', rel >= 3.4);
+      $('#zl').textContent = rel.toFixed(1) + '×';
+    }
+    if (MOB) { if (!hudT) hudT = setTimeout(() => { hudT = 0; updateHud(); tiles(); }, 130); return; }
     palms.forEach(p => { const k = +p.dataset.k; p.style.translate = `${(x * k).toFixed(1)}px ${(y * k).toFixed(1)}px`; });
     updateHud();
+  };
+  const schedule = () => { if (!frame) frame = requestAnimationFrame(() => { frame = 0; apply(); }); };
+
+  // ---- плитки: основа 1668 px лёгкая, но при приближении мылит; поверх подгружается полное разрешение, только видимая часть ----
+  const tilesEl = $('#tiles'), TC = 4, TR = 6, live = new Map();
+  const tiles = () => {
+    const on = z * WW * Math.min(devicePixelRatio || 1, 3) > 1668 * 1.1, style = document.body.dataset.mode;
+    tilesEl.hidden = !on;
+    const want = new Set();
+    if (on) {
+      const W = stage.clientWidth, H = stage.clientHeight, tw = WW * z / TC, th = WH * z / TR;
+      const c0 = Math.max(0, Math.floor(-x / tw)), c1 = Math.min(TC - 1, Math.floor((W - x) / tw));
+      const r0 = Math.max(0, Math.floor(-y / th)), r1 = Math.min(TR - 1, Math.floor((H - y) / th));
+      for (let r = r0; r <= r1; r++) for (let c = c0; c <= c1; c++) want.add(`${style}-${r}-${c}`);
+    }
+    want.forEach(k => {
+      if (live.has(k)) return;
+      const [, r, c] = k.split('-').map(Number), im = new Image();
+      im.className = 'tile'; im.alt = ''; im.decoding = 'async';
+      im.style.cssText = `left:${c / TC * 100}%;top:${r / TR * 100}%;width:${100 / TC + .03}%;height:${100 / TR + .03}%`;
+      im.onload = () => im.classList.add('is-on');
+      im.src = `img/m/map/${k}.webp`;
+      tilesEl.appendChild(im); live.set(k, im);
+    });
+    // в памяти держим не больше дюжины плиток: 24 штуки — это снова целая картинка
+    live.forEach((im, k) => { if (!want.has(k) && (live.size > 12 || !k.startsWith(style))) { im.remove(); live.delete(k); } });
   };
   const anim = on => { world.classList.toggle('is-anim', !!on); clearTimeout(anim.t); if (on) anim.t = setTimeout(() => world.classList.remove('is-anim'), 720); };
   const clampZ = v => Math.min(fitZ * 6.5, Math.max(fitZ * .8, v));
@@ -180,19 +230,81 @@
   });
   const findMe = () => flyTo(D.you[0], D.you[1], Math.max(z, fitZ * 3));
   $('#locate').addEventListener('click', findMe);
-  let drag = null;
+  // один палец — панорама с инерцией, два — масштаб вокруг точки между ними; касание — ближайшая точка, двойное касание — приближение
+  let drag = null, pinch = null, glide = 0, lastTap = { t: 0, x: 0, y: 0 };
+  const touches = new Map();
+  const at = e => { const r = stage.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+  const startPinch = () => {
+    const [a, b] = [...touches.values()];
+    pinch = { d: Math.hypot(a[0] - b[0], a[1] - b[1]) || 1, cx: (a[0] + b[0]) / 2, cy: (a[1] + b[1]) / 2, z, x, y };
+    drag = null; world.classList.remove('is-anim');
+  };
+  const nearest = (px, py) => { // в пределах 30 px от пальца: в плотном центре Вайс-Сити точки стоят вплотную
+    let best = null, bd = 30 * 30;
+    pins.forEach(p => {
+      if (p.el.classList.contains('is-off') || p.el.classList.contains('is-dim')) return;
+      const d = (x + p.x / 100 * WW * z - px) ** 2 + (y + p.y / 100 * WH * z - py) ** 2;
+      if (d < bd) { bd = d; best = p; }
+    });
+    return best;
+  };
+  const tap = (px, py, t) => {
+    const hit = nearest(px, py);
+    if (hit) { open(hit); return; }
+    if (t - lastTap.t < 320 && Math.hypot(px - lastTap.x, py - lastTap.y) < 30) { zoomAt(px, py, 1.9, true); lastTap.t = 0; return; }
+    lastTap = { t, x: px, y: py };
+    if (cur) close(); else if (sheets() && sheetL.stop) sheetL.go(0);
+  };
   stage.addEventListener('pointerdown', e => {
-    if (e.target.closest('.bp')) return;
-    drag = { sx: e.clientX, sy: e.clientY, x, y, moved: false }; stage.setPointerCapture(e.pointerId);
+    const touch = e.pointerType !== 'mouse';
+    if (!touch && e.target.closest('.bp')) return;
+    cancelAnimationFrame(glide); world.classList.add('is-move');
+    stage.setPointerCapture(e.pointerId);
+    if (touch) touches.set(e.pointerId, at(e));
+    if (touches.size >= 2) { if (touches.size === 2) startPinch(); return; }
+    drag = { sx: e.clientX, sy: e.clientY, x, y, moved: false, touch, lx: e.clientX, ly: e.clientY, lt: e.timeStamp, vx: 0, vy: 0 };
   });
   stage.addEventListener('pointermove', e => {
+    if (touches.has(e.pointerId)) touches.set(e.pointerId, at(e));
+    if (pinch && touches.size >= 2) {
+      const [a, b] = [...touches.values()], k = clampZ(pinch.z * Math.hypot(a[0] - b[0], a[1] - b[1]) / pinch.d) / pinch.z;
+      z = pinch.z * k; x = (a[0] + b[0]) / 2 - (pinch.cx - pinch.x) * k; y = (a[1] + b[1]) / 2 - (pinch.cy - pinch.y) * k;
+      schedule(); return;
+    }
     if (!drag) return;
     const dx = e.clientX - drag.sx, dy = e.clientY - drag.sy;
-    if (!drag.moved && Math.hypot(dx, dy) < 4) return;
+    if (!drag.moved && Math.hypot(dx, dy) < (drag.touch ? 8 : 4)) return;
     drag.moved = true; stage.classList.add('is-drag');
-    x = drag.x + dx; y = drag.y + dy; apply();
+    const dt = e.timeStamp - drag.lt;
+    if (dt > 0) { drag.vx = drag.vx * .3 + (e.clientX - drag.lx) / dt * .7; drag.vy = drag.vy * .3 + (e.clientY - drag.ly) / dt * .7; drag.lx = e.clientX; drag.ly = e.clientY; drag.lt = e.timeStamp; }
+    x = drag.x + dx; y = drag.y + dy; schedule();
   });
-  const end = () => { if (drag && !drag.moved) close(); drag = null; stage.classList.remove('is-drag'); };
+  const coast = (vx, vy) => { // инерция: скорость тает примерно за полсекунды
+    let t0 = performance.now();
+    const step = now => {
+      const dt = Math.min(32, now - t0), k = Math.pow(.994, dt); t0 = now;
+      vx *= k; vy *= k; x += vx * dt; y += vy * dt; apply();
+      if (Math.hypot(vx, vy) > .03) glide = requestAnimationFrame(step); else world.classList.remove('is-move');
+    };
+    glide = requestAnimationFrame(step);
+  };
+  const end = e => {
+    touches.delete(e.pointerId);
+    if (pinch) {
+      if (touches.size < 2) pinch = null;
+      if (touches.size === 1) { // второй палец убран — панорама продолжается от оставшегося
+        const [p] = [...touches.values()], r = stage.getBoundingClientRect();
+        drag = { sx: p[0] + r.left, sy: p[1] + r.top, x, y, moved: true, touch: true, lx: p[0] + r.left, ly: p[1] + r.top, lt: e.timeStamp, vx: 0, vy: 0 };
+      } else world.classList.remove('is-move');
+      return;
+    }
+    if (touches.size) return;
+    const d = drag; drag = null; stage.classList.remove('is-drag');
+    if (d && d.touch && !d.moved) { const [px, py] = at(e); tap(px, py, e.timeStamp); world.classList.remove('is-move'); return; }
+    if (d && !d.moved) close();
+    // палец замер перед отпусканием — без инерции
+    if (d && d.touch && e.timeStamp - d.lt < 60 && Math.hypot(d.vx, d.vy) > .2) coast(d.vx, d.vy); else world.classList.remove('is-move');
+  };
   stage.addEventListener('pointerup', end); stage.addEventListener('pointercancel', end);
 
   // обзор: клик или перетаскивание — центр карты туда
@@ -226,7 +338,8 @@
       .map(([o, d]) => `<li><button type="button" data-i="${o.i}" data-cat="${o.s.g}"><span class="mini">${icon(o.k)}</span>${o.n}<span class="mono">${fmtKm(d)}</span></button></li>`).join('');
     setWpBtn();
     info.hidden = false; atlas.classList.add('has-info');
-    requestAnimationFrame(() => info.classList.add('is-open'));
+    if (sheets()) { info.scrollTop = 0; info.classList.add('is-open'); sheetL.go(0, false); sheetI.go(0); setSheetVar(); }
+    else requestAnimationFrame(() => info.classList.add('is-open'));
     history.replaceState(null, '', '#p' + p.i);
     if (fly) flyTo(p.x, p.y, Math.max(z, fitZ * 2.4));
   }
@@ -234,6 +347,7 @@
     if (!cur) return;
     cur.el.classList.remove('is-on'); cur = null;
     info.classList.remove('is-open'); atlas.classList.remove('has-info');
+    if (sheets()) { info.classList.add('is-anim'); info.style.transform = ''; setSheetVar(); }
     history.replaceState(null, '', location.pathname);
   }
   blipsEl.addEventListener('click', e => { const b = e.target.closest('.bp'); if (b) open(pins.find(p => p.el === b)); });
@@ -257,6 +371,7 @@
   }
   function setWp(p) {
     wpPin = p;
+    atlas.classList.toggle('has-gps', !!p);
     if (!p) { wp.hidden = true; route.classList.remove('is-on'); gps.hidden = true; ovWp.hidden = true; setWpBtn(); return; }
     wp.hidden = false; wp.style.left = p.x + '%'; wp.style.top = p.y + '%';
     wp.style.animation = 'none'; void wp.offsetWidth; wp.style.animation = '';
@@ -310,10 +425,15 @@
   chip.querySelector('button').addEventListener('click', () => setRegion(null));
 
   // ---- стиль карты: неон / атлас ----
+  // атлас на телефоне подгружается только по выбору стиля, на ПК — сразу, как и раньше
+  const lay = $('.lay-atlas'), loadAtlas = () => { if (!lay.getAttribute('src')) lay.src = MOB ? 'img/m/map/atlas.webp' : 'img/map-atlas.webp'; };
+  if (!MOB) loadAtlas();
   document.querySelector('.mode').addEventListener('click', e => {
     const b = e.target.closest('[data-mode]'); if (!b) return;
     document.body.dataset.mode = b.dataset.mode;
     document.querySelectorAll('.mode button').forEach(o => o.classList.toggle('is-on', o === b));
+    if (b.dataset.mode === 'atlas') loadAtlas();
+    if (MOB) tiles();
   });
 
   // ---- клавиши ----
@@ -329,13 +449,70 @@
     else if (e.key === '-') zoomAt(...center(), 1 / 1.4, true);
   });
   addEventListener('resize', () => {
+    if (sheets()) { sheetL.go(sheetL.stop, false); if (cur) sheetI.go(sheetI.stop, false); }
+    else { legend.style.transform = ''; info.style.transform = ''; }
+    setSheetVar();
     const keep = Math.abs(z - fitZ) > 1e-6, b = box(true);
     fitZ = Math.min(b.w / WW, b.h / WH) * 1.02;
     keep ? apply() : fit(false);
   });
 
-  // старт: чуть ближе «по размеру», чтобы сразу были видны иконки, а не точки
-  refresh(); fit(false); flyTo(START[0], START[1], fitZ * 1.75, false);
+  // ---- нижние листы (телефон в портрете): легенда — три положения, карточка места — два ----
+  // Лист выше видимой части, положение — сдвиг вниз; тянется за ручку и шапку, отпускание ведёт к ближайшему положению с учётом скорости
+  function makeSheet(el, stops, grabs, onstop) {
+    let i = 0, d = null;
+    const off = v => el.offsetHeight - v;
+    const go = (n, anim = true) => {
+      const s = stops(); i = Math.max(0, Math.min(s.length - 1, n));
+      el.classList.toggle('is-anim', anim);
+      el.style.transform = `translate3d(0, ${off(s[i])}px, 0)`;
+      el.style.setProperty('--hid', off(s[i]) + 'px');
+      el.dataset.stop = i;
+      if (onstop) onstop(i);
+    };
+    grabs.forEach(g => {
+      g.addEventListener('pointerdown', e => {
+        if (e.target.closest('a, button, input')) return;
+        const s = stops();
+        d = { y: e.clientY, from: off(s[i]), min: off(s[s.length - 1]), max: off(s[0]), moved: false, ly: e.clientY, lt: e.timeStamp, v: 0 };
+        g.setPointerCapture(e.pointerId); el.classList.remove('is-anim');
+      });
+      g.addEventListener('pointermove', e => {
+        if (!d) return;
+        const dy = e.clientY - d.y;
+        if (!d.moved && Math.abs(dy) < 6) return;
+        d.moved = true;
+        const dt = e.timeStamp - d.lt; if (dt > 0) { d.v = d.v * .3 + (e.clientY - d.ly) / dt * .7; d.ly = e.clientY; d.lt = e.timeStamp; }
+        el.style.transform = `translate3d(0, ${Math.min(d.max + 40, Math.max(d.min, d.from + dy))}px, 0)`;
+      });
+      const up = e => {
+        if (!d) return;
+        const was = d; d = null;
+        if (!was.moved) { go(i + 1 >= stops().length ? 0 : i + 1); return; } // касание ручки — следующее положение
+        const now = was.from + (e.clientY - was.y), aim = now + was.v * 170, s = stops();
+        let best = 0; s.forEach((v, k) => { if (Math.abs(off(v) - aim) < Math.abs(off(s[best]) - aim)) best = k; });
+        go(best);
+      };
+      g.addEventListener('pointerup', up); g.addEventListener('pointercancel', up);
+    });
+    return { go, get stop() { return i; } };
+  }
+  // отступ домашней полосы: env() читается только через вычисленный стиль
+  const safeB = () => parseFloat(getComputedStyle(legend).paddingBottom) || 0;
+  // видимая высота в нижнем положении: у легенды — до конца поиска, у карточки — до конца кнопок
+  const peekL = () => { const f = legend.querySelector('.lg-find'); return f.offsetTop + f.offsetHeight + 12 + safeB(); };
+  const peekI = () => { const a = info.querySelector('.info-act'); return a.offsetTop + a.offsetHeight + 16 + safeB(); };
+  const setSheetVar = () => { if (sheets()) atlas.style.setProperty('--sheet', (cur ? peekI() : peekL()) + 'px'); };
+  const sheetL = makeSheet(legend, () => [peekL(), Math.round(stage.clientHeight * .58), legend.offsetHeight],
+    [legend.querySelector('.sheet-grip'), legend.querySelector('.lg-head')], n => { if (!n) qIn.blur(); });
+  const sheetI = makeSheet(info, () => { const p = peekI(), h = info.offsetHeight; return h - p > 30 ? [p, h] : [p]; },
+    [info.querySelector('.sheet-grip'), info.querySelector('.info-top')], n => { info.style.overflowY = n ? 'auto' : ''; });
+
+  // старт: чуть ближе «по размеру», чтобы сразу были видны иконки, а не точки; на телефоне — весь остров
+  refresh();
+  if (sheets()) { sheetL.go(0, false); setSheetVar(); }
+  fit(false);
+  if (!MOB) flyTo(START[0], START[1], fitZ * 1.75, false);
   // с главной приходят с адресом: #vice — к региону, #p12 — сразу к точке
   const h = location.hash.slice(1);
   if (REG[h]) cards.querySelector(`[data-r="${h}"]`).click();

@@ -1,31 +1,57 @@
-// Общее для всех страниц: шапка, мобильное меню, появление блоков, отсчёт до релиза, параллакс героя.
+// Общее для всех страниц: шапка, мобильное меню, появление блоков, отсчёт до релиза, параллакс героя, ролик первого экрана.
 (() => {
-  // плавная инерционная прокрутка (Lenis) — везде, кроме полноэкранной карты
-  if (window.Lenis && !document.body.classList.contains('is-app') && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const lenis = window.NB_LENIS = new Lenis({ lerp: .09, wheelMultiplier: .9, smoothWheel: true });
-    const loop = t => { lenis.raf(t); requestAnimationFrame(loop); };
-    requestAnimationFrame(loop);
-    document.addEventListener('click', e => {
-      const a = e.target.closest('a[href^="#"]'), t = a && a.getAttribute('href').length > 1 && document.querySelector(a.getAttribute('href'));
-      if (t) { e.preventDefault(); lenis.scrollTo(t, { offset: -24, duration: 1.4 }); }
-    });
+  // макет телефона: тот же запрос, что в media у css/mobile.css
+  const MOB = window.NB_MOB = matchMedia('(max-width: 900px), (max-width: 1100px) and (max-height: 520px)');
+
+  // карта и заставка на главной работают по-разному на телефоне и ПК: поворот планшета через границу макета перезагружает страницу
+  if (document.querySelector('[data-mm], .atlas')) MOB.addEventListener('change', () => location.reload());
+
+  // плавная инерционная прокрутка (Lenis) — везде, кроме полноэкранной карты; телефону библиотека не нужна: прокруткой управляет сама система
+  if (!MOB.matches && !document.body.classList.contains('is-app') && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const lib = document.createElement('script');
+    lib.src = 'js/vendor/lenis.min.js';
+    lib.onload = () => {
+      const lenis = window.NB_LENIS = new Lenis({ lerp: .09, wheelMultiplier: .9, smoothWheel: true });
+      const loop = t => { lenis.raf(t); requestAnimationFrame(loop); };
+      requestAnimationFrame(loop);
+      document.addEventListener('click', e => {
+        const a = e.target.closest('a[href^="#"]'), t = a && a.getAttribute('href').length > 1 && document.querySelector(a.getAttribute('href'));
+        if (t) { e.preventDefault(); lenis.scrollTo(t, { offset: -24, duration: 1.4 }); }
+      });
+    };
+    document.head.appendChild(lib);
   }
+
+  // ссылки-заглушки не прыгают наверх страницы
+  document.addEventListener('click', e => { if (e.target.closest('a[href="#"]')) e.preventDefault(); });
+
+  // iOS применяет :active только при наличии обработчика касаний
+  document.addEventListener('touchstart', () => {}, { passive: true });
 
   const hdr = document.getElementById('hdr');
   const onScroll = () => hdr && hdr.classList.toggle('is-scrolled', scrollY > 24);
   addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  const burger = document.getElementById('burger');
-  burger && burger.addEventListener('click', () => {
-    const open = document.documentElement.classList.toggle('menu-open');
+  // полноэкранное меню телефона: закрывается по пункту, по Esc и при уходе на широкий экран; страница под ним не листается
+  const burger = document.getElementById('burger'), mnav = document.getElementById('mnav'), html = document.documentElement;
+  const setMenu = open => {
+    html.classList.toggle('menu-open', open);
     burger.setAttribute('aria-expanded', open);
-  });
+    burger.setAttribute('aria-label', open ? 'Close menu' : 'Menu');
+    mnav.inert = !open;
+  };
+  if (burger && mnav) {
+    burger.addEventListener('click', () => setMenu(!html.classList.contains('menu-open')));
+    mnav.addEventListener('click', e => { if (e.target.closest('a')) setMenu(false); });
+    addEventListener('keydown', e => { if (e.key === 'Escape' && html.classList.contains('menu-open')) { setMenu(false); burger.focus(); } });
+    MOB.addEventListener('change', e => { if (!e.matches) setMenu(false); });
+  }
 
   // появление при прокрутке
   const io = new IntersectionObserver(es => es.forEach(e => {
     if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
-  }), { rootMargin: '0px 0px -8% 0px' });
+  }), { rootMargin: MOB.matches ? '0px' : '0px 0px -8% 0px' });
   document.querySelectorAll('.rv').forEach(el => io.observe(el));
 
   // отсчёт до релиза: 19 ноября 2026, полночь по Майами (EST)
@@ -50,9 +76,29 @@
 
   // ширина окна без полосы прокрутки — для единицы макета --u (100vw её включает, и правый край уезжал бы)
   const root = document.documentElement;
-  const setVw = () => root.style.setProperty('--vw', root.clientWidth + 'px');
+  let vw = 0;
+  const setVw = () => { if (root.clientWidth !== vw) { vw = root.clientWidth; root.style.setProperty('--vw', vw + 'px'); } };
   setVw();
   new ResizeObserver(setVw).observe(root);
+
+  // ролик первого экрана. Постер уже на экране, поэтому на телефоне файл подключается после загрузки страницы и не спорит с ней за сеть.
+  // Экономия трафика, 2G и «меньше движения» — без ролика, только постер. Поворот телефона меняет кадр: вертикальный ↔ горизонтальный
+  const hv = document.querySelector('.hero-video');
+  if (hv) {
+    const portrait = matchMedia('(orientation: portrait)'), conn = navigator.connection;
+    const lite = MOB.matches && (matchMedia('(prefers-reduced-motion: reduce)').matches || (conn && (conn.saveData || /2g/.test(conn.effectiveType || ''))));
+    const file = () => !MOB.matches ? 'video/hero.mp4' : portrait.matches ? 'video/hero-m.mp4' : 'video/hero-l.mp4';
+    const start = () => {
+      if (!hv.getAttribute('src') || !hv.src.endsWith(file())) { hv.classList.remove('is-on'); hv.src = file(); }
+      hv.play().catch(() => {});
+    };
+    hv.addEventListener('playing', () => hv.classList.add('is-on'));
+    if (!lite) {
+      if (!MOB.matches || document.readyState === 'complete') start(); else addEventListener('load', start, { once: true });
+      portrait.addEventListener('change', () => { if (hv.getAttribute('src')) start(); });
+      MOB.addEventListener('change', () => { if (hv.getAttribute('src')) start(); });
+    }
+  }
 
   // видео-петли играют, только пока видны
   const vio = new IntersectionObserver(es => es.forEach(e => {

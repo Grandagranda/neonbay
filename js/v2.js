@@ -1,7 +1,7 @@
 // NeonBay v2 — общее для страниц по первым двум блокам главной:
 // наезд листа на липкую шапку (--p, шапка размывается), параллакс слоёв по скроллу, полоса чтения, оглавление, «скопировать ссылку».
 (() => {
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches, MOB = !!(window.NB_MOB && NB_MOB.matches);
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
   const jobs = [];
 
@@ -9,21 +9,23 @@
   document.querySelectorAll('[data-stack]').forEach(stack => {
     const sheet = stack.querySelector('[data-sheet]'), hero = stack.querySelector('[data-hero]');
     if (!sheet || !hero) return;
-    const video = hero.querySelector('video');
+    const video = hero.querySelector('video'), dim = hero.querySelector('.hero-dim');
     let covered = false;
     // отсчёт от того места, где лист стоит при открытии страницы (шапка бывает ниже окна — тогда лист уже виден)
     jobs.push(vh => {
       const start = Math.min(vh, hero.offsetHeight);
       const p = clamp((start - sheet.getBoundingClientRect().top) / start, 0, 1);
-      stack.style.setProperty('--p', p.toFixed(3));
+      // телефон: только затемнение одного слоя. --p на стопке пересчитывал бы стили всего блока на каждый кадр прокрутки
+      if (MOB) { if (dim) dim.style.opacity = (p * .5).toFixed(3); }
+      else stack.style.setProperty('--p', p.toFixed(3));
       if (video && (p >= 1) !== covered) { covered = p >= 1; covered ? video.pause() : video.play().catch(() => {}); }
     });
   });
 
   // ---- параллакс: слой отстаёт от прокрутки на долю k; опора — [data-par-root] или ближайшая секция ----
   // at — доля высоты окна, где слой стоит на своём месте; lo/hi — пределы сдвига в px макета;
-  // ps — уменьшение на px ухода вниз (лого блока 2 «уходит» за девушку)
-  if (!reduce) {
+  // ps — уменьшение на px ухода вниз (лого блока 2 «уходит» за девушку). На телефоне параллакса нет: прокрутку ведёт система, сдвиг на JS отставал бы от пальца
+  if (!reduce && !MOB) {
     const par = [...document.querySelectorAll('[data-par]')].map(el => ({
       el, root: el.closest('[data-par-root]') || el.closest('section, footer') || el.parentElement,
       k: +el.dataset.par, lo: +(el.dataset.lo ?? -1e4), hi: +(el.dataset.hi ?? 1e4), ps: +(el.dataset.ps || 0), at: +(el.dataset.at || 0),
@@ -64,6 +66,14 @@
       links.forEach(a => a.classList.toggle('is-on', cur && a.hash === '#' + cur.id));
     };
     addEventListener('scroll', mark, { passive: true }); mark();
+    // телефон: оглавление свёрнуто над текстом, раскрывается касанием; после выбора раздела снова сворачивается
+    if (MOB) {
+      const head = toc.querySelector('.kk'), set = on => { toc.classList.toggle('is-open', on); head.setAttribute('aria-expanded', on); };
+      head.setAttribute('role', 'button'); head.tabIndex = 0; set(false);
+      head.addEventListener('click', () => set(!toc.classList.contains('is-open')));
+      head.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); set(!toc.classList.contains('is-open')); } });
+      links.forEach(a => a.addEventListener('click', () => set(false)));
+    }
   }
 
   // ---- скопировать ссылку ----

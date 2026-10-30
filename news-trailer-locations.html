@@ -1,17 +1,24 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta name="robots" content="noindex, nofollow">
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
 <title>Every trailer location we could match on the Leonida map. — NeonBay</title>
 <meta name="description" content="Gas stations, motels and beach strips — we lined up trailer shots with the map. Here is what fits and what is still a guess.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0a0712">
 <link rel="icon" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/touch-icon.png">
+<!-- основной шрифт — свой (тот же файл, что отдаёт Google, css/base.css); курсив и Bebas подключаются, не блокируя первый показ страницы -->
+<link rel="preload" href="fonts/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,300..800;1,400..800&family=Bebas+Neue&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@1,400..800&family=Bebas+Neue&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@1,400..800&family=Bebas+Neue&display=swap"></noscript>
+
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/v2.css">
 <link rel="stylesheet" href="css/news.css">
+<link rel="stylesheet" href="css/mobile.css" media="(max-width: 900px), (max-width: 1100px) and (max-height: 520px)">
 </head>
 <body class="p-article v2">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -53,18 +60,36 @@
         <button class="is-on" type="button">EN</button><button type="button">RU</button>
       </div>
       <a class="btn btn-primary btn-sm hdr-cta" href="login.html">Sign in</a>
-      <button class="burger" type="button" aria-label="Menu" aria-expanded="false" id="burger"><span></span></button>
+      <button class="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="mnav" id="burger"><span></span></button>
     </div>
   </div>
 </header>
 
-<nav class="mnav" aria-label="Mobile">
-  <a class="m-link" href="index.html" data-nav="home">Home</a>
-  <a class="m-link is-active" href="news.html" data-nav="news" aria-current="page">News</a>
-  <a class="m-link" href="map.html" data-nav="map">Map</a>
-  <a class="m-link" href="#" data-nav="guides">Guides</a>
-  <a class="m-link" href="#" data-nav="achievements">Achievements</a>
-  <a class="btn btn-primary btn-block" href="login.html">Sign in</a>
+<!-- меню телефона — как меню паузы: крупные пункты, отсчёт до релиза, вход и каналы; открывает js/site.js -->
+<nav class="mnav" id="mnav" aria-label="Mobile" inert>
+  <div class="mnav-fx" aria-hidden="true"></div>
+  <div class="mnav-in">
+    <div class="mnav-links">
+      <a class="m-link" href="index.html" data-nav="home">Home</a>
+      <a class="m-link is-active" href="news.html" data-nav="news" aria-current="page">News</a>
+      <a class="m-link" href="map.html" data-nav="map">Map</a>
+      <a class="m-link" href="#" data-nav="guides">Guides</a>
+      <a class="m-link" href="#" data-nav="achievements">Achievements</a>
+    </div>
+    <div class="mnav-foot">
+      <div class="mnav-count" data-countdown>
+        <span class="mnav-count-k">Launch in</span><b data-u="d">22</b><span>days</span><b data-u="h">21</b><span>hours</span>
+      </div>
+      <a class="hb hb-sun mnav-cta" href="login.html"><span class="hb-t"><span data-t="Sign in">Sign in</span></span><svg class="arr"><use href="#i-arrow"/></svg></a>
+      <div class="mnav-row">
+        <a class="hb hb-tg" href="#" rel="noopener"><svg viewBox="0 0 15.8 13.24"><use href="#i-tg-s"/></svg><span class="hb-t"><span data-t="Telegram">Telegram</span></span></a>
+        <a class="hb hb-dc" href="#" rel="noopener"><svg viewBox="0 0 18.4 11.93"><use href="#i-dc-s"/></svg><span class="hb-t"><span data-t="Discord">Discord</span></span></a>
+      </div>
+      <div class="lang" role="group" aria-label="Language">
+        <button class="is-on" type="button">EN</button><button type="button">RU</button>
+      </div>
+    </div>
+  </div>
 </nav>
 
 <div class="rp" aria-hidden="true"><i data-progress></i></div>
@@ -76,8 +101,8 @@
   <section class="ah" data-hero data-k="explainer" style="--arn:1.778">
     <img class="ah-amb" src="img/news/trailer-locations-amb.webp" alt="" aria-hidden="true">
     <div class="ah-shade" aria-hidden="true"></div>
-    <img class="fx fx-leaf ah-leaf" src="img/leaf-o1.svg" alt="" aria-hidden="true">
-    <figure class="ah-cover rv" style="--d:.1s"><img src="img/news/trailer-locations-cover.webp" alt="" style="object-position:50% 40%"></figure>
+    <img class="fx fx-leaf ah-leaf" src="img/leaf-o1.svg" alt="" aria-hidden="true" loading="lazy">
+    <figure class="ah-cover rv" style="--d:.1s"><img src="img/news/trailer-locations-cover.webp" srcset="img/m/news-trailer-locations-cover.webp 860w, img/news/trailer-locations-cover.webp 1600w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 1600px" alt="" style="object-position:50% 40%"></figure>
 
     <div class="ah-in">
       <nav class="crumbs rv" aria-label="Breadcrumbs"><a href="index.html">Home</a><svg><use href="#i-chev"/></svg><a href="news.html">News</a><svg><use href="#i-chev"/></svg><a href="news.html#explainer">Explainer</a></nav>
@@ -98,9 +123,9 @@
 
   <!-- ЛИСТ СТАТЬИ: текст слева, справа липкая колонка — карточка проверки (как карточка места на карте) и оглавление -->
   <article class="sheet ab" data-sheet data-k="explainer">
-    <img class="fx fx-v ab-fx-v" src="img/glow-violet.webp" alt="" aria-hidden="true">
-    <img class="fx fx-p ab-fx-p" src="img/glow-plum.webp" alt="" aria-hidden="true">
-    <img class="fx fx-leaf ab-leaf" src="img/leaf-o2.svg" alt="" aria-hidden="true">
+    <img class="fx fx-v ab-fx-v" src="img/glow-violet.webp" srcset="img/m/glow-violet.webp 760w, img/glow-violet.webp 1458w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 1458px" alt="" aria-hidden="true" loading="lazy">
+    <img class="fx fx-p ab-fx-p" src="img/glow-plum.webp" srcset="img/m/glow-plum.webp 760w, img/glow-plum.webp 1408w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 1408px" alt="" aria-hidden="true" loading="lazy">
+    <img class="fx fx-leaf ab-leaf" src="img/leaf-o2.svg" alt="" aria-hidden="true" loading="lazy">
 
     <div class="ab-grid">
       <div class="prose" data-prose>
@@ -143,7 +168,7 @@
       </div>
       <div class="more-grid">
           <a class="sc rv" style="--d:0s" href="news-leonida-regions.html" data-k="explainer" data-q="six regions of leonida, explained — and where the collectibles hide. from vice city to the keys: a quick tour of the state, region by region, with links to every marker on our interactive map. explainer">
-          <span class="sc-img"><img src="img/news/leonida-regions-card.webp" alt="" loading="lazy" style="object-position:50% 50%"></span>
+          <span class="sc-img"><img src="img/news/leonida-regions-card.webp" srcset="img/m/news-leonida-regions-card.webp 720w, img/news/leonida-regions-card.webp 960w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 960px" alt="" loading="lazy" style="object-position:50% 50%"></span>
           <span class="sc-body">
             <span class="sc-meta"><span class="kk">Explainer</span></span>
             <span class="sc-h">Six regions of Leonida, explained — and where the collectibles hide.</span>
@@ -151,7 +176,7 @@
           </span>
         </a>
           <a class="sc rv" style="--d:0.08s" href="news-heists-explained.html" data-k="explainer" data-q="heists in leonida: what the trailers tell us so far. masks, guard dogs and getaway cars — a look at what the trailers show about heists, and what is still speculation. explainer">
-          <span class="sc-img"><img src="img/news/heists-explained-card.webp" alt="" loading="lazy" style="object-position:50% 35%"></span>
+          <span class="sc-img"><img src="img/news/heists-explained-card.webp" srcset="img/m/news-heists-explained-card.webp 720w, img/news/heists-explained-card.webp 960w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 960px" alt="" loading="lazy" style="object-position:50% 35%"></span>
           <span class="sc-body">
             <span class="sc-meta"><span class="kk">Explainer</span></span>
             <span class="sc-h">Heists in Leonida: what the trailers tell us so far.</span>
@@ -159,7 +184,7 @@
           </span>
         </a>
           <a class="sc rv" style="--d:0.16s" href="news-vinyl-records.html" data-k="news" data-q="rockstar has officially announced the release of vinyl records for gta vi. the soundtrack is getting a physical release. here is what is confirmed, what is not, and how to avoid the fake pre-order pages that showed up within an hour. news">
-          <span class="sc-img"><img src="img/news/vinyl-records-card.webp" alt="" loading="lazy" style="object-position:50% 40%"></span>
+          <span class="sc-img"><img src="img/news/vinyl-records-card.webp" srcset="img/m/news-vinyl-records-card.webp 720w, img/news/vinyl-records-card.webp 960w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 960px" alt="" loading="lazy" style="object-position:50% 40%"></span>
           <span class="sc-body">
             <span class="sc-meta"><span class="kk">News</span><span class="st st-confirmed"><svg><use href="#i-check"/></svg>Confirmed</span></span>
             <span class="sc-h">Rockstar has officially announced the release of vinyl records for GTA VI.</span>
@@ -174,14 +199,14 @@
   <!-- «Join the crew» (Figma 4048:1305): фото заправки XERON на всю ширину, трое из баннера Discord выходят за верхний край
        (параллакс по скроллу), размытые купюры по краям; кнопки-плашки Telegram/Discord в стекле отсчёта -->
   <section class="crew" data-par-root aria-labelledby="crew-t">
-    <div class="crew-bg" aria-hidden="true"><img src="img/hero-station.jpg" alt="" loading="lazy" data-par=".2" data-at=".5" data-lo="-120" data-hi="220"></div>
+    <div class="crew-bg" aria-hidden="true"><img src="img/hero-station.jpg" srcset="img/m/hero-station.webp 880w, img/hero-station.jpg 2752w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 2752px" alt="" loading="lazy" data-par=".2" data-at=".5" data-lo="-120" data-hi="220"></div>
     <div class="crew-cast" aria-hidden="true">
-      <img class="crew-gun" src="img/char-gun.webp" alt="" loading="lazy" data-par="-.07" data-at=".5" data-lo="-45" data-hi="60">
-      <img class="crew-girl" src="img/char-girl.webp" alt="" loading="lazy" data-par="-.1" data-at=".5" data-lo="-60" data-hi="80">
-      <img class="crew-suit" src="img/char-suit.webp" alt="" loading="lazy" data-par="-.04" data-at=".5" data-lo="-30" data-hi="40">
+      <img class="crew-gun" src="img/char-gun.webp" srcset="img/m/char-gun.webp 460w, img/char-gun.webp 912w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 912px" alt="" loading="lazy" data-par="-.07" data-at=".5" data-lo="-45" data-hi="60">
+      <img class="crew-girl" src="img/char-girl.webp" srcset="img/m/char-girl.webp 400w, img/char-girl.webp 712w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 712px" alt="" loading="lazy" data-par="-.1" data-at=".5" data-lo="-60" data-hi="80">
+      <img class="crew-suit" src="img/char-suit.webp" srcset="img/m/char-suit.webp 440w, img/char-suit.webp 772w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 772px" alt="" loading="lazy" data-par="-.04" data-at=".5" data-lo="-30" data-hi="40">
     </div>
-    <span class="crew-bill crew-bill-1" aria-hidden="true"><img src="img/bill-1.webp" alt="" loading="lazy"></span>
-    <span class="crew-bill crew-bill-2" aria-hidden="true"><img src="img/bill-3.webp" alt="" loading="lazy"></span>
+    <span class="crew-bill crew-bill-1" aria-hidden="true"><img src="img/bill-1.webp" srcset="img/m/bill-1.webp 200w, img/bill-1.webp 620w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 620px" alt="" loading="lazy"></span>
+    <span class="crew-bill crew-bill-2" aria-hidden="true"><img src="img/bill-3.webp" srcset="img/m/bill-3.webp 200w, img/bill-3.webp 594w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 594px" alt="" loading="lazy"></span>
     <div class="crew-in">
       <span class="hero-kicker rv">Community</span>
       <h2 class="crew-t rv" style="--d:.06s" id="crew-t">Join the crew.</h2>
@@ -198,15 +223,15 @@
 <!-- подвал по Figma 4048:1348: «See you in Vice City» с отсчётом поверх клуба в глубокой тени, свечения и купюры;
      внизу лого, меню, «наверх» и юридическая строка. Единицы свои (--fu/--ft): подвал стоит и на старых страницах -->
 <footer class="ftr">
-  <div class="ftr-art" aria-hidden="true"><img src="img/ftr-club.webp" alt="" loading="lazy"></div>
-  <img class="ftr-fx ftr-fx-v" src="img/glow-violet.webp" alt="" aria-hidden="true" loading="lazy">
-  <img class="ftr-fx ftr-fx-p" src="img/glow-plum.webp" alt="" aria-hidden="true" loading="lazy">
+  <div class="ftr-art" aria-hidden="true"><img src="img/ftr-club.webp" srcset="img/m/ftr-club.webp 860w, img/ftr-club.webp 2400w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 2400px" alt="" loading="lazy"></div>
+  <img class="ftr-fx ftr-fx-v" src="img/glow-violet.webp" srcset="img/m/glow-violet.webp 760w, img/glow-violet.webp 1458w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 1458px" alt="" aria-hidden="true" loading="lazy">
+  <img class="ftr-fx ftr-fx-p" src="img/glow-plum.webp" srcset="img/m/glow-plum.webp 760w, img/glow-plum.webp 1408w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 1408px" alt="" aria-hidden="true" loading="lazy">
   <span class="ftr-bill ftr-bill-1" aria-hidden="true"><img src="img/hero-bill.webp" alt="" loading="lazy"></span>
   <span class="ftr-bill ftr-bill-2" aria-hidden="true"><img src="img/hero-bill-2.webp" alt="" loading="lazy"></span>
 
   <div class="ftr-stage">
     <span class="hero-kicker">Nov 19, 2026 · PS5 · Xbox Series X|S</span>
-    <h2 class="ftr-t">See you in Vice City.</h2>
+    <h2 class="ftr-t">See you in <br class="mb">Vice City.</h2>
     <p class="ftr-lead">The map, the tracker and every fact-checked story — ready before you land.</p>
     <div class="cd" data-countdown aria-label="Time until launch">
       <span class="cd-i"><b data-u="d">22</b><span>days</span></span><i>:</i>
@@ -231,7 +256,6 @@
   </div>
 </footer>
 
-<script src="js/vendor/lenis.min.js"></script>
 <script src="js/site.js"></script>
 <script src="js/v2.js"></script>
 </body>
