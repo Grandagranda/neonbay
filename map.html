@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-  <meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="noindex, nofollow">
 <title>Interactive Vice City map — NeonBay</title>
 <meta name="description" content="Weapon shops, vehicles, safehouses, collectibles and secrets across Vice City and Leonida — on one map.">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -53,8 +53,6 @@
       <a href="index.html" data-nav="home">Home</a>
       <a href="news.html" data-nav="news">News</a>
       <a href="map.html" data-nav="map" class="is-active" aria-current="page">Map</a>
-      <a href="#" data-nav="guides">Guides</a>
-      <a href="#" data-nav="achievements">Achievements</a>
     </nav>
     <div class="hdr-tools">
       <div class="lang" role="group" aria-label="Language">
@@ -74,8 +72,6 @@
       <a class="m-link" href="index.html" data-nav="home">Home</a>
       <a class="m-link" href="news.html" data-nav="news">News</a>
       <a class="m-link is-active" href="map.html" data-nav="map" aria-current="page">Map</a>
-      <a class="m-link" href="#" data-nav="guides">Guides</a>
-      <a class="m-link" href="#" data-nav="achievements">Achievements</a>
     </div>
     <div class="mnav-foot">
       <div class="mnav-count" data-countdown>
@@ -113,6 +109,7 @@
   <symbol id="b-clothes" viewBox="0 0 24 24"><path class="bf" d="M8.2 4 3.8 6.3 2.3 11l3.2 1.4 1.4-2.1V20h10.2v-9.7l1.4 2.1 3.2-1.4-1.5-4.7L15.8 4c-.5 1.6-2 2.6-3.8 2.6S8.7 5.6 8.2 4Z"/></symbol>
   <symbol id="b-tuning" viewBox="0 0 24 24"><path class="bf" d="M15 3.2a5 5 0 0 0-4.7 6.7l-6.9 6.9a1.8 1.8 0 0 0 0 2.6l1.2 1.2a1.8 1.8 0 0 0 2.6 0l6.9-6.9a5 5 0 0 0 6.6-5.7l-3.1 3.1-2.9-.8-.8-2.9 3.1-3.1a5 5 0 0 0-2-.1Z"/></symbol>
   <symbol id="b-gas" viewBox="0 0 24 24"><path class="bs" d="M5 20.5V4.5h9v16 M3.5 20.5h12 M7.2 7.5h4.6v3.5H7.2z M14 9h2.2l2.3 2.3v6.2a1.3 1.3 0 0 0 2.6 0V9.4L18.4 6.6"/></symbol>
+  <symbol id="b-food" viewBox="0 0 24 24"><path class="bs" d="M7 3v18 M4 3v5a3 3 0 0 0 6 0V3 M17 21v-7 M17 14c-2.200 0-3.200-1.800-3.200-5.200C13.800 5.200 15.200 3 17 3Z"/></symbol>
   <symbol id="b-safehouse" viewBox="0 0 24 24"><path class="bs" d="M3 11.2 12 4l9 7.2 M5.5 9.5V20h13V9.5 M10 20v-5.2h4V20"/></symbol>
   <symbol id="b-property" viewBox="0 0 24 24"><circle class="bs" cx="7.5" cy="12" r="3.8"/><path class="bs" d="M11.3 12H21 M18 12v3 M21 12v2.4"/></symbol>
   <!-- Vehicles -->
@@ -133,8 +130,6 @@
   <symbol id="b-business" viewBox="0 0 24 24"><path class="bs" d="M16.2 7.6C15.6 6 14 5 12 5c-2.6 0-4.2 1.4-4.2 3.2s1.6 2.7 4.2 3.1c2.6.4 4.2 1.3 4.2 3.2S14.8 18 12 18c-2.1 0-3.7-1-4.2-2.6 M12 2.8v18.4"/></symbol>
   <symbol id="b-heist" viewBox="0 0 24 24"><path class="bs" d="M4.5 9.5C4.5 5.4 7.8 3 12 3s7.5 2.4 7.5 6.5V16c0 2.8-3 5-7.5 5s-7.5-2.2-7.5-5Z M7 10.5h3.6M13.4 10.5H17 M9.5 16h5"/></symbol>
   <!-- служебные -->
-  <symbol id="b-waypoint" viewBox="0 0 24 24"><path class="bf" d="M12 2.5c-4 0-7 3-7 6.9 0 5 7 12.1 7 12.1s7-7.1 7-12.1c0-3.9-3-6.9-7-6.9Z"/><circle cx="12" cy="9.4" r="2.6" fill="#130b1d"/></symbol>
-  <symbol id="b-you" viewBox="0 0 24 24"><path class="bf" d="M12 2.5 19.5 21 12 16.8 4.5 21Z"/></symbol>
 </svg>
 
 
@@ -154,7 +149,6 @@
       <img class="lay-neon" src="img/map-neon.webp" srcset="img/m/map/neon.webp 1668w, img/map-neon.webp 3336w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 3336px" alt="Vice City and the state of Leonida" draggable="false">
       <img class="lay-atlas" alt="" draggable="false">
       <div class="tiles" id="tiles" aria-hidden="true" hidden></div>
-      <svg class="route" id="route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><line id="routeGlow" x1="0" y1="0" x2="0" y2="0"/><line id="routeLine" x1="0" y1="0" x2="0" y2="0"/></svg>
       <div class="blips" id="blips"></div>
       <div class="labels" id="labels"></div>
     </div>
@@ -176,24 +170,16 @@
         <div class="lg-res" id="res" role="listbox" aria-label="Places" hidden></div>
       </div>
       <div class="lg-region" id="rgChip" hidden><i></i><span id="rgName">Vice City</span><span class="lg-region-n" id="rgN"></span><button type="button" aria-label="Show the whole map"><svg><use href="#i-x"/></svg></button></div>
-      <div class="lg-quick"><button type="button" data-all="on">Show all</button><button type="button" data-all="off">Hide all</button><span class="lg-count"><b id="shown">0</b> on map</span></div>
+      <div class="lg-quick" role="group" aria-label="Point type"><button type="button" data-all="all" class="is-on">All</button><button type="button" data-all="col"><i class="kd kd-col"></i>Collectibles</button><button type="button" data-all="place"><i class="kd"></i>Places</button><span class="lg-count"><b id="shown">0</b> on map</span></div>
     </div>
     <div class="lg-list" id="list"></div>
     <p class="lg-note"><span class="dot"></span>Real points go live in <b data-countdown><span data-u="short">22d 21h</span></b></p>
   </aside>
 
-  <!-- ВЕРХНЯЯ СТРОКА: подсказки клавиш и навигатор, когда стоит метка пути -->
+  <!-- ВЕРХНЯЯ СТРОКА: подсказки клавиш -->
   <div class="bar">
     <div class="keys">
-      <span><kbd>Drag</kbd>Move</span><span><kbd>Scroll</kbd>Zoom</span><span><kbd>/</kbd>Search</span><span><kbd>W</kbd>Waypoint</span><span><kbd>L</kbd>Find me</span><span><kbd>Esc</kbd>Close</span>
-    </div>
-    <div class="gps" id="gps" hidden>
-      <span class="gps-ic"><svg><use href="#b-waypoint"/></svg></span>
-      <span class="gps-t"><span class="gps-k">GPS route</span><b id="gpsName">Ammu-Nation</b></span>
-      <span class="gps-d"><b id="gpsKm">2.4</b><span id="gpsUnit">km</span></span>
-      <span class="gps-d"><b id="gpsMin">3</b><span>min</span></span>
-      <button class="gps-go" type="button" id="gpsGo" aria-label="Show waypoint"><svg><use href="#i-arrow"/></svg></button>
-      <button class="gps-x" type="button" id="gpsX" aria-label="Remove waypoint"><svg><use href="#i-x"/></svg></button>
+      <span><kbd>Drag</kbd>Move</span><span><kbd>Scroll</kbd>Zoom</span><span><kbd>/</kbd>Search</span><span><kbd>Esc</kbd>Close</span>
     </div>
   </div>
 
@@ -201,11 +187,9 @@
   <div class="ov" id="ov" role="button" tabindex="0" aria-label="Overview — click to move the map">
     <img src="img/map-neon.webp" srcset="img/m/map-neon-s.webp 860w, img/map-neon.webp 3336w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 3336px" alt="" draggable="false" loading="lazy">
     <i class="ov-view" id="ovView"></i>
-    <i class="ov-you"></i>
-    <i class="ov-wp" id="ovWp" hidden></i>
   </div>
 
-  <!-- ЗУМ, «ГДЕ Я» И СТИЛЬ КАРТЫ -->
+  <!-- ЗУМ И СТИЛЬ КАРТЫ -->
   <div class="ctrl">
     <div class="zoom">
       <button type="button" data-z="in" title="Zoom in (+)"><svg><use href="#i-plus"/></svg></button>
@@ -213,7 +197,6 @@
       <button type="button" data-z="out" title="Zoom out (−)"><svg><use href="#i-minus"/></svg></button>
       <button type="button" data-z="fit" title="Whole map (F)"><svg><use href="#i-fit"/></svg></button>
     </div>
-    <button class="locate" type="button" id="locate" title="Find me (L)"><svg><use href="#b-you"/></svg></button>
     <div class="mode" role="group" aria-label="Map style">
       <button type="button" class="is-on" data-mode="neon">Neon</button><button type="button" data-mode="atlas">Atlas</button>
     </div>
@@ -242,14 +225,14 @@
         <h2 class="info-name" id="iName">Ammu-Nation</h2>
       </div>
     </div>
-    <div class="info-where"><svg><use href="#i-pin"/></svg><span id="iWhere">Vice City · Downtown</span><span class="info-dist" id="iDist">1.2 km</span></div>
-    <p class="info-txt" id="iTxt"></p>
-    <div class="info-meta"><span id="iXY">X 0 · Y 0</span><span>Spot confirmed on launch day</span></div>
+    <figure class="info-shot"><img id="iShot" alt="" decoding="async"></figure>
+    <div class="info-where"><svg><use href="#i-pin"/></svg><span id="iWhere">Vice City · Downtown</span></div>
     <div class="info-act">
-      <button class="info-wp" type="button" id="wpBtn"><svg><use href="#b-waypoint"/></svg><span>Set waypoint</span></button>
       <a class="info-fd" href="login.html"><svg><use href="#i-check"/></svg>Mark found</a>
-      <button class="info-link" type="button" id="linkBtn" title="Copy link to this place" aria-label="Copy link to this place"><svg><use href="#i-link"/></svg></button>
+      <button class="info-link" type="button" id="linkBtn" title="Copy link to this place" aria-label="Copy link to this place"><svg><use href="#i-link"/></svg><span>Copy link</span></button>
     </div>
+    <p class="info-txt" id="iTxt"></p>
+    <div class="info-meta"><span id="iXY">X 0 · Y 0</span><span>In-game screenshot on launch day</span></div>
     <div class="info-near">
       <span class="info-h">Nearby</span>
       <ul id="iNear"></ul>

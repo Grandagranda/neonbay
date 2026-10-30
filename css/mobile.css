@@ -482,6 +482,15 @@ h1, h2, h3, .display { font-style: normal; font-weight: 600; letter-spacing: -.0
 .tog, .set-row { min-height: 48px; gap: 14px; }
 .set-row .btn { height: 42px; border-radius: 30px; }
 .danger { min-height: 44px; }
+.arts { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+.set.art-form .chips { display: grid; grid-template-columns: repeat(2, 1fr); }
+.ava-row { flex-wrap: wrap; gap: 12px 14px; }
+.ava-txt { flex: 1; }
+.ava-acts { width: 100%; margin: 0; }
+.ava-acts .btn { flex: 1; height: 42px; border-radius: 30px; }
+.pw { padding: calc(14 * var(--m)); }
+.pw .set-foot { flex-wrap: wrap; }
+.pw .set-foot .btn { height: 46px; padding: 0 22px; border-radius: 30px; }
 
 /* самые низкие окна: лид уступает место героям, в меню — отсчёт */
 @media (orientation: portrait) and (max-height: 500px) { .hero-lead, .mnav-count { display: none; } }

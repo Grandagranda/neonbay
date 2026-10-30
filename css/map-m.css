@@ -4,7 +4,7 @@
    Без backdrop-filter и больших анимированных свечений: под панелями движется карта, а размытие и слои 1500 px — это память и кадры телефона. */
 
 .atlas { --pad: 8px; --top: calc(64px + var(--st)); --gap: 8px; --lg-w: 286px; --info-w: 306px; --sheet: 0px; --glass: rgba(18, 9, 32, .9); }
-.glass, .legend, .gps, .keys, .ov, .rg, .info, .zoom, .mode, .locate { backdrop-filter: none; -webkit-backdrop-filter: none; }
+.glass, .legend, .keys, .ov, .rg, .info, .zoom, .mode { backdrop-filter: none; -webkit-backdrop-filter: none; }
 
 /* шапка — стеклянная полоса с отступом, как на ПК */
 .is-app .hdr { inset: calc(8px + var(--st)) calc(8px + var(--sr)) auto calc(8px + var(--sl)); height: 50px; padding-top: 0; border-radius: 16px; background: rgba(18, 9, 32, .95); backdrop-filter: none; -webkit-backdrop-filter: none; }
@@ -46,14 +46,6 @@ html:has(.is-app) { overscroll-behavior: none; } /* без «оттягиван�
 .keys, .ov, .zoom-v, .lg-search kbd { display: none; }
 .bar { left: calc(var(--pad) + var(--lg-w) + var(--gap)); right: var(--pad); top: var(--top); }
 
-/* навигатор: полоса на всю ширину свободного поля */
-.gps { flex: 1; min-width: 0; height: 56px; gap: 10px; padding: 0 6px 0 7px; border-radius: 16px; background: rgba(22, 10, 38, .94); }
-.gps-t { flex: 1; min-width: 0; max-width: none; }
-.gps-k { letter-spacing: .2em; }
-.gps-d { gap: 2px; padding-left: 9px; }
-.gps-d b { font-size: 24px; }
-.gps .gps-go { display: none; }
-.gps button { width: 40px; height: 40px; }
 
 /* правая колонка: приближение, весь остров, «где я», стиль */
 .ctrl { right: calc(var(--pad) + var(--sr)); top: auto; bottom: 8px; transform: none; gap: 6px; }
@@ -61,7 +53,6 @@ html:has(.is-app) { overscroll-behavior: none; } /* без «оттягиван�
 .zoom, .mode { width: 44px; padding: 2px; border-radius: 14px; background: rgba(18, 9, 32, .9); }
 .zoom button { width: 40px; height: 40px; }
 .zoom button[data-z="fit"] { height: 40px; }
-.locate { width: 44px; height: 44px; border-radius: 14px; background: rgba(18, 9, 32, .9); }
 .mode button { width: 40px; height: 40px; font-size: 11px; }
 
 /* подпись района: в углу, меньше */
@@ -90,7 +81,6 @@ html:has(.is-app) { overscroll-behavior: none; } /* без «оттягиван�
 .rg.is-on { background: linear-gradient(90deg, var(--g0), var(--g1)); border-color: transparent; }
 .rg.is-on::before { background: #fff; box-shadow: none; }
 .rg.is-on .rg-name, .rg.is-on .rg-meta b { color: #1a0712; }
-.atlas.has-gps .regions { display: none; }
 
 /* легенда — левая панель; прокручивается вся, а не только список */
 .legend { left: calc(var(--pad) + var(--sl)); top: var(--top); bottom: 8px; padding: 14px 0 0 14px; border-radius: 18px; }
@@ -104,7 +94,10 @@ html:has(.is-app) { overscroll-behavior: none; } /* без «оттягиван�
 .lg-res { left: 0; right: 0; }
 .lg-res button { height: 54px; }
 .lg-quick { padding: 6px 0 4px; }
+.lg-quick { gap: 16px; }
 .lg-quick button { min-height: 40px; font-size: 13.5px; }
+.lg-quick [data-all="all"] { min-width: 44px; }
+.lg-cap { font-size: 11.5px; padding-top: 12px; }
 .lg-list { padding: 0 14px 50px 0; overscroll-behavior: contain; }
 .legend::after { display: none; }
 .lg-note { position: static; margin: 10px 0 0; font-size: 12.5px; }
@@ -114,6 +107,7 @@ html:has(.is-app) { overscroll-behavior: none; } /* без «оттягиван�
 .lg-i { height: 44px; }
 .has-info .legend { display: none; }
 .has-info .bar, .has-info .regions, .has-info .hud { left: var(--pad); }
+.has-info .credit { opacity: 0; }
 
 /* карточка места — правая панель */
 .info { top: var(--top); right: calc(var(--pad) + var(--sr)); max-height: calc(100% - var(--top) - 8px); padding: 18px 16px 14px; border-radius: 18px; background: #170c28; overflow-y: auto; overscroll-behavior: contain; }
@@ -127,8 +121,9 @@ html:has(.is-app) { overscroll-behavior: none; } /* без «оттягиван�
 .info-name { margin-top: 3px; font-size: 23px; line-height: 1.1; letter-spacing: .1px; }
 .info-where { margin-top: 12px; height: 42px; font-size: 13.5px; min-width: 0; }
 .info-where span:first-of-type { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-.info-dist { flex: none; }
-.info-act { order: 3; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) 48px; margin-top: 12px; }
+.info-shot { order: 1; margin-top: 12px; max-height: 26svh; border-radius: 12px; }
+.info-where { order: 4; }
+.info-act { order: 3; grid-template-columns: minmax(0, 1fr) 48px; margin-top: 12px; }
 .info-act > * { height: 48px; padding: 0 6px; font-size: 14px; }
 .info-txt { order: 4; margin-top: 14px; font-size: 15px; line-height: 1.5; }
 .info-meta { order: 5; margin-top: 10px; font-size: 12px; }
@@ -185,6 +180,7 @@ html:has(.is-app) { overscroll-behavior: none; } /* без «оттягиван�
 }
 /* низкое окно: с открытой карточкой карте остаётся мало места, кнопки и подпись района убираются */
 @media (orientation: portrait) and (max-width: 640px) and (max-height: 600px) {
+  .has-info .credit { opacity: 1; }
   .has-info .ctrl, .has-info .hud { display: none; }
 }
 

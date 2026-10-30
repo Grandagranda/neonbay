@@ -1,4 +1,4 @@
-// Карта Леониды: панорама/зум, блипы, легенда-фильтр, поиск мест с подсказками, карточка места, метка пути с навигатором,
+// Карта Леониды: панорама/зум, блипы (коллекционные и обычные места), легенда-фильтр, поиск мест с подсказками, карточка места со скрином,
 // обзорная мини-карта, подпись района как в GTA, открытки регионов с фокусом на регион.
 // Телефон: щипок, инерция, выбор ближайшей точки касанием, нижние листы вместо панелей, плитки полного разрешения при приближении.
 (() => {
@@ -14,6 +14,8 @@
   D.groups.forEach(g => { GROUP[g.id] = g; g.subs.forEach(([k, name, total, desc]) => { SUB[k] = { k, name, total, desc, g: g.id }; }); });
   const REG = Object.fromEntries(D.regions.map(r => [r.id, r]));
   const off = new Set(); // выключенные типы
+  const KEYS = { col: D.groups.filter(g => g.track), place: D.groups.filter(g => !g.track) };
+  Object.keys(KEYS).forEach(t => { KEYS[t] = KEYS[t].flatMap(g => g.subs.map(s => s[0])); });
   const icon = (k, cls = '') => `<svg class="${cls}"><use href="#b-${k}"/></svg>`;
   const km = (a, b) => Math.hypot((a[0] - b[0]) / 100 * KM_X, (a[1] - b[1]) / 100 * KM_Y);
   const fmtKm = d => d < 1 ? Math.round(d * 1000 / 10) * 10 + ' m' : d.toFixed(1) + ' km';
@@ -33,17 +35,15 @@
   const START = [64, 46];
   const pins = (window.PINS || []).map((p, i) => {
     const s = SUB[p.k], b = document.createElement('button');
-    b.type = 'button'; b.className = 'bp'; b.dataset.cat = s.g; b.dataset.k = p.k;
+    b.type = 'button'; b.className = GROUP[s.g].track ? 'bp is-col' : 'bp'; b.dataset.cat = s.g; b.dataset.k = p.k;
     b.style.left = p.x + '%'; b.style.top = p.y + '%';
     b.style.setProperty('--dl', (.25 + Math.min(1.1, Math.hypot(p.x - START[0], (p.y - START[1]) * D.aspect) * .022)).toFixed(2) + 's');
     b.setAttribute('aria-label', `${p.n} · ${s.name}`);
-    b.innerHTML = icon(p.k) + `<b>${p.n}<i>${s.name}</i></b>`;
+    // телефон открывается на всём острове точками: значки не нужны, пока не приблизили
+    if (!MOB) b.innerHTML = icon(p.k) + `<b>${p.n}<i>${s.name}</i></b>`;
     blipsEl.appendChild(b);
     return { ...p, i, s, el: b };
   });
-  const you = document.createElement('span'); you.className = 'you'; you.innerHTML = icon('you');
-  you.style.left = D.you[0] + '%'; you.style.top = D.you[1] + '%'; blipsEl.appendChild(you);
-  const wp = document.createElement('span'); wp.className = 'wp'; wp.hidden = true; wp.innerHTML = icon('waypoint'); blipsEl.appendChild(wp);
 
   // подписи регионов и ориентиров
   $('#labels').innerHTML =
@@ -52,14 +52,16 @@
 
   // ---- легенда ----
   const countK = k => pins.filter(p => p.k === k).length;
-  $('#list').innerHTML = D.groups.map(g => {
+  const groupRow = g => {
     const n = g.subs.reduce((s, [k]) => s + countK(k), 0);
     return `<div class="lg-g" data-cat="${g.id}" data-g="${g.id}">
       <button class="lg-gh" type="button" title="Show / hide group"><span>${g.name}</span><span class="mono">${g.track ? `0/${n}` : n}</span></button>
       ${g.subs.map(([k, name, total]) => `<button class="lg-i" type="button" data-k="${k}" data-name="${name.toLowerCase()}" title="Show / hide">
         <span class="mini">${icon(k)}</span>${name}<span class="mono">${total ? `0/${countK(k)} <i>· ${total}</i>` : countK(k)}</span></button>`).join('')}
     </div>`;
-  }).join('');
+  };
+  const part = (name, cls, gs) => `<div class="lg-part"><p class="lg-cap"><i class="kd ${cls}"></i>${name}</p>${gs.map(groupRow).join('')}</div>`;
+  $('#list').innerHTML = part('Collectibles', 'kd-col', D.groups.filter(g => g.track)) + part('Places', '', D.groups.filter(g => !g.track));
 
   // приглушение: поиск по тексту и фокус на регионе действуют вместе
   let q = '', focus = null, hoverK = null;
@@ -70,6 +72,7 @@
     pins.forEach(p => { const h = hit(p); p.el.classList.toggle('is-dim', !h || (hoverK && p.k !== hoverK)); if (h) ks.add(p.k); });
     document.querySelectorAll('.lg-i').forEach(i => i.hidden = !!q && !ks.has(i.dataset.k));
     document.querySelectorAll('.lg-g').forEach(g => g.hidden = !!q && !g.querySelector('.lg-i:not([hidden])'));
+    document.querySelectorAll('.lg-part').forEach(g => g.hidden = !!q && !g.querySelector('.lg-g:not([hidden])'));
   };
   const refresh = () => {
     let shown = 0;
@@ -77,6 +80,8 @@
     $('#shown').textContent = shown;
     document.querySelectorAll('.lg-i').forEach(i => i.classList.toggle('is-off', off.has(i.dataset.k)));
     document.querySelectorAll('.lg-g').forEach(g => g.querySelector('.lg-gh').classList.toggle('is-off', GROUP[g.dataset.g].subs.every(([k]) => off.has(k))));
+    const only = t => off.size === KEYS[t === 'col' ? 'place' : 'col'].length && KEYS[t].every(k => !off.has(k));
+    document.querySelectorAll('.lg-quick [data-all]').forEach(b => b.classList.toggle('is-on', b.dataset.all === 'all' ? !off.size : only(b.dataset.all)));
   };
   $('#list').addEventListener('click', e => {
     const it = e.target.closest('.lg-i'), gh = e.target.closest('.lg-gh');
@@ -95,7 +100,8 @@
   }
   document.querySelector('.lg-quick').addEventListener('click', e => {
     const b = e.target.closest('[data-all]'); if (!b) return;
-    if (b.dataset.all === 'on') off.clear(); else Object.keys(SUB).forEach(k => off.add(k));
+    off.clear();
+    if (b.dataset.all !== 'all') KEYS[b.dataset.all === 'col' ? 'place' : 'col'].forEach(k => off.add(k));
     refresh();
   });
 
@@ -106,11 +112,11 @@
     if (!q) { res.hidden = true; return; }
     const w = s => s.toLowerCase().startsWith(q) ? 0 : 1;
     found = pins.filter(p => !off.has(p.k) && hit(p))
-      .sort((a, b) => w(a.n) - w(b.n) || km([a.x, a.y], D.you) - km([b.x, b.y], D.you)).slice(0, 6);
+      .sort((a, b) => w(a.n) - w(b.n) || a.n.localeCompare(b.n)).slice(0, 6);
     act = 0;
     res.innerHTML = found.length
       ? found.map((p, j) => `<button type="button" role="option" data-i="${p.i}" data-cat="${p.s.g}" class="${j ? '' : 'is-act'}"><span class="mini">${icon(p.k)}</span>
-          <span class="t"><b>${p.n}</b><span>${p.s.name} · ${REG[p.r].name}</span></span><span class="d">${fmtKm(km([p.x, p.y], D.you))}</span></button>`).join('')
+          <span class="t"><b>${p.n}</b><span>${p.s.name} · ${REG[p.r].name}</span></span></button>`).join('')
       : `<p class="empty">Nothing on the map matches “${qIn.value.trim()}”.</p>`;
     res.hidden = false;
   };
@@ -164,7 +170,7 @@
     ovView.style.cssText = `left:${(cl * 100).toFixed(2)}%;top:${(ct * 100).toFixed(2)}%;width:${Math.max(0, (cr - cl) * 100).toFixed(2)}%;height:${Math.max(0, (cb - ct) * 100).toFixed(2)}%`;
     ov.classList.toggle('is-whole', vw >= 1 && vh >= 1);
   };
-  let izOf = 0, hudT = 0, frame = 0;
+  let izOf = 0, hudT = 0, frame = 0, iconsOn = false;
   const apply = () => {
     if (MOB) { // остров не уводим из окна: центр экрана всегда над картой
       const W = stage.clientWidth, H = stage.clientHeight, mw = WW * z, mh = WH * z;
@@ -178,6 +184,7 @@
       const rel = z / fitZ;
       world.classList.toggle('is-far', rel < 1.7);
       world.classList.toggle('is-near', rel >= 1.7);
+      if (MOB && rel >= 1.7 && !iconsOn) { iconsOn = true; pins.forEach(p => { p.el.innerHTML = icon(p.k); }); }
       world.classList.toggle('is-close', rel >= 3.4);
       $('#zl').textContent = rel.toFixed(1) + '×';
     }
@@ -190,6 +197,7 @@
   // ---- плитки: основа 1668 px лёгкая, но при приближении мылит; поверх подгружается полное разрешение, только видимая часть ----
   const tilesEl = $('#tiles'), TC = 4, TR = 6, live = new Map();
   const tiles = () => {
+    if (MOB && shot.getAttribute('src') && !shot.complete) { shot.addEventListener('load', tiles, { once: true }); return; } // сначала кадр карточки, потом плитки
     const on = z * WW * Math.min(devicePixelRatio || 1, 3) > 1668 * 1.1, style = document.body.dataset.mode;
     tilesEl.hidden = !on;
     const want = new Set();
@@ -202,7 +210,7 @@
     want.forEach(k => {
       if (live.has(k)) return;
       const [, r, c] = k.split('-').map(Number), im = new Image();
-      im.className = 'tile'; im.alt = ''; im.decoding = 'async';
+      im.className = 'tile'; im.alt = ''; im.decoding = 'async'; im.fetchPriority = 'low';
       im.style.cssText = `left:${c / TC * 100}%;top:${r / TR * 100}%;width:${100 / TC + .03}%;height:${100 / TR + .03}%`;
       im.onload = () => im.classList.add('is-on');
       im.src = `img/m/map/${k}.webp`;
@@ -228,8 +236,6 @@
     if (b.dataset.z === 'fit') { setRegion(null); return fit(true); }
     zoomAt(...center(), b.dataset.z === 'in' ? 1.6 : 1 / 1.6, true);
   });
-  const findMe = () => flyTo(D.you[0], D.you[1], Math.max(z, fitZ * 3));
-  $('#locate').addEventListener('click', findMe);
   // один палец — панорама с инерцией, два — масштаб вокруг точки между ними; касание — ближайшая точка, двойное касание — приближение
   let drag = null, pinch = null, glide = 0, lastTap = { t: 0, x: 0, y: 0 };
   const touches = new Map();
@@ -319,7 +325,10 @@
   ov.addEventListener('pointerup', () => { ovDrag = false; });
 
   // ---- карточка места ----
-  let cur = null, wpPin = null;
+  let cur = null;
+  const shot = $('#iShot'), shotBox = shot.parentElement;
+  shot.fetchPriority = 'high';
+  shot.addEventListener('load', () => shotBox.classList.add('is-on'));
   function open(p, fly = true) {
     if (cur) cur.el.classList.remove('is-on');
     if (off.has(p.k)) { off.delete(p.k); refresh(); }
@@ -328,17 +337,21 @@
     $('#iBlip').innerHTML = icon(p.k);
     $('#iCat').textContent = `${GROUP[p.s.g].name} · ${p.s.name}`;
     $('#iName').textContent = p.n;
+    // кадр грузится только при открытии карточки; место под него занято заранее, лист не прыгает
+    const src = D.spot(p, p.i, MOB);
+    if (shot.getAttribute('src') !== src) { shotBox.classList.remove('is-on'); shot.src = src; }
+    shot.alt = `Where to find ${p.n}`;
+    info.classList.toggle('is-place', !GROUP[p.s.g].track);
     const lm = nearestLandmark(p.x, p.y);
     $('#iWhere').textContent = REG[p.r].name + (lm[1] < 60 ? ` · near ${lm[0]}` : '');
-    $('#iDist').textContent = fmtKm(km([p.x, p.y], D.you)) + ' away';
     $('#iTxt').textContent = p.s.desc;
     $('#iXY').textContent = gxy(p.x, p.y);
     $('#iNear').innerHTML = pins.filter(o => o !== p && !off.has(o.k))
       .map(o => [o, km([p.x, p.y], [o.x, o.y])]).sort((a, b) => a[1] - b[1]).slice(0, 4)
       .map(([o, d]) => `<li><button type="button" data-i="${o.i}" data-cat="${o.s.g}"><span class="mini">${icon(o.k)}</span>${o.n}<span class="mono">${fmtKm(d)}</span></button></li>`).join('');
-    setWpBtn();
     info.hidden = false; atlas.classList.add('has-info');
-    if (sheets()) { info.scrollTop = 0; info.classList.add('is-open'); sheetL.go(0, false); sheetI.go(0); setSheetVar(); }
+    info.scrollTop = 0;
+    if (sheets()) { info.classList.add('is-open'); sheetL.go(0, false); sheetI.go(0); setSheetVar(); }
     else requestAnimationFrame(() => info.classList.add('is-open'));
     history.replaceState(null, '', '#p' + p.i);
     if (fly) flyTo(p.x, p.y, Math.max(z, fitZ * 2.4));
@@ -361,35 +374,6 @@
     const u = location.href, ok = () => say('Link to ' + cur.n + ' copied');
     navigator.clipboard ? navigator.clipboard.writeText(u).then(ok, ok) : ok();
   });
-
-  // ---- метка пути: маршрут от игрока и навигатор сверху (расстояние и время в пути на машине) ----
-  const route = $('#route'), lines = [$('#routeLine'), $('#routeGlow')], gps = $('#gps'), ovWp = $('#ovWp');
-  function setWpBtn() {
-    const on = cur && wpPin === cur, b = $('#wpBtn');
-    b.classList.toggle('is-set', on);
-    b.querySelector('span').textContent = on ? 'Remove waypoint' : 'Set waypoint';
-  }
-  function setWp(p) {
-    wpPin = p;
-    atlas.classList.toggle('has-gps', !!p);
-    if (!p) { wp.hidden = true; route.classList.remove('is-on'); gps.hidden = true; ovWp.hidden = true; setWpBtn(); return; }
-    wp.hidden = false; wp.style.left = p.x + '%'; wp.style.top = p.y + '%';
-    wp.style.animation = 'none'; void wp.offsetWidth; wp.style.animation = '';
-    lines.forEach(l => { l.setAttribute('x1', D.you[0]); l.setAttribute('y1', D.you[1]); l.setAttribute('x2', p.x); l.setAttribute('y2', p.y); });
-    route.classList.add('is-on');
-    const d = km([p.x, p.y], D.you);
-    $('#gpsName').textContent = p.n;
-    $('#gpsKm').textContent = d < 1 ? Math.round(d * 1000 / 10) * 10 : d.toFixed(1);
-    $('#gpsUnit').textContent = d < 1 ? 'm' : 'km';
-    $('#gpsMin').textContent = Math.max(1, Math.round(d / 60 * 60 * 1.35)); // по прямой ×1,35 — дороги петляют, 60 км/ч
-    gps.hidden = false; gps.classList.remove('is-in'); void gps.offsetWidth; gps.classList.add('is-in');
-    ovWp.hidden = false; ovWp.style.left = p.x + '%'; ovWp.style.top = p.y + '%';
-    setWpBtn();
-  }
-  const toggleWp = () => { if (cur) setWp(wpPin === cur ? null : cur); };
-  $('#wpBtn').addEventListener('click', toggleWp);
-  $('#gpsX').addEventListener('click', () => setWp(null));
-  $('#gpsGo').addEventListener('click', () => wpPin && open(wpPin));
 
   // ---- открытки регионов: перелёт и фокус — точки вне региона гаснут, в легенде — чип региона ----
   const cards = $('#cards'), chip = $('#rgChip');
@@ -442,8 +426,6 @@
     if (e.ctrlKey || e.metaKey || e.altKey) return;
     if (e.key === '/') { e.preventDefault(); qIn.focus(); }
     else if (e.key === 'Escape') { if (cur) close(); else if (focus) setRegion(null); }
-    else if (e.code === 'KeyW') toggleWp();
-    else if (e.code === 'KeyL') findMe();
     else if (e.code === 'KeyF') { setRegion(null); fit(true); }
     else if (e.key === '+' || e.key === '=') zoomAt(...center(), 1.4, true);
     else if (e.key === '-') zoomAt(...center(), 1 / 1.4, true);
@@ -471,6 +453,8 @@
       if (onstop) onstop(i);
     };
     grabs.forEach(g => {
+      // без этого браузер считает жест прокруткой, и касание сразу после броска листа не становится кликом
+      g.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
       g.addEventListener('pointerdown', e => {
         if (e.target.closest('a, button, input')) return;
         const s = stops();

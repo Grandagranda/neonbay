@@ -16,7 +16,7 @@
   D.regions.forEach(r => { REG[r.id] = r; });
   const icon = k => `<svg><use href="#b-${k}"/></svg>`;
   const off = new Set(), found = new Set();
-  let q = '', sel = null, wp = null;
+  let q = '', sel = null;
 
   // телефон: заставка вместо живой карты — весь остров, блипы точками, переход на полную карту; ниже лента регионов.
   // Точки строятся на подходе к блоку: первому экрану они не нужны
@@ -46,17 +46,15 @@
   const blips = $('.mm-blips');
   const pins = (window.PINS || []).map((p, i) => {
     const s = SUB[p.k], el = document.createElement('button');
-    el.type = 'button'; el.className = 'mm-bp'; el.dataset.cat = s.g.id;
+    el.type = 'button'; el.className = s.g.track ? 'mm-bp is-col' : 'mm-bp'; el.dataset.cat = s.g.id;
     el.style.left = p.x + '%'; el.style.top = p.y + '%';
     el.innerHTML = icon(p.k) + `<b>${p.n}</b>`; el.setAttribute('aria-label', p.n);
     blips.appendChild(el);
     return { ...p, i, s, el };
   });
-  const you = document.createElement('span'); you.className = 'mm-you'; you.innerHTML = icon('you');
-  you.style.left = D.you[0] + '%'; you.style.top = D.you[1] + '%'; blips.appendChild(you);
 
-  // легенда: группы и типы, счётчики по точкам на карте
-  list.innerHTML = D.groups.map(g => {
+  // легенда: коллекционные и обычные места, в них группы и типы, счётчики по точкам на карте
+  const groupRow = g => {
     const rows = g.subs.map(([k, name, total]) => {
       const n = pins.filter(p => p.k === k).length;
       const meta = g.track ? `<span data-f="${k}">0</span>/${n} · ${total}` : n;
@@ -64,7 +62,10 @@
     }).join('');
     const n = pins.filter(p => p.s.g === g).length;
     return `<div class="mm-g" data-g="${g.id}" data-cat="${g.id}"><button class="mm-gh" type="button" data-gid="${g.id}"><span>${g.name}</span><i>${g.track ? `<span data-fg="${g.id}">0</span>/${n}` : n}</i></button>${rows}</div>`;
-  }).join('');
+  };
+  const part = (name, cls, gs) => `<div class="mm-part"><p class="mm-cap"><i class="kd ${cls}"></i>${name}</p>${gs.map(groupRow).join('')}</div>`;
+  list.innerHTML = part('Collectibles', 'kd-col', D.groups.filter(g => g.track)) + part('Places', '', D.groups.filter(g => !g.track));
+  const KEYS = t => D.groups.filter(g => !!g.track === (t === 'col')).flatMap(g => g.subs.map(s => s[0]));
 
   const match = p => !q || p.n.toLowerCase().includes(q) || p.s.name.toLowerCase().includes(q);
   const refresh = () => {
@@ -80,6 +81,9 @@
       g.hidden = rows.every(r => r.hidden);
       g.querySelector('.mm-gh').classList.toggle('is-off', rows.every(r => off.has(r.dataset.k)));
     });
+    list.querySelectorAll('.mm-part').forEach(s => { s.hidden = [...s.querySelectorAll('.mm-g')].every(g => g.hidden); });
+    const only = t => off.size === KEYS(t === 'col' ? 'place' : 'col').length && KEYS(t).every(k => !off.has(k));
+    mm.querySelectorAll('[data-all]').forEach(b => b.classList.toggle('is-on', b.dataset.all === 'all' ? !off.size : only(b.dataset.all)));
   };
   list.addEventListener('click', e => {
     const r = e.target.closest('.mm-i'), h = e.target.closest('.mm-gh');
@@ -92,7 +96,8 @@
     refresh();
   });
   mm.querySelectorAll('[data-all]').forEach(b => b.addEventListener('click', () => {
-    if (b.dataset.all === 'on') off.clear(); else Object.keys(SUB).forEach(k => off.add(k));
+    off.clear();
+    if (b.dataset.all !== 'all') KEYS(b.dataset.all === 'col' ? 'place' : 'col').forEach(k => off.add(k));
     refresh();
   }));
   $('[data-q]').addEventListener('input', e => { q = e.target.value.trim().toLowerCase(); refresh(); });
@@ -162,8 +167,6 @@
   }, { passive: false });
 
   // ---- карточка места ----
-  const dist = (a, b) => Math.hypot(a.x - b.x, (a.y - b.y) * D.aspect) / 100 * D.kmPerMap;
-  const fmt = km => km < 1 ? Math.round(km * 20) * 50 + ' m' : km.toFixed(1) + ' km';
   const syncFound = () => {
     $('[data-found]').textContent = found.size;
     $('[data-bar]').style.width = Math.max(1.5, found.size / 349 * 100) + '%';
@@ -172,7 +175,6 @@
     pins.forEach(p => p.el.classList.toggle('is-found', found.has(p.i)));
   };
   const syncActs = () => {
-    $('[data-wp] span').textContent = wp === sel ? 'Remove waypoint' : 'Set waypoint';
     const fd = $('[data-fd]'); fd.classList.toggle('is-on', found.has(sel.i));
     fd.querySelector('span').textContent = found.has(sel.i) ? 'Found' : 'Mark found';
   };
@@ -183,11 +185,12 @@
     card.querySelector('.mm-ic use').setAttribute('href', '#b-' + p.k);
     $('.mm-cat').textContent = `${p.s.g.name} · ${p.s.name}`;
     $('.mm-name').textContent = p.n;
+    const shot = $('[data-shot]'), src = D.spot(p, p.i);
+    if (shot.getAttribute('src') !== src) { shot.classList.remove('is-on'); shot.src = src; }
+    shot.alt = `Where to find ${p.n}`;
+    card.classList.toggle('is-place', !p.s.g.track);
     $('.mm-rg').textContent = (REG[p.r] || {}).name || 'Leonida';
-    $('.mm-dist').textContent = fmt(dist(p, { x: D.you[0], y: D.you[1] })) + ' away';
     $('.mm-desc').textContent = p.s.desc;
-    $('[data-near]').innerHTML = pins.filter(o => o !== p).sort((a, b) => dist(a, p) - dist(b, p)).slice(0, 4)
-      .map(o => `<li><button type="button" data-i="${o.i}" data-cat="${o.s.g.id}"><span class="mini">${icon(o.k)}</span>${o.n}<i>${fmt(dist(o, p))}</i></button></li>`).join('');
     syncActs();
     card.hidden = false;
     if (pan) { // точку — в середину свободного поля
@@ -196,13 +199,7 @@
   }
   const close = () => { card.hidden = true; if (sel) sel.el.classList.remove('is-sel'); };
   $('[data-close]').addEventListener('click', close);
-  $('[data-near]').addEventListener('click', e => { const b = e.target.closest('[data-i]'); if (b) pick(pins[+b.dataset.i], true); });
-  $('[data-wp]').addEventListener('click', () => {
-    if (wp) wp.el.classList.remove('is-wp');
-    wp = wp === sel ? null : sel;
-    if (wp) wp.el.classList.add('is-wp');
-    syncActs();
-  });
+  $('[data-shot]').addEventListener('load', e => e.target.classList.add('is-on'));
   $('[data-fd]').addEventListener('click', () => { found.has(sel.i) ? found.delete(sel.i) : found.add(sel.i); syncFound(); syncActs(); });
 
   let inView = false;
@@ -211,7 +208,6 @@
 
   new ResizeObserver(() => fit(false)).observe(mm);
   refresh(); syncFound(); fit(false);
-  // как в макете: открыта карточка оружейного в Вайс-Сити, на нём метка пути
-  const start = pins.find(p => p.k === 'weapon' && p.r === 'vice') || pins[0];
-  pick(start); wp = start; start.el.classList.add('is-wp'); syncActs();
+  // сразу открыта карточка коллекционного предмета в Вайс-Сити
+  pick(pins.find(p => p.k === 'fragment' && p.r === 'vice') || pins[0]);
 })();

@@ -79,6 +79,33 @@
 .prop-go:hover { color: var(--rose-2); border-color: rgba(255, 141, 184, .4); background: rgba(255, 111, 165, .06); }
 .prop-go.is-empty { border: 0; }
 
+/* статьи */
+.arts { display: grid; grid-template-columns: minmax(0, 1fr) 440px; gap: 16px; align-items: start; }
+.prop[data-st="ok"] { --c: var(--mint); }
+.prop[data-st="wait"] { --c: var(--amber); }
+.prop[data-st="no"] { --c: #ff8ca8; }
+.set.art-form .chips { justify-self: stretch; display: flex; }
+.art-form .chip { flex: 1; justify-content: center; }
+textarea.input { display: block; height: auto; min-height: 150px; padding: 14px 16px; line-height: 1.5; resize: vertical; }
+.f-opt { color: var(--dim); font-weight: 400; }
+.f-err, .ava-txt .is-err { color: #ff8ca8; font-size: 13px; }
+.input.is-bad { border-color: rgba(255, 140, 168, .7); }
+
+/* аватар и пароль */
+.ava-row { display: flex; align-items: center; gap: 16px; }
+.ava-pic { width: 64px; height: 64px; flex: none; padding: 2px; border-radius: 18px; background: var(--sunset); }
+.ava-pic span { display: grid; place-items: center; width: 100%; height: 100%; border-radius: 16px; background: radial-gradient(120% 120% at 30% 20%, #3a1e46, #140c22 70%); font: italic 800 28px/1 var(--f-display); color: #fff4f9; }
+span.has-img { background-size: cover; background-position: center; color: transparent; text-shadow: none; }
+.ava-txt { min-width: 0; }
+.ava-txt b { display: block; font-size: 15px; font-weight: 600; }
+.ava-txt span { display: block; color: var(--muted); font-size: 13.5px; margin-top: 3px; }
+.ava-acts { display: flex; gap: 8px; margin-left: auto; }
+.ava-up { position: relative; overflow: hidden; cursor: pointer; }
+.ava-up input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.ava-up:focus-within { outline: 2px solid var(--rose-2); outline-offset: 2px; }
+.pw { display: grid; gap: 16px; padding: 18px; border-radius: 14px; border: 1px solid var(--line); background: rgba(8, 5, 14, .35); }
+.pw[hidden] { display: none; }
+
 /* настройки */
 .sets { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
 .set { padding: 28px; display: grid; gap: 20px; }
@@ -103,6 +130,7 @@
   .pstats { grid-template-columns: 1fr 1fr 1fr; }
   .ring-card { grid-column: 1 / -1; }
   .pgrid { grid-template-columns: 1fr 1fr; }
+  .arts { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 760px) {
   .pcover { padding-top: calc(var(--header-h) + 120px); }

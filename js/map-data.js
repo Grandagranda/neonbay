@@ -1,7 +1,8 @@
 // Справочник карты: группы и типы точек (как в базе neonbay.gg), регионы Леониды, ориентиры.
+// track: true — коллекционные точки (идут в ачивки, есть Mark found); без него — обычные места.
 window.MAP = {
   groups: [
-    { id: 'collectibles', name: 'Collectibles', track: true, subs: [
+    { id: 'collectibles', name: 'Items', track: true, subs: [
       ['fragment', 'Hidden Fragments', 50, 'One of 50 hidden fragments scattered across Leonida.'],
       ['letter', 'Letter Scraps', 50, 'A torn page of a bigger story. 50 to find.'],
       ['case', 'Buried Cases', 30, 'Dig spot for a buried case — bring a shovel.'],
@@ -13,11 +14,17 @@ window.MAP = {
       ['bridge', 'Under the Bridge', 50, 'Fly under this bridge to tick it off.'],
       ['flight', 'Low Flights', 15, 'Low-flight challenge — stay under the limit.'],
     ] },
+    { id: 'secrets', name: 'Secrets', track: true, subs: [
+      ['egg', 'Easter Eggs', 12, 'Something strange happens out here. Look up.'],
+      ['mission', 'Side Missions', 20, 'Side mission start point.'],
+      ['stranger', 'Strangers', 15, 'A stranger with a favor to ask.'],
+    ] },
     { id: 'world', name: 'World & Services', subs: [
       ['weapon', 'Weapon Shops', 0, 'Guns, ammo, body armor and attachments.'],
       ['clothes', 'Clothing Stores', 0, 'Outfits, shoes and accessories.'],
       ['tuning', 'Tuning Garages', 0, 'Respray, performance upgrades and body kits.'],
       ['gas', 'Gas Stations', 0, 'Fuel and snacks. Also a classic stick-up spot.'],
+      ['food', 'Restaurants', 0, 'Grab a bite and top up your health.'],
       ['safehouse', 'Safehouses', 0, 'Save, change outfits and store your vehicles.'],
       ['property', 'Properties for Sale', 0, 'Buy it to unlock a new safehouse or business.'],
     ] },
@@ -26,11 +33,6 @@ window.MAP = {
       ['boat', 'Boats & Docks', 0, 'Boats moored and ready to take.'],
       ['plane', 'Aircraft Locations', 0, 'Planes and helicopters you can take off in.'],
     ] },
-    { id: 'secrets', name: 'Secrets', track: true, subs: [
-      ['egg', 'Easter Eggs', 12, 'Something strange happens out here. Look up.'],
-      ['mission', 'Side Missions', 20, 'Side mission start point.'],
-      ['stranger', 'Strangers', 15, 'A stranger with a favor to ask.'],
-    ] },
     { id: 'florida', name: 'Florida', subs: [
       ['fish', 'Fishing Spots', 0, 'A good spot to cast a line.'],
       ['dive', 'Dive Sites', 0, 'Reef or wreck worth a dive.'],
@@ -38,7 +40,7 @@ window.MAP = {
       ['island', 'Keys & Islands', 0, 'One of the Leonida Keys.'],
     ] },
     { id: 'online', name: 'Online', subs: [
-      ['weekly', 'Weekly Collectibles', 0, 'Rotates every Thursday in Online.'],
+      ['weekly', 'Weekly Drops', 0, 'Rotates every Thursday in Online.'],
       ['business', 'Business Locations', 0, 'Business you can buy in Online.'],
       ['heist', 'Heist Setups', 0, 'Heist prep location.'],
     ] },
@@ -57,7 +59,8 @@ window.MAP = {
     ['Downtown', 72, 50.5], ['Vice Beach', 92, 52], ['International Airport', 55, 58.5], ['Port of Vice City', 70, 64.5],
     ['Watson Bay', 36, 69.5], ['Keys Bridge', 53, 90.5], ['Keys Airfield', 22, 91], ['Lake', 61, 25.5], ['North Airport', 70, 16.5],
   ],
-  you: [73, 52.5], // где стоит игрок — от него строится маршрут к метке
   kmPerMap: 24,      // ширина карты в км — для расстояний
   aspect: 4784 / 3336, // высота / ширина картинки карты (YANIS v17, z3)
+  // кадр точки в карточке: p.img — настоящий скрин; пока игры нет — демо-кадр (_tools/spots.cjs); телефону — файл легче
+  spot: (p, i, mob) => p.img || `img/${mob ? 'm/' : ''}spots/${(i * 5) % 8}.webp`,
 };

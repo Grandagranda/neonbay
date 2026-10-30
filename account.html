@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-  <meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="noindex, nofollow">
 <title>Your profile — NeonBay</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0a0712">
@@ -51,8 +51,6 @@
       <a href="index.html" data-nav="home">Home</a>
       <a href="news.html" data-nav="news">News</a>
       <a href="map.html" data-nav="map">Map</a>
-      <a href="#" data-nav="guides">Guides</a>
-      <a href="#" data-nav="achievements">Achievements</a>
     </nav>
     <div class="hdr-tools">
       <div class="lang" role="group" aria-label="Language">
@@ -72,8 +70,6 @@
       <a class="m-link" href="index.html" data-nav="home">Home</a>
       <a class="m-link" href="news.html" data-nav="news">News</a>
       <a class="m-link" href="map.html" data-nav="map">Map</a>
-      <a class="m-link" href="#" data-nav="guides">Guides</a>
-      <a class="m-link" href="#" data-nav="achievements">Achievements</a>
     </div>
     <div class="mnav-foot">
       <div class="mnav-count" data-countdown>
@@ -97,7 +93,7 @@
   <section class="pcover">
     <div class="pcover-art" aria-hidden="true"><img src="img/cover-duo.jpg" srcset="img/m/cover-duo.webp 880w, img/cover-duo.jpg 2752w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 2752px" alt=""></div>
     <div class="wrap pcover-in">
-      <div class="pava rv"><span>V</span></div>
+      <div class="pava rv"><span data-ava>V</span></div>
       <div class="pwho rv" style="--d:.06s">
         <h1>vicefan</h1>
         <p class="mono">Member since Oct 2026 · Vice City · EN</p>
@@ -121,12 +117,12 @@
         <span class="ring-v"><b>14</b><i>%</i></span>
       </div>
       <div>
-        <span class="kicker no-dot">Overall completion</span>
-        <p class="ring-t">49 of 349 tracked items found</p>
+        <span class="kicker no-dot">Map progress</span>
+        <p class="ring-t">49 of 349 collectibles marked found</p>
         <p class="ring-s">Synced with the map · last update 2 h ago</p>
       </div>
     </div>
-    <div class="stat card rv" style="--d:.06s" data-cat="collectibles"><span class="stat-k"><i></i>Collectibles</span><b>26<small>/187</small></b><span class="bar"><span style="width:14%"></span></span></div>
+    <div class="stat card rv" style="--d:.06s" data-cat="collectibles"><span class="stat-k"><i></i>Items</span><b>26<small>/187</small></b><span class="bar"><span style="width:14%"></span></span></div>
     <div class="stat card rv" style="--d:.12s" data-cat="activities"><span class="stat-k"><i></i>Activities</span><b>17<small>/115</small></b><span class="bar"><span style="width:15%"></span></span></div>
     <div class="stat card rv" style="--d:.18s" data-cat="secrets"><span class="stat-k"><i></i>Secrets</span><b>6<small>/47</small></b><span class="bar"><span style="width:13%"></span></span></div>
   </section>
@@ -135,18 +131,18 @@
   <nav class="ptabs" aria-label="Profile sections">
     <div class="wrap"><div class="chips">
       <a class="chip is-on" href="#progress">Progress</a>
-      <a class="chip" href="#proposals">Proposals <span class="cnt mono">5</span></a>
       <a class="chip" href="#settings">Settings</a>
+      <a class="chip" href="#articles">Articles <span class="cnt mono" id="art-cnt">4</span></a>
     </div></div>
   </nav>
 
   <div class="wrap pbody">
     <!-- прогресс по категориям -->
     <section id="progress" class="psec">
-      <div class="psec-h"><h2>Progress</h2><span class="mono">Tap a category to see it on the map</span></div>
+      <div class="psec-h"><h2>Progress</h2><span class="mono">Everything you marked with “Mark found” on the map</span></div>
       <div class="pgrid">
         <div class="pg card rv" data-cat="collectibles">
-          <div class="pg-h"><i></i>Collectibles<span class="mono">26/187</span></div>
+          <div class="pg-h"><i></i>Items<span class="mono">26/187</span></div>
           <ul>
             <li><span>Hidden Fragments</span><span class="bar"><span style="width:24%"></span></span><b class="mono">12/50</b></li>
             <li><span>Letter Scraps</span><span class="bar"><span style="width:14%"></span></span><b class="mono">7/50</b></li>
@@ -174,65 +170,20 @@
       </div>
     </section>
 
-    <!-- предложения точек -->
-    <section id="proposals" class="psec">
-      <div class="psec-h"><h2>Proposals</h2><a class="btn btn-sm" href="map.html"><svg><use href="#i-plus"/></svg>Propose a point</a></div>
-      <ul class="props">
-        <li class="prop rv" data-st="ok">
-          <span class="prop-dot" data-cat="collectibles"></span>
-          <div class="prop-main">
-            <div class="prop-t">Hidden Fragment under the Little Haiti overpass</div>
-            <div class="prop-m mono">Collectibles · Hidden Fragments · Oct 21</div>
-          </div>
-          <span class="st">Approved</span>
-          <a class="prop-go" href="map.html" title="View on map"><svg><use href="#i-pin"/></svg></a>
-        </li>
-        <li class="prop rv" data-st="wait">
-          <span class="prop-dot" data-cat="activities"></span>
-          <div class="prop-main">
-            <div class="prop-t">Stunt jump off the Port Gellhorn container ramp</div>
-            <div class="prop-m mono">Activities · Stunt Jumps · Oct 24</div>
-          </div>
-          <span class="st">Under review</span>
-          <a class="prop-go" href="map.html" title="View on map"><svg><use href="#i-pin"/></svg></a>
-        </li>
-        <li class="prop rv" data-st="no">
-          <span class="prop-dot" data-cat="secrets"></span>
-          <div class="prop-main">
-            <div class="prop-t">Easter egg: UFO light over the Kelly County swamp</div>
-            <div class="prop-m mono">Secrets · Easter Eggs · Oct 18</div>
-            <blockquote class="prop-why"><span class="mono">Moderator · reason</span>Based on a pre-release leak with no in-game footage yet. We'll re-check it on launch day — resubmit with a screenshot after Nov 19.</blockquote>
-          </div>
-          <span class="st">Declined</span>
-          <span class="prop-go is-empty"></span>
-        </li>
-        <li class="prop rv" data-st="ok">
-          <span class="prop-dot" data-cat="world"></span>
-          <div class="prop-main">
-            <div class="prop-t">Ammu-Nation on Ocean Drive, rear entrance</div>
-            <div class="prop-m mono">World &amp; Services · Weapon Shops · Oct 15</div>
-          </div>
-          <span class="st">Approved</span>
-          <a class="prop-go" href="map.html" title="View on map"><svg><use href="#i-pin"/></svg></a>
-        </li>
-        <li class="prop rv" data-st="ok">
-          <span class="prop-dot" data-cat="florida"></span>
-          <div class="prop-main">
-            <div class="prop-t">Dive site off the Leonida Keys lighthouse</div>
-            <div class="prop-m mono">Florida · Dive Sites · Oct 12</div>
-          </div>
-          <span class="st">Approved</span>
-          <a class="prop-go" href="map.html" title="View on map"><svg><use href="#i-pin"/></svg></a>
-        </li>
-      </ul>
-    </section>
-
     <!-- настройки -->
     <section id="settings" class="psec">
       <div class="psec-h"><h2>Settings</h2></div>
       <div class="sets">
         <form class="set card rv" onsubmit="event.preventDefault();this.querySelector('.saved').hidden=false">
           <h3>Profile</h3>
+          <div class="ava-row">
+            <span class="ava-pic"><span data-ava>V</span></span>
+            <span class="ava-txt"><b>Profile picture</b><span id="ava-note">JPG, PNG or WebP, up to 2 MB</span></span>
+            <span class="ava-acts">
+              <label class="btn btn-sm ava-up">Upload<input id="ava-file" type="file" accept="image/jpeg,image/png,image/webp" aria-describedby="ava-note"></label>
+              <button class="btn btn-sm" id="ava-del" type="button" hidden>Remove</button>
+            </span>
+          </div>
           <div class="field"><label for="s-name">Display name</label><input class="input" id="s-name" value="vicefan"></div>
           <div class="field"><label for="s-email">Email</label><input class="input" id="s-email" type="email" value="vicefan@mail.com"></div>
           <div class="field">
@@ -244,13 +195,77 @@
         <div class="set card rv" style="--d:.06s">
           <h3>Notifications</h3>
           <label class="tog"><span><b>Launch day</b><span>One email on November 19, when the full map opens</span></span><input type="checkbox" checked><i></i></label>
-          <label class="tog"><span><b>Proposal decisions</b><span>When a moderator approves or declines your point</span></span><input type="checkbox" checked><i></i></label>
+          <label class="tog"><span><b>Article decisions</b><span>When a moderator publishes or declines your article</span></span><input type="checkbox" checked><i></i></label>
           <label class="tog"><span><b>Weekly digest</b><span>Fact-checked news, once a week</span></span><input type="checkbox"><i></i></label>
           <h3 class="set-h2">Security</h3>
-          <div class="set-row"><span><b>Password</b><span>Changed 12 days ago</span></span><button class="btn btn-sm" type="button">Change</button></div>
+          <div class="set-row"><span><b>Password</b><span id="pw-when">Changed 12 days ago</span></span><button class="btn btn-sm" id="pw-open" type="button" aria-expanded="false" aria-controls="pw-form">Change</button></div>
+          <form class="pw" id="pw-form" novalidate hidden>
+            <div class="field"><label for="p-old">Current password</label><input class="input" id="p-old" type="password" autocomplete="current-password"><span class="f-err" hidden>Enter your current password</span></div>
+            <div class="field"><label for="p-new">New password</label><input class="input" id="p-new" type="password" autocomplete="new-password"><span class="f-err" hidden>Use at least 8 characters</span></div>
+            <div class="field"><label for="p-rep">Repeat new password</label><input class="input" id="p-rep" type="password" autocomplete="new-password"><span class="f-err" hidden>The passwords don't match</span></div>
+            <div class="set-foot"><button class="btn btn-primary btn-sm" type="submit">Update password</button><button class="btn btn-sm" id="pw-cancel" type="button">Cancel</button></div>
+          </form>
           <div class="set-row"><span><b>Sign out</b><span>On this device</span></span><a class="btn btn-sm" href="login.html">Sign out</a></div>
           <button class="danger" type="button">Delete account</button>
         </div>
+      </div>
+    </section>
+
+    <!-- статьи: статусы предложенных и панель предложения -->
+    <section id="articles" class="psec">
+      <div class="psec-h"><h2>Your articles</h2><span class="mono">A moderator reads every article before it goes live</span></div>
+      <div class="arts">
+        <ul class="props" id="art-list">
+          <li class="prop rv" data-st="wait">
+            <span class="prop-dot"></span>
+            <div class="prop-main">
+              <div class="prop-t">Every gas station along the Leonida Keys highway</div>
+              <div class="prop-m mono">Guide · Sent Oct 27</div>
+            </div>
+            <span class="st">Under review</span>
+            <span class="prop-go is-empty"></span>
+          </li>
+          <li class="prop rv" data-st="ok">
+            <span class="prop-dot"></span>
+            <div class="prop-main">
+              <div class="prop-t">Launch night checklist: storage, settings and finding a crew.</div>
+              <div class="prop-m mono">Guide · Sent Sep 22</div>
+            </div>
+            <span class="st">Published</span>
+            <a class="prop-go" href="news-launch-checklist.html" title="Read the article"><svg><use href="#i-ext"/></svg></a>
+          </li>
+          <li class="prop rv" data-st="no">
+            <span class="prop-dot"></span>
+            <div class="prop-main">
+              <div class="prop-t">Leak: a casino heist opens the first chapter</div>
+              <div class="prop-m mono">Leak · Sent Oct 18</div>
+              <blockquote class="prop-why"><span class="mono">Moderator · reason</span>We couldn't trace this to a source. Send it again with a link to the original post and we'll take another look.</blockquote>
+            </div>
+            <span class="st">Declined</span>
+            <span class="prop-go is-empty"></span>
+          </li>
+          <li class="prop rv" data-st="ok">
+            <span class="prop-dot"></span>
+            <div class="prop-main">
+              <div class="prop-t">Every trailer location we could match on the Leonida map.</div>
+              <div class="prop-m mono">Explainer · Sent Oct 2</div>
+            </div>
+            <span class="st">Published</span>
+            <a class="prop-go" href="news-trailer-locations.html" title="Read the article"><svg><use href="#i-ext"/></svg></a>
+          </li>
+        </ul>
+
+        <form class="set card art-form rv" id="art-form" style="--d:.06s" novalidate>
+          <h3>Propose an article</h3>
+          <div class="field"><label for="a-title">Headline</label><input class="input" id="a-title" maxlength="120" placeholder="What is the story?"><span class="f-err" hidden>Add a headline</span></div>
+          <div class="field">
+            <label id="a-type-l">Type</label>
+            <div class="chips" data-chips id="a-type" role="group" aria-labelledby="a-type-l"><button class="chip is-on" type="button">News</button><button class="chip" type="button">Leak</button><button class="chip" type="button">Explainer</button><button class="chip" type="button">Guide</button></div>
+          </div>
+          <div class="field"><label for="a-text">Article text</label><textarea class="input" id="a-text" rows="7" data-lenis-prevent placeholder="Paste the text or a detailed outline"></textarea><span class="f-err" hidden>Write at least 100 characters</span></div>
+          <div class="field"><label for="a-src">Source link <span class="f-opt">optional</span></label><input class="input" id="a-src" type="url" inputmode="url" placeholder="https://"><span class="f-err" hidden>Enter a full link, starting with https://</span></div>
+          <div class="set-foot"><button class="btn btn-primary btn-sm" type="submit">Send for review</button><span class="saved mono" hidden>Sent — it's now in your list</span></div>
+        </form>
       </div>
     </section>
   </div>
@@ -283,7 +298,7 @@
 
   <a class="ftr-logo" href="index.html" aria-label="NeonBay — home"><img src="img/logo.svg" alt="NeonBay" width="126" height="35" loading="lazy"></a>
   <nav class="ftr-nav" aria-label="Footer">
-    <a href="index.html">Home</a><a href="news.html">News</a><a href="map.html">Map</a><a href="#">Guides</a><a href="#">Achievements</a>
+    <a href="index.html">Home</a><a href="news.html">News</a><a href="map.html">Map</a>
   </nav>
   <button class="ftr-up" type="button" onclick="window.NB_LENIS ? NB_LENIS.scrollTo(0, { duration: 1.6 }) : scrollTo({ top: 0, behavior: 'smooth' })">Back to top<svg><use href="#i-up"/></svg></button>
   <div class="ftr-legal">
@@ -302,6 +317,66 @@
     let i = secs.findLastIndex(s => s.getBoundingClientRect().top < y);
     tabs.forEach((t, k) => t.classList.toggle('is-on', k === Math.max(0, i)));
   }, { passive: true });
+
+  const $ = id => document.getElementById(id);
+  // ошибка у поля: подпись под ним и красная рамка
+  const bad = (el, on) => { el.classList.toggle('is-bad', on); el.parentElement.querySelector('.f-err').hidden = !on; return on; };
+
+  // аватар: предпросмотр в профиле, настройках и шапке (хранить будет сервер)
+  const avas = document.querySelectorAll('[data-ava], .user-chip .avatar');
+  const note = $('ava-note'), noteText = note.textContent, file = $('ava-file'), del = $('ava-del');
+  let avaUrl = '';
+  const setAva = url => {
+    if (avaUrl) URL.revokeObjectURL(avaUrl);
+    avaUrl = url;
+    avas.forEach(a => { a.style.backgroundImage = url ? `url("${url}")` : ''; a.classList.toggle('has-img', !!url); });
+    del.hidden = !url;
+  };
+  file.addEventListener('change', () => {
+    const f = file.files[0]; if (!f) return;
+    const ok = /^image\/(jpeg|png|webp)$/.test(f.type) && f.size <= 2 * 1024 * 1024;
+    note.textContent = ok ? noteText : 'Use a JPG, PNG or WebP up to 2 MB';
+    note.classList.toggle('is-err', !ok);
+    if (ok) setAva(URL.createObjectURL(f));
+    file.value = '';
+  });
+  del.addEventListener('click', () => setAva(''));
+
+  // смена пароля
+  const pw = $('pw-form'), pwOpen = $('pw-open');
+  const pwShow = on => {
+    pw.hidden = !on; pwOpen.hidden = on; pwOpen.setAttribute('aria-expanded', on);
+    if (on) $('p-old').focus();
+    else { pw.reset(); pw.querySelectorAll('.input').forEach(i => bad(i, false)); pwOpen.focus(); }
+  };
+  pwOpen.addEventListener('click', () => pwShow(true));
+  $('pw-cancel').addEventListener('click', () => pwShow(false));
+  pw.addEventListener('submit', e => {
+    e.preventDefault();
+    const a = bad($('p-old'), !$('p-old').value), b = bad($('p-new'), $('p-new').value.length < 8), c = bad($('p-rep'), $('p-rep').value !== $('p-new').value);
+    if (a || b || c) return;
+    $('pw-when').textContent = 'Changed just now';
+    pwShow(false);
+  });
+
+  // предложить статью: новая строка сверху списка со статусом «на проверке»
+  const artForm = $('art-form'), artList = $('art-list'), sent = artForm.querySelector('.saved');
+  artForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const t = $('a-title'), x = $('a-text'), u = $('a-src');
+    const a = bad(t, !t.value.trim()), b = bad(x, x.value.trim().length < 100), c = bad(u, !!u.value && !(u.checkValidity() && /^https?:\/\//.test(u.value)));
+    sent.hidden = true;
+    if (a || b || c) return;
+    const li = document.createElement('li');
+    li.className = 'prop'; li.dataset.st = 'wait';
+    li.innerHTML = '<span class="prop-dot"></span><div class="prop-main"><div class="prop-t"></div><div class="prop-m mono"></div></div><span class="st">Under review</span><span class="prop-go is-empty"></span>';
+    li.querySelector('.prop-t').textContent = t.value.trim();
+    li.querySelector('.prop-m').textContent = `${$('a-type').querySelector('.is-on').textContent} · Sent ${new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`;
+    artList.prepend(li);
+    $('art-cnt').textContent = artList.children.length;
+    artForm.reset();
+    sent.hidden = false;
+  });
 </script>
 </body>
 </html>
