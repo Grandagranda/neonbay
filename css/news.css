@@ -1,10 +1,11 @@
 /* Лента новостей и страница статьи — в языке первых двух блоков главной (общие компоненты — в v2.css).
-   Обе страницы устроены как главная: липкая шапка-арт, на неё наезжает лист со скруглением 72, шапка уходит в размытие (js/v2.js). */
+   Обе страницы устроены как главная: липкая шапка-арт, на неё наезжает лист со скруглением 72, шапка размывается (js/v2.js). */
 
 /* ---------- липкие шапки: лента (.nh) и статья (.ah) ---------- */
 .nh, .ah { --hh: max(calc(900 * var(--u)), min(100svh, calc(1040 * var(--u)))); --ex: calc((var(--hh) - 900 * var(--u)) / 2);
   position: sticky; top: min(0px, calc(100svh - var(--hh))); height: var(--hh); overflow: hidden; isolation: isolate;
   will-change: transform; }
+.nh > :not(.hero-dim), .ah > :not(.hero-dim) { will-change: filter; }
 .hero-dim { position: absolute; inset: 0; z-index: 5; pointer-events: none; background: #0a0712; opacity: 0; }
 
 /* ---------- лента: шапка — по Figma 4048:1207 (кадр пользователя, x макета + 16) ----------
@@ -14,7 +15,6 @@
 .nh { --hh: calc(1040 * var(--u)); --dy: 0px; }
 .nh-bg { position: absolute; left: 0; top: 0; z-index: -5; width: 100%; height: calc(1040 * var(--u)); }
 .nh-bg img { width: 100%; height: 100%; object-fit: cover; }
-.nh-soft { position: absolute; z-index: 0; left: 0; top: 0; width: 100%; height: calc(1040 * var(--u)); max-width: none; opacity: 0; will-change: opacity; pointer-events: none; }
 .nh-shade { position: absolute; inset: 0; z-index: -4; pointer-events: none;
   background: linear-gradient(90deg, rgba(10, 7, 18, .9) 0%, rgba(10, 7, 18, .78) 24%, rgba(10, 7, 18, .48) 44%, rgba(10, 7, 18, .14) 62%, rgba(10, 7, 18, 0) 76%),
     linear-gradient(180deg, rgba(10, 7, 18, .55) 0%, rgba(10, 7, 18, 0) 22%); }

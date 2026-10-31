@@ -114,7 +114,7 @@ input, select, textarea { font-size: max(16px, 1em); }
 .hero { --vid: calc(var(--vw, 100vw) * 1.3); --top: calc(var(--vid) * .6331); --hh: calc(var(--top) + 426 * var(--mt));
   display: flex; flex-direction: column; justify-content: flex-start; padding: var(--top) var(--gut) 0; background: var(--bg); transform: none; }
 
-.hero-soft, .nh-soft { display: none; }
+.hero, .nh, .ah, .hero > :not(.hero-dim), .nh > :not(.hero-dim), .ah > :not(.hero-dim) { will-change: auto; }
 /* заглушка — кадр 24 px прямо в стилях: цвет сцены виден сразу, пока идёт постер */
 .hero-media { left: -7.18%; top: calc(var(--vid) * -.0434); right: auto; width: 114.36%; bottom: auto; height: calc(var(--vid) * 1.144); background: #3a3560 url(data:image/webp;base64,UklGRtAAAABXRUJQVlA4IMQAAACQBQCdASoYAB8APulgqk8pJSOiMBgIASAdCWIAqRTIBMEn4h+bKtUOMaJqagDruT9UY6siqAD+zT+0qUB8qNkUZhByF5IZYC56Hh3x62mDWx1sMD3081Qb7Au3vF3ut+xWAZEh8gdBw/UEaL70DNX87arZWp9nHrFcAkkf03eaKkHRVNNXJDojhomN2bGE0SzLOFggeo+w5wmUndXCY0n4jfVC3/sQqKnGMHfVTG6TrN20U4jh3oUNe5kQpjKMl27gAAAA) 50% 0 / cover no-repeat; }
 .hero-poster, .hero-video { position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; }
@@ -441,8 +441,7 @@ h1, h2, h3, .display { font-style: normal; font-weight: 600; letter-spacing: -.0
 .auth-legal { order: 5; margin-top: calc(24 * var(--m)); padding: 0 var(--gut); font-size: 12px; line-height: 1.45; letter-spacing: .04em; text-align: center; }
 
 /* ---------- профиль ---------- */
-.pcover { padding-top: calc(var(--hdr) + 104 * var(--m)); }
-.pcover-art { height: calc(300 * var(--m) + var(--st)); }
+.pcover { padding-top: calc(var(--hdr) + 32 * var(--m)); }
 .pcover-in { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: end; gap: calc(14 * var(--m)); }
 .pava { width: calc(80 * var(--m)); height: calc(80 * var(--m)); border-radius: 50%; box-shadow: 0 0 0 4px var(--bg), 0 0 30px rgba(255, 111, 165, .35); }
 .pava span { border-radius: 50%; font: 600 calc(38 * var(--m))/1 'Inter Tight', var(--f-body); }

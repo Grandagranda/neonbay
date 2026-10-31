@@ -7,12 +7,12 @@
 
   // ---- наезд: p (0…1) — насколько лист [data-sheet] закрыл шапку [data-hero]; ролик закрытой шапки стоит ----
   // Каждая работа сначала читает, а записи возвращает функцией: чтение после записи заставляло браузер пересчитывать стили внутри кадра.
-  // Только opacity и transform нескольких слоёв: их ведёт видеокарта. --p на стопке пересчитывал стили всего блока, а blur шёл по экрану с роликом
+  // Значения пишутся прямо в слои шапки, а не в --p на стопке: иначе стили всего блока пересчитывались бы на каждый кадр. Слои подняты will-change — блюр считает видеокарта
   document.querySelectorAll('[data-stack]').forEach(stack => {
     const sheet = stack.querySelector('[data-sheet]'), hero = stack.querySelector('[data-hero]');
     if (!sheet || !hero) return;
     const video = hero.querySelector('video'), dim = hero.querySelector('.hero-dim');
-    const soft = hero.querySelector('[data-soft]'), fades = [...hero.querySelectorAll('[data-fade]')];
+    const layers = [...hero.children].filter(el => el !== dim), zoom = hero.querySelector('.hero-video, .nh-bg img');
     let covered = false, last = -1;
     // отсчёт от того места, где лист стоит при открытии страницы (шапка бывает ниже окна — тогда лист уже виден)
     jobs.push(vh => {
@@ -27,9 +27,9 @@
           hero.classList.toggle('is-soft', on);
           hero.style.transform = on ? `translate3d(0, ${(-40 * u * p).toFixed(1)}px, 0)` : '';
           if (dim) dim.style.opacity = (p * .22).toFixed(3);
-          if (soft) soft.style.opacity = Math.min(1, p * 1.5).toFixed(3);
-          const o = on ? (1 - Math.min(1, p * 1.6)).toFixed(3) : '';
-          fades.forEach(el => { el.style.transition = on ? 'none' : ''; el.style.opacity = o; });
+          const blur = on ? `blur(${(18 * u * p).toFixed(1)}px)` : '';
+          layers.forEach(el => { el.style.filter = blur; });
+          if (zoom) zoom.style.scale = on ? (1 + p * .04).toFixed(4) : '';
         }
         if (video && (p >= 1) !== covered) { covered = p >= 1; covered ? video.pause() : video.play().catch(() => {}); }
       };

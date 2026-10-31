@@ -18,8 +18,8 @@
   overflow: hidden; isolation: isolate;
   will-change: transform;
 }
-/* уход под лист: js/v2.js проявляет готовый размытый кадр и гасит текст — живой blur всего экрана с роликом стоил 20+ мс на кадр */
-.hero-soft { position: absolute; left: 0; top: 0; width: 100%; height: auto; opacity: 0; will-change: opacity; }
+/* уход под лист: блюр, сдвиг и затемнение пишет js/v2.js; слои подняты, чтобы блюр считала видеокарта, а не перерисовка */
+.hero > :not(.hero-dim) { will-change: filter; }
 .hero.is-soft .hero-count { backdrop-filter: none; -webkit-backdrop-filter: none; }
 .hero-dim { position: absolute; inset: 0; z-index: 5; pointer-events: none; background: #0a0712; opacity: 0; }
 /* видео как в макете: слой 2108×1026 при −135/−81 (масштаб 1,098), видна верхняя часть кадра.
