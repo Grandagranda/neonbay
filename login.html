@@ -53,9 +53,6 @@
       <a href="map.html" data-nav="map">Map</a>
     </nav>
     <div class="hdr-tools">
-      <div class="lang" role="group" aria-label="Language">
-        <button class="is-on" type="button">EN</button><button type="button">RU</button>
-      </div>
       
       <button class="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="mnav" id="burger"><span></span></button>
     </div>
@@ -79,9 +76,6 @@
       <div class="mnav-row">
         <a class="hb hb-tg" href="#" rel="noopener"><svg viewBox="0 0 15.8 13.24"><use href="#i-tg-s"/></svg><span class="hb-t"><span data-t="Telegram">Telegram</span></span></a>
         <a class="hb hb-dc" href="#" rel="noopener"><svg viewBox="0 0 18.4 11.93"><use href="#i-dc-s"/></svg><span class="hb-t"><span data-t="Discord">Discord</span></span></a>
-      </div>
-      <div class="lang" role="group" aria-label="Language">
-        <button class="is-on" type="button">EN</button><button type="button">RU</button>
       </div>
     </div>
   </div>
@@ -144,35 +138,10 @@
       </form>
     </div>
     <p class="auth-legal mono">Unofficial fan project. Not affiliated with Rockstar Games or Take-Two Interactive.</p>
+
   </section>
 </main>
 
 <script src="js/site.js"></script>
-<script>
-  // переключение вкладок + бегунок
-  const seg = document.querySelector('[data-seg]'), ind = seg.querySelector('.seg-ind');
-  const move = b => { ind.style.width = b.offsetWidth + 'px'; ind.style.transform = `translateX(${b.offsetLeft - 4}px)`; };
-  seg.addEventListener('click', e => {
-    const b = e.target.closest('button'); if (!b) return;
-    seg.querySelectorAll('button').forEach(x => x.classList.toggle('is-on', x === b));
-    document.querySelectorAll('[data-pane]').forEach(p => p.hidden = p.dataset.pane !== b.dataset.tab);
-    move(b);
-  });
-  addEventListener('load', () => move(seg.querySelector('.is-on')));
-  if (location.hash === '#signup') seg.querySelector('[data-tab="up"]').click();
-  // показать пароль
-  document.querySelectorAll('.pass-eye').forEach(b => b.addEventListener('click', () => {
-    const i = b.previousElementSibling; i.type = i.type === 'password' ? 'text' : 'password';
-    b.classList.toggle('is-on', i.type === 'text');
-  }));
-  // сила пароля
-  const up = document.getElementById('up-pass'), bars = document.querySelectorAll('.meter i');
-  up.addEventListener('input', () => {
-    const v = up.value; let s = 0;
-    if (v.length >= 8) s++; if (/[A-Z]/.test(v) && /[a-z]/.test(v)) s++; if (/\d/.test(v)) s++; if (/[^\w]/.test(v) || v.length >= 14) s++;
-    bars.forEach((b, i) => b.classList.toggle('is-on', i < s));
-    up.closest('.field').dataset.s = s;
-  });
-</script>
 </body>
 </html>

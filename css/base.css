@@ -270,9 +270,6 @@ p { margin: 0; }
   background: var(--sunset); box-shadow: 0 0 10px rgba(255, 111, 165, .7);
 }
 .hdr-tools { display: flex; align-items: center; gap: 12px; }
-.lang { display: flex; align-items: center; gap: 2px; padding: 3px; border-radius: 10px; border: 1px solid var(--line); }
-.lang button { height: 28px; padding: 0 9px; border: 0; border-radius: 7px; background: none; color: var(--muted); font: 600 11.5px/1 var(--f-mono); letter-spacing: .06em; }
-.lang button.is-on { background: var(--surface-3); color: var(--text); }
 .burger { display: none; width: 42px; height: 42px; border-radius: 12px; border: 1px solid var(--line-2); background: var(--surface-2); place-items: center; }
 .burger span { display: block; width: 18px; height: 1.5px; background: var(--text); border-radius: 2px; position: relative; transition: transform .3s var(--ease), background .2s; }
 .burger span::before, .burger span::after { content: ''; position: absolute; left: 0; width: 18px; height: 1.5px; background: var(--text); border-radius: 2px; transition: transform .3s var(--ease); }
@@ -313,8 +310,8 @@ p { margin: 0; }
 .ftr-lead { margin: calc(18.5 * var(--fu)) 0 0; font: 500 calc(17 * var(--ft))/1.35 'Inter Tight', var(--f-body); color: rgba(255, 255, 255, .6); }
 /* отсчёт 406×130: стекло, розовые цифры Bebas, двоеточия */
 .cd { display: inline-flex; align-items: flex-start; gap: calc(9.55 * var(--ft)); height: calc(130 * var(--ft)); margin-top: calc(29.6 * var(--fu)); padding: calc(37 * var(--ft)) calc(36.7 * var(--ft)) 0;
-  border-radius: calc(18.5 * var(--ft)); border: 1px solid rgba(255, 222, 242, .12); background: rgba(32, 2, 25, .27);
-  backdrop-filter: blur(calc(16.2 * var(--ft))); -webkit-backdrop-filter: blur(calc(16.2 * var(--ft))); }
+  border-radius: calc(18.5 * var(--ft)); border: 1px solid rgba(255, 222, 242, .12); background: rgba(32, 2, 25, .52);
+ }
 .cd-i { display: flex; flex-direction: column; align-items: center; gap: calc(10.7 * var(--ft)); width: calc(56.9 * var(--ft)); }
 .cd-i b { font: 400 calc(59 * var(--ft))/calc(46.27 * var(--ft)) 'Bebas Neue', var(--f-display); letter-spacing: calc(-1.16 * var(--ft)); color: #ff6fa5;
   text-shadow: 0 0 calc(16.2 * var(--ft)) rgba(255, 111, 165, .32); font-variant-numeric: tabular-nums; }
@@ -368,7 +365,7 @@ p { margin: 0; }
 }
 @media (max-width: 900px) {
   :root { --gutter: 20px; --header-h: 64px; }
-  .nav, .hdr-tools .lang, .hdr-tools .hdr-cta { display: none; }
+  .nav, .hdr-tools .hdr-cta { display: none; }
   .burger { display: grid; }
   .hdr .wrap { justify-content: space-between; }
   .logo img { height: 28px; }

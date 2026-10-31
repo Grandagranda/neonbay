@@ -490,7 +490,7 @@
   const sheetL = makeSheet(legend, () => [peekL(), Math.round(stage.clientHeight * .58), legend.offsetHeight],
     [legend.querySelector('.sheet-grip'), legend.querySelector('.lg-head')], n => { if (!n) qIn.blur(); });
   const sheetI = makeSheet(info, () => { const p = peekI(), h = info.offsetHeight; return h - p > 30 ? [p, h] : [p]; },
-    [info.querySelector('.sheet-grip'), info.querySelector('.info-top')], n => { info.style.overflowY = n ? 'auto' : ''; });
+    [info.querySelector('.sheet-grip'), info.querySelector('.info-top'), info.querySelector('.info-shot'), info.querySelector('.info-act')], n => { info.style.overflowY = n ? 'auto' : ''; });
 
   // старт: чуть ближе «по размеру», чтобы сразу были видны иконки, а не точки; на телефоне — весь остров
   refresh();

@@ -1,12 +1,11 @@
 /* Лента новостей и страница статьи — в языке первых двух блоков главной (общие компоненты — в v2.css).
-   Обе страницы устроены как главная: липкая шапка-арт, на неё наезжает лист со скруглением 72, шапка размывается (--p). */
+   Обе страницы устроены как главная: липкая шапка-арт, на неё наезжает лист со скруглением 72, шапка уходит в размытие (js/v2.js). */
 
 /* ---------- липкие шапки: лента (.nh) и статья (.ah) ---------- */
 .nh, .ah { --hh: max(calc(900 * var(--u)), min(100svh, calc(1040 * var(--u)))); --ex: calc((var(--hh) - 900 * var(--u)) / 2);
   position: sticky; top: min(0px, calc(100svh - var(--hh))); height: var(--hh); overflow: hidden; isolation: isolate;
-  transform: translateY(calc(var(--p, 0) * -40 * var(--u))); }
-.nh > :not(.hero-dim), .ah > :not(.hero-dim) { filter: blur(calc(var(--p, 0) * 18 * var(--u))); }
-.hero-dim { position: absolute; inset: 0; z-index: 5; pointer-events: none; background: #0a0712; opacity: calc(var(--p, 0) * .22); }
+  will-change: transform; }
+.hero-dim { position: absolute; inset: 0; z-index: 5; pointer-events: none; background: #0a0712; opacity: 0; }
 
 /* ---------- лента: шапка — по Figma 4048:1207 (кадр пользователя, x макета + 16) ----------
    фон «Jack of Hearts», двое из char-duo: с сумкой — под заголовком, в рубашке — поверх него; уход в фон снизу — над людьми.
@@ -14,7 +13,8 @@
 /* шапка ленты всегда высотой кадра 1040: композиция один в один с Figma, в низком окне низ просто ниже сгиба */
 .nh { --hh: calc(1040 * var(--u)); --dy: 0px; }
 .nh-bg { position: absolute; left: 0; top: 0; z-index: -5; width: 100%; height: calc(1040 * var(--u)); }
-.nh-bg img { width: 100%; height: 100%; object-fit: cover; scale: calc(1 + var(--p, 0) * .04); transform-origin: 30% 40%; }
+.nh-bg img { width: 100%; height: 100%; object-fit: cover; }
+.nh-soft { position: absolute; z-index: 0; left: 0; top: 0; width: 100%; height: calc(1040 * var(--u)); max-width: none; opacity: 0; will-change: opacity; pointer-events: none; }
 .nh-shade { position: absolute; inset: 0; z-index: -4; pointer-events: none;
   background: linear-gradient(90deg, rgba(10, 7, 18, .9) 0%, rgba(10, 7, 18, .78) 24%, rgba(10, 7, 18, .48) 44%, rgba(10, 7, 18, .14) 62%, rgba(10, 7, 18, 0) 76%),
     linear-gradient(180deg, rgba(10, 7, 18, .55) 0%, rgba(10, 7, 18, 0) 22%); }
@@ -55,9 +55,9 @@
 .nw-leaf-2 { left: calc(-300 * var(--u)); top: calc(1300 * var(--u)); rotate: -20deg; }
 .nw-in { position: relative; width: calc(1300 * var(--u)); margin-left: calc(310 * var(--u)); }
 .nw-bar { display: flex; align-items: center; justify-content: space-between; gap: calc(20 * var(--u)); }
-/* вкладки меток — как переключатель EN/RU в шапке, только крупнее: стекло, активная — белая подложка */
+/* вкладки меток — стекло, активная — белая подложка */
 .tabs { display: inline-flex; gap: calc(4 * var(--t)); padding: calc(4 * var(--t)); border-radius: calc(18 * var(--t)); border: 1px solid rgba(255, 222, 242, .12);
-  background: rgba(18, 9, 32, .55); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+  background: rgba(18, 9, 32, .55); }
 .tabs button { display: inline-flex; align-items: center; gap: calc(9 * var(--t)); height: calc(46 * var(--t)); padding: 0 calc(18 * var(--t)); border: 0; border-radius: calc(14 * var(--t)); background: none;
   font: 500 calc(15 * var(--t))/1 'Inter Tight', var(--f-body); color: rgba(255, 255, 255, .62); cursor: pointer; transition: color .25s, background .35s var(--ease-out); }
 .tabs button::before { content: ''; width: calc(6 * var(--t)); height: calc(6 * var(--t)); border-radius: 50%; background: var(--kc, #fff); box-shadow: 0 0 calc(8 * var(--t)) var(--kc, rgba(255, 255, 255, .6)); }
@@ -66,7 +66,7 @@
 .tabs button.is-on { background: rgba(255, 255, 255, .13); color: #fff; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1); }
 .tabs button.is-on i { color: rgba(255, 255, 255, .6); }
 .nw-q { display: flex; align-items: center; gap: calc(12 * var(--t)); width: calc(330 * var(--t)); height: calc(56 * var(--t)); padding: 0 calc(20 * var(--t)); border-radius: calc(28 * var(--t));
-  border: 1px solid rgba(255, 222, 242, .12); background: rgba(18, 9, 32, .55); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); transition: border-color .3s, box-shadow .3s; }
+  border: 1px solid rgba(255, 222, 242, .12); background: rgba(18, 9, 32, .55); transition: border-color .3s, box-shadow .3s; }
 .nw-q:focus-within { border-color: rgba(255, 141, 184, .6); box-shadow: 0 0 0 4px rgba(255, 111, 165, .12); }
 .nw-q svg { width: calc(15 * var(--t)); height: calc(15 * var(--t)); flex: none; color: var(--mut); }
 .nw-q input { flex: 1; min-width: 0; height: 100%; border: 0; background: none; outline: none; font: 500 calc(15 * var(--t)) 'Inter Tight', var(--f-body); color: #fff; }
@@ -161,7 +161,7 @@
 /* липкая колонка: карточка проверки (как карточка места на карте) и оглавление */
 .rail-in { position: sticky; top: calc(56 * var(--t) + 40 * var(--u)); display: flex; flex-direction: column; gap: calc(20 * var(--u)); }
 .fc { --sc: #73d9ad; position: relative; overflow: hidden; padding: calc(28 * var(--u)) calc(28 * var(--u)) calc(24 * var(--u)); border-radius: calc(24 * var(--u));
-  border: 1px solid rgba(255, 222, 242, .12); background: rgba(18, 9, 32, .8); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+  border: 1px solid rgba(255, 222, 242, .12); background: rgba(18, 9, 32, .8); }
 .fc[data-st="unconfirmed"] { --sc: #ffb26e; }
 .fc[data-st="false"] { --sc: #ff7a8e; }
 .fc[data-st="context"] { --sc: #78d2ee; }
@@ -187,7 +187,7 @@
 .fc-src a:hover svg:last-child { transform: translate(2px, -2px); }
 .fc-up { display: block; margin-top: calc(14 * var(--u)); font: 500 calc(12 * var(--t))/1 'Inter Tight', var(--f-body); color: var(--dm); }
 .toc { display: flex; flex-direction: column; padding: calc(26 * var(--u)) calc(28 * var(--u)) calc(18 * var(--u)); border-radius: calc(24 * var(--u)); border: 1px solid var(--gl);
-  background: rgba(18, 9, 32, .55); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+  background: rgba(18, 9, 32, .66); }
 .toc .kk { margin-bottom: calc(10 * var(--u)); }
 .toc a { position: relative; padding: calc(10 * var(--u)) 0 calc(10 * var(--u)) calc(20 * var(--t)); font: 500 calc(15 * var(--t))/1.35 'Inter Tight', var(--f-body); color: rgba(255, 255, 255, .55); transition: color .3s; }
 .toc a::before { content: ''; position: absolute; left: 0; top: 50%; width: calc(6 * var(--t)); height: calc(6 * var(--t)); margin-top: calc(-3 * var(--t)); border-radius: 50%; border: 1px solid rgba(255, 255, 255, .35); transition: background .3s, border-color .3s, box-shadow .3s; }

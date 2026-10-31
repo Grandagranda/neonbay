@@ -20,6 +20,7 @@
 <link rel="stylesheet" href="css/v2.css" media="(max-width: 900px), (max-width: 1100px) and (max-height: 520px)">
 <link rel="stylesheet" href="css/mobile.css" media="(max-width: 900px), (max-width: 1100px) and (max-height: 520px)">
 <link rel="stylesheet" href="css/map-m.css" media="(max-width: 900px), (max-width: 1100px) and (max-height: 520px)">
+<link rel="stylesheet" href="css/auth.css" media="(min-width: 901px)">
 </head>
 <body class="is-app" data-mode="neon">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -55,9 +56,6 @@
       <a href="map.html" data-nav="map" class="is-active" aria-current="page">Map</a>
     </nav>
     <div class="hdr-tools">
-      <div class="lang" role="group" aria-label="Language">
-        <button class="is-on" type="button">EN</button><button type="button">RU</button>
-      </div>
       <a class="btn btn-primary btn-sm hdr-cta" href="login.html">Sign in</a>
       <button class="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="mnav" id="burger"><span></span></button>
     </div>
@@ -81,9 +79,6 @@
       <div class="mnav-row">
         <a class="hb hb-tg" href="#" rel="noopener"><svg viewBox="0 0 15.8 13.24"><use href="#i-tg-s"/></svg><span class="hb-t"><span data-t="Telegram">Telegram</span></span></a>
         <a class="hb hb-dc" href="#" rel="noopener"><svg viewBox="0 0 18.4 11.93"><use href="#i-dc-s"/></svg><span class="hb-t"><span data-t="Discord">Discord</span></span></a>
-      </div>
-      <div class="lang" role="group" aria-label="Language">
-        <button class="is-on" type="button">EN</button><button type="button">RU</button>
       </div>
     </div>
   </div>
@@ -185,7 +180,7 @@
 
   <!-- ОБЗОР: весь остров, рамка — видимая часть; клик или перетаскивание — туда -->
   <div class="ov" id="ov" role="button" tabindex="0" aria-label="Overview — click to move the map">
-    <img src="img/map-neon.webp" srcset="img/m/map-neon-s.webp 860w, img/map-neon.webp 3336w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 3336px" alt="" draggable="false" loading="lazy">
+    <img decoding="async" src="img/map-neon.webp" srcset="img/m/map-neon-s.webp 860w, img/map-neon.webp 3336w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 3336px" alt="" draggable="false" loading="lazy">
     <i class="ov-view" id="ovView"></i>
   </div>
 
@@ -242,6 +237,48 @@
   <div class="toast" id="toast" role="status" hidden></div>
 </main>
 
+<template id="auth-tpl">    <div class="auth-box rv" style="--d:.1s">
+      <div class="seg" role="tablist" data-seg>
+        <span class="seg-ind" aria-hidden="true"></span>
+        <button class="is-on" type="button" role="tab" data-tab="in">Sign in</button>
+        <button type="button" role="tab" data-tab="up">Create account</button>
+      </div>
+
+      <form class="auth-form" data-pane="in" action="account.html">
+        <div class="auth-h">
+          <h2>Welcome back</h2>
+          <p>Pick up where you left off on the map.</p>
+        </div>
+        <div class="field"><label for="in-email">Email</label><input class="input" id="in-email" type="email" placeholder="you@email.com" autocomplete="email" required></div>
+        <div class="field">
+          <label for="in-pass">Password</label>
+          <div class="pass"><input class="input" id="in-pass" type="password" placeholder="••••••••" autocomplete="current-password" required><button type="button" class="pass-eye" aria-label="Show password"><svg><use href="#i-eye"/></svg></button></div>
+        </div>
+        <div class="auth-row">
+          <label class="check"><input type="checkbox" checked><span></span>Remember me</label>
+          <a class="auth-link" href="#">Forgot password?</a>
+        </div>
+        <button class="btn btn-primary btn-block" type="submit">Sign in</button>
+      </form>
+
+      <form class="auth-form" data-pane="up" action="account.html" hidden>
+        <div class="auth-h">
+          <h2>Join NeonBay</h2>
+          <p>Free. Your progress stays yours.</p>
+        </div>
+        <div class="field"><label for="up-name">Display name</label><input class="input" id="up-name" type="text" placeholder="vicefan" autocomplete="username" required></div>
+        <div class="field"><label for="up-email">Email</label><input class="input" id="up-email" type="email" placeholder="you@email.com" autocomplete="email" required></div>
+        <div class="field">
+          <label for="up-pass">Password</label>
+          <div class="pass"><input class="input" id="up-pass" type="password" placeholder="At least 8 characters" autocomplete="new-password" minlength="8" required><button type="button" class="pass-eye" aria-label="Show password"><svg><use href="#i-eye"/></svg></button></div>
+          <div class="meter" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        </div>
+        <label class="check"><input type="checkbox" required><span></span>I agree to the <a class="auth-link" href="#">Terms</a> and <a class="auth-link" href="#">Privacy</a></label>
+        <button class="btn btn-primary btn-block" type="submit">Create account</button>
+      </form>
+    </div>
+    <p class="auth-legal mono">Unofficial fan project. Not affiliated with Rockstar Games or Take-Two Interactive.</p>
+</template>
 <script src="js/site.js"></script>
 <script src="js/map-data.js"></script>
 <script src="js/pins.js"></script>

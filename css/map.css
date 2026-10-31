@@ -17,9 +17,6 @@
 .is-app .nav a:hover { background: none; opacity: .7; }
 .is-app .nav a.is-active::after { display: none; }
 .is-app .hdr-tools { margin-left: auto; gap: 18px; }
-.is-app .lang { gap: 1px; padding: 1px; border-radius: 6px; border: 1px solid rgba(255, 255, 255, .36); }
-.is-app .lang button { width: 37px; height: 30px; padding: 0; border-radius: 4px; font: 500 13px/1.35 var(--f-body); letter-spacing: 0; text-transform: uppercase; color: #fff; }
-.is-app .lang button.is-on { background: rgba(255, 255, 255, .24); }
 .is-app .hdr-cta.btn { --h: 40px; padding: 0 44px; border-radius: 28px; background: #ffc080; box-shadow: none; color: #0f0c1a; font: 500 15px/1.35 var(--f-body); }
 .is-app .hdr-cta.btn:hover { background: #ffcb96; }
 

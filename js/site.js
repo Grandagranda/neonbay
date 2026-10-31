@@ -11,8 +11,8 @@
     const lib = document.createElement('script');
     lib.src = 'js/vendor/lenis.min.js';
     lib.onload = () => {
-      const lenis = window.NB_LENIS = new Lenis({ lerp: .09, wheelMultiplier: .9, smoothWheel: true });
-      const loop = t => { lenis.raf(t); requestAnimationFrame(loop); };
+      const lenis = window.NB_LENIS = new Lenis({ lerp: .12, wheelMultiplier: .9, smoothWheel: true });
+      const loop = t => { lenis.raf(t); if (window.NB_FRAME) NB_FRAME(); requestAnimationFrame(loop); };
       requestAnimationFrame(loop);
       document.addEventListener('click', e => {
         const a = e.target.closest('a[href^="#"]'), t = a && a.getAttribute('href').length > 1 && document.querySelector(a.getAttribute('href'));
@@ -46,6 +46,80 @@
     mnav.addEventListener('click', e => { if (e.target.closest('a')) setMenu(false); });
     addEventListener('keydown', e => { if (e.key === 'Escape' && html.classList.contains('menu-open')) { setMenu(false); burger.focus(); } });
     MOB.addEventListener('change', e => { if (!e.matches) setMenu(false); });
+  }
+
+  // форма входа: вкладки с бегунком, показать пароль, сила пароля. Одна на странице login.html и в окне на ПК
+  const initAuth = box => {
+    const seg = box.querySelector('[data-seg]'), ind = seg.querySelector('.seg-ind');
+    const move = b => { ind.style.width = b.offsetWidth + 'px'; ind.style.transform = `translateX(${b.offsetLeft - 4}px)`; };
+    const tab = name => {
+      const b = seg.querySelector(`[data-tab="${name}"]`);
+      seg.querySelectorAll('button').forEach(x => x.classList.toggle('is-on', x === b));
+      box.querySelectorAll('[data-pane]').forEach(p => p.hidden = p.dataset.pane !== name);
+      move(b);
+    };
+    seg.addEventListener('click', e => { const b = e.target.closest('button'); if (b) tab(b.dataset.tab); });
+    box.querySelectorAll('.pass-eye').forEach(b => b.addEventListener('click', () => {
+      const i = b.previousElementSibling; i.type = i.type === 'password' ? 'text' : 'password';
+      b.classList.toggle('is-on', i.type === 'text');
+    }));
+    const up = box.querySelector('#up-pass'), bars = box.querySelectorAll('.meter i');
+    up.addEventListener('input', () => {
+      const v = up.value; let n = 0;
+      if (v.length >= 8) n++; if (/[A-Z]/.test(v) && /[a-z]/.test(v)) n++; if (/\d/.test(v)) n++; if (/[^\w]/.test(v) || v.length >= 14) n++;
+      bars.forEach((b, i) => b.classList.toggle('is-on', i < n));
+      up.closest('.field').dataset.s = n;
+    });
+    return tab;
+  };
+  const pageBox = document.querySelector('.auth .auth-box');
+  if (pageBox) {
+    const tab = initAuth(pageBox), first = () => tab(location.hash === '#signup' ? 'up' : 'in');
+    first(); addEventListener('load', first);
+  }
+
+  // окно входа на ПК (Figma 4065:1853): ссылки на login.html открывают форму поверх страницы; на телефоне вход — отдельная страница
+  const authTpl = document.getElementById('auth-tpl');
+  if (authTpl) {
+    let am = null, back = null;
+    const closeAm = () => {
+      if (!am) return;
+      const el = am; am = null;
+      html.classList.remove('am-open'); el.classList.remove('is-on');
+      if (window.NB_LENIS) NB_LENIS.start();
+      setTimeout(() => el.remove(), 300);
+      if (back) back.focus();
+    };
+    const openAm = (link, name) => {
+      am = document.createElement('div');
+      am.className = 'am'; am.setAttribute('role', 'dialog'); am.setAttribute('aria-modal', 'true'); am.setAttribute('aria-label', 'Sign in');
+      am.innerHTML = '<div class="am-in"></div>';
+      am.firstChild.append(authTpl.content.cloneNode(true));
+      am.querySelectorAll('.rv').forEach(x => x.classList.replace('rv', 'is-in'));
+      document.body.append(am);
+      initAuth(am)(name);
+      back = link;
+      html.classList.add('am-open');
+      if (window.NB_LENIS) NB_LENIS.stop();
+      am.addEventListener('mousedown', e => { if (!e.target.closest('.auth-box')) closeAm(); });
+      am.getBoundingClientRect();
+      am.classList.add('is-on');
+      const f = am.querySelector('form:not([hidden]) input'); if (f) f.focus({ preventScroll: true });
+    };
+    document.addEventListener('click', e => {
+      const a = e.target.closest && e.target.closest('a[href^="login.html"]');
+      if (!a || MOB.matches || e.ctrlKey || e.metaKey || e.shiftKey || e.button) return;
+      e.preventDefault(); e.stopPropagation();
+      openAm(a, /#signup$/.test(a.getAttribute('href')) ? 'up' : 'in');
+    }, true);
+    addEventListener('keydown', e => {
+      if (!am) return;
+      if (e.key === 'Escape') return closeAm();
+      if (e.key !== 'Tab') return;
+      const all = [...am.querySelectorAll('button, input, a')].filter(x => x.offsetParent), i = all.indexOf(document.activeElement);
+      if (e.shiftKey ? i <= 0 : i === all.length - 1) { e.preventDefault(); all[e.shiftKey ? all.length - 1 : 0].focus(); }
+    });
+    MOB.addEventListener('change', e => { if (e.matches) closeAm(); });
   }
 
   // появление при прокрутке

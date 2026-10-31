@@ -16,16 +16,18 @@
   --ex: calc((var(--hh) - 954 * var(--u)) / 2);
   position: sticky; top: min(0px, calc(100svh - var(--hh))); height: var(--hh);
   overflow: hidden; isolation: isolate;
-  transform: translateY(calc(var(--p, 0) * -40 * var(--u)));
+  will-change: transform;
 }
-.hero > :not(.hero-dim) { filter: blur(calc(var(--p, 0) * 18 * var(--u))); }
-.hero-dim { position: absolute; inset: 0; z-index: 5; pointer-events: none; background: #0a0712; opacity: calc(var(--p, 0) * .22); }
+/* уход под лист: js/v2.js проявляет готовый размытый кадр и гасит текст — живой blur всего экрана с роликом стоил 20+ мс на кадр */
+.hero-soft { position: absolute; left: 0; top: 0; width: 100%; height: auto; opacity: 0; will-change: opacity; }
+.hero.is-soft .hero-count { backdrop-filter: none; -webkit-backdrop-filter: none; }
+.hero-dim { position: absolute; inset: 0; z-index: 5; pointer-events: none; background: #0a0712; opacity: 0; }
 /* видео как в макете: слой 2108×1026 при −135/−81 (масштаб 1,098), видна верхняя часть кадра.
    Ролик уже обрезан по видимой ширине (с 120-го px исходника) — коробка от −3,25 шириной 1927,9;
    низ у 945, в высоком окне коробка дорастает вниз вместе с героем */
 .hero-media { position: absolute; z-index: -4; left: calc(-3.25 * var(--u)); top: calc(-81 * var(--u)); width: calc(1927.9 * var(--u)); bottom: calc(9 * var(--u)); overflow: hidden; }
 .hero-poster { position: absolute; left: 0; top: 0; width: 100%; height: auto; }
-.hero-video { position: relative; display: block; width: 100%; height: auto; scale: calc(1 + var(--p, 0) * .04); }
+.hero-video { position: relative; display: block; width: 100%; height: auto; }
 /* «тень» — затемнение слева под текст, .44 */
 .hero-shade { position: absolute; z-index: -3; pointer-events: none; opacity: .44;
   left: calc(-372 * var(--u)); top: calc(-96 * var(--u)); width: calc(2303 * var(--u)); height: calc(1024 * var(--u) + var(--ex) * 2);
@@ -86,8 +88,8 @@
 /* лого: слой 916×249 при (502, 65), свечение SVG выходит за слой на 18,59 % × 5,05 % */
 .b2-logo { position: absolute; z-index: -1; left: calc(455.74 * var(--u)); top: calc(18.71 * var(--u)); width: calc(1008.6 * var(--u)); height: calc(341.6 * var(--u)); max-width: none; pointer-events: none;
   transform: translate3d(0, var(--py, 0), 0) scale(var(--ps, 1)); transform-origin: 50% 70%; will-change: transform; }
-/* девушка: слой 600×813 при (673, 170) — чуть обгоняет прокрутку (ближний план), лого за ней уходит вниз */
-.b2-woman { position: absolute; z-index: -1; left: calc(673 * var(--u)); top: calc(170 * var(--u)); width: calc(600 * var(--u)); height: calc(813 * var(--u)); max-width: none; pointer-events: none; transform: translate3d(0, var(--py, 0), 0); will-change: transform; }
+/* персонаж: слой 737×915 при (572, 80) — чуть обгоняет прокрутку (ближний план), лого за ним уходит вниз */
+.b2-char { position: absolute; z-index: -1; left: calc(572 * var(--u)); top: calc(80 * var(--u)); width: calc(737 * var(--u)); height: calc(915 * var(--u)); max-width: none; pointer-events: none; transform: translate3d(0, var(--py, 0), 0); will-change: transform; }
 /* «тень 2» (0, 399) 1931×596: уход арта и девушки в фон — многоточечный спад вместо линейного */
 .b2-shade { position: absolute; z-index: -1; left: 0; right: 0; top: calc(399 * var(--u)); height: calc(596 * var(--u)); pointer-events: none;
   background: linear-gradient(180deg, rgba(10, 7, 18, 0) 0%, rgba(10, 7, 18, .13) 10%, rgba(10, 7, 18, .27) 20%, rgba(10, 7, 18, .4) 30%, rgba(10, 7, 18, .54) 40%, rgba(10, 7, 18, .67) 50%, rgba(10, 7, 18, .78) 60%, rgba(10, 7, 18, .85) 70%, rgba(10, 7, 18, .9) 80%, rgba(10, 7, 18, .95) 90%, var(--bg) 100%); }
@@ -144,7 +146,7 @@
 
 /* легенда: 330×607 при (20, 34) */
 .mm-lg { position: absolute; left: calc(20 * var(--u)); top: calc(34 * var(--u)); width: calc(330 * var(--u)); height: calc(607 * var(--u)); display: flex; flex-direction: column; padding: calc(33 * var(--u)) 0 0 calc(25 * var(--u));
-  border-radius: calc(24 * var(--u)); border: 1px solid rgba(255, 222, 242, .1); background: rgba(18, 9, 32, .55); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); overflow: hidden; }
+  border-radius: calc(24 * var(--u)); border: 1px solid rgba(255, 222, 242, .1); background: rgba(18, 9, 32, .66); overflow: hidden; }
 .mm-lg > * { margin-right: calc(25 * var(--u)); }
 .mm-kicker { padding-left: calc(2 * var(--u)); font: 600 calc(10 * var(--t))/1.2 'Inter Tight', var(--f-body); letter-spacing: calc(6 * var(--t)); text-transform: uppercase; color: #ff6fa5; text-shadow: 0 0 8.4px rgba(255, 111, 165, .65); }
 .mm-title { margin: calc(14 * var(--u)) 0 0; font: 600 calc(35 * var(--u))/.96 'Inter Tight', var(--f-body); letter-spacing: calc(-2 * var(--u)); color: #fff; text-shadow: 0 0 18.1px rgba(255, 255, 255, .58); }
@@ -196,7 +198,7 @@
 
 /* карточка места: 372×524 при (906, 34) */
 .mm-card { --c: #f3e3ec; position: absolute; left: calc(906 * var(--u)); top: calc(34 * var(--u)); width: calc(372 * var(--u)); padding: calc(25 * var(--u)) calc(25 * var(--u)) calc(20 * var(--u));
-  border-radius: calc(24 * var(--u)); border: 1px solid rgba(255, 222, 242, .12); background: rgba(18, 9, 32, .8); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); overflow: hidden;
+  border-radius: calc(24 * var(--u)); border: 1px solid rgba(255, 222, 242, .12); background: rgba(18, 9, 32, .8); overflow: hidden;
   transition: opacity .35s var(--ease-out), transform .45s var(--ease-out); }
 .mm-card[hidden] { display: block; opacity: 0; transform: translateX(calc(16 * var(--u))); pointer-events: none; }
 .mm-card::before { content: ''; position: absolute; z-index: -1; right: calc(-84 * var(--u)); top: calc(-160 * var(--u)); width: calc(378 * var(--u)); height: calc(328 * var(--u)); border-radius: 50%; pointer-events: none;
@@ -229,7 +231,7 @@
 
 /* зум: столбик справа снизу, над кнопкой «Open map» */
 .mm-zoom { position: absolute; right: calc(22 * var(--u)); bottom: calc(60 * var(--u)); display: flex; flex-direction: column; align-items: center; padding: calc(4 * var(--t)); border-radius: calc(14 * var(--t));
-  border: 1px solid rgba(255, 222, 242, .12); background: rgba(18, 9, 32, .7); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+  border: 1px solid rgba(255, 222, 242, .12); background: rgba(18, 9, 32, .7); }
 .mm-card:not([hidden]) ~ .mm-zoom { right: calc(404 * var(--u)); }
 .mm-zoom button { width: calc(36 * var(--t)); height: calc(36 * var(--t)); display: grid; place-items: center; padding: 0; border: 0; border-radius: calc(10 * var(--t)); background: none; color: #cdbfd6; transition: background .2s, color .2s; }
 .mm-zoom button:hover { background: rgba(255, 236, 248, .1); color: #fff; }
@@ -248,7 +250,7 @@
 .wire { position: relative; z-index: 2; isolation: isolate; width: calc(1300 * var(--u)); margin-left: calc(310 * var(--u)); padding-top: calc(40 * var(--u)); }
 .wire-fx-v { left: calc(-780 * var(--u)); top: calc(300 * var(--u)); }
 .wire-fx-p { right: calc(-640 * var(--u)); top: calc(620 * var(--u)); }
-.wire-leaf { left: calc(-470 * var(--u)); top: calc(560 * var(--u)); rotate: -24deg; opacity: .7; }
+.wire-leaf { left: calc(-470 * var(--u)); top: calc(560 * var(--u)); rotate: -24deg; opacity: .3; }
 .wire .ls { height: calc(660 * var(--u)); margin-top: calc(48 * var(--u)); }
 .wire .ls-dek { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .wire-row { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(3, 1fr); gap: calc(20 * var(--u)); margin-top: calc(-118 * var(--u)); padding: 0 calc(48 * var(--u)); }

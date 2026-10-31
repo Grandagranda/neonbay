@@ -12,9 +12,6 @@
 .v2 .nav a:hover { background: none; opacity: .7; }
 .v2 .nav a.is-active::after { display: none; }
 .v2 .hdr-tools { margin-left: auto; gap: calc(18 * var(--t)); }
-.v2 .lang { gap: calc(1 * var(--t)); padding: calc(1 * var(--t)); border-radius: calc(6 * var(--t)); border: 1px solid rgba(255, 255, 255, .36); transform: translateY(calc(3 * var(--t))); }
-.v2 .lang button { width: calc(37 * var(--t)); height: calc(30 * var(--t)); padding: 0; border-radius: calc(4 * var(--t)); font: 500 calc(13 * var(--t))/1.35 'Inter Tight', var(--f-body); letter-spacing: 0; text-transform: uppercase; color: #fff; }
-.v2 .lang button.is-on { background: rgba(255, 255, 255, .24); backdrop-filter: blur(4.4px); -webkit-backdrop-filter: blur(4.4px); }
 .v2 .hdr-cta.btn { --h: calc(40 * var(--t)); padding: 0 calc(44 * var(--t)); border-radius: calc(28 * var(--t)); background: #ffc080; box-shadow: none; color: #0f0c1a; font: 500 calc(15 * var(--t))/1.35 'Inter Tight', var(--f-body); }
 .v2 .hdr-cta.btn:hover { background: #ffcb96; box-shadow: none; }
 .hero-kicker { display: flex; align-items: center; gap: calc(10 * var(--t)); font: 600 calc(12 * var(--t))/calc(12 * var(--t)) 'Inter Tight', var(--f-body); letter-spacing: calc(6 * var(--t)); text-transform: uppercase; color: #ff6fa5; text-shadow: 0 0 calc(16.8 * var(--t)) rgba(255, 111, 165, .65); white-space: nowrap; }
@@ -84,11 +81,12 @@
 .fx { position: absolute; z-index: -1; max-width: none; pointer-events: none; user-select: none; }
 .fx-v { width: calc(1458 * var(--u)); }
 .fx-p { width: calc(1408 * var(--u)); }
-.fx-leaf { width: calc(852 * var(--u)); mix-blend-mode: overlay; }
+/* лист без mix-blend-mode: смешивание с тем, что под ним, пересчитывалось на каждом кадре прокрутки */
+.fx-leaf { width: calc(852 * var(--u)); opacity: .42; }
 
 /* плашка в духе отсчёта: стекло, цифры Bebas с розовым свечением, подписи снизу, тонкие разделители */
 .pl { display: inline-flex; align-items: center; gap: calc(30 * var(--t)); height: calc(118 * var(--t)); padding: 0 calc(34 * var(--t)); border-radius: calc(18.51 * var(--t));
-  border: calc(1.157 * var(--t)) solid rgba(255, 222, 242, .12); background: rgba(32, 2, 25, .43); backdrop-filter: blur(calc(16.2 * var(--t))); -webkit-backdrop-filter: blur(calc(16.2 * var(--t))); }
+  border: calc(1.157 * var(--t)) solid rgba(255, 222, 242, .12); background: rgba(32, 2, 25, .6); }
 .pl-i { display: flex; flex-direction: column; align-items: center; gap: calc(11 * var(--t)); }
 .pl-i b { font: 400 calc(59 * var(--t))/calc(46.27 * var(--t)) 'Bebas Neue', var(--f-display); letter-spacing: calc(-1.157 * var(--t)); color: #fff4f9; text-shadow: 0 0 calc(16.2 * var(--t)) rgba(255, 111, 165, .32); }
 .pl-i span { font: 500 calc(15.04 * var(--t))/1 'Inter Tight', var(--f-body); color: rgba(205, 191, 214, .43); white-space: nowrap; }
@@ -99,7 +97,7 @@
    На наведении: рамка в цвет метки, кадр приближается, снизу кадра пробегает полоса цвета метки (как полоса карточки места),
    кружок со стрелкой заливается закатом */
 .sc { position: relative; isolation: isolate; display: flex; flex-direction: column; padding: calc(12 * var(--u)); border-radius: calc(24 * var(--u)); border: 1px solid var(--gl);
-  background: rgba(18, 9, 32, .66); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); transition: border-color .45s var(--ease-out), background .45s; }
+  background: rgba(18, 9, 32, .66); transition: border-color .45s var(--ease-out), background .45s; }
 .sc:hover { border-color: color-mix(in srgb, var(--kc) 45%, transparent); background: rgba(26, 13, 42, .76); }
 .sc-img { position: relative; display: block; aspect-ratio: 16 / 10; border-radius: calc(16 * var(--u)); overflow: hidden; background: #130923; }
 .sc-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease-out); }
@@ -143,7 +141,7 @@
 
 /* ---------- бегущая строка «в эфире» ---------- */
 .tick { position: relative; isolation: isolate; display: flex; align-items: center; height: calc(52 * var(--t)); border-radius: calc(26 * var(--t)); border: 1px solid rgba(255, 222, 242, .14);
-  background: rgba(18, 9, 32, .62); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); overflow: hidden; }
+  background: rgba(18, 9, 32, .74); overflow: hidden; }
 .tick-live { position: relative; z-index: 2; flex: none; display: inline-flex; align-items: center; gap: calc(9 * var(--t)); height: 100%; padding: 0 calc(20 * var(--t)) 0 calc(22 * var(--t));
   background: #ff6fa5; color: #1a0712; font: 700 calc(12 * var(--t))/1 'Inter Tight', var(--f-body); letter-spacing: .24em; text-transform: uppercase; box-shadow: 0 0 calc(24 * var(--t)) rgba(255, 111, 165, .55); }
 .tick-live i { width: calc(7 * var(--t)); height: calc(7 * var(--t)); border-radius: 50%; background: #fff; animation: tick-blink 1.6s ease-in-out infinite; }
@@ -194,7 +192,7 @@
 .crew-ctas { position: absolute; left: 0; top: calc(314.5 * var(--u)); display: flex; flex-direction: column; gap: calc(12 * var(--u)); width: calc(440 * var(--t)); }
 /* кнопка-плашка: стекло отсчёта; на наведении заливается цветом сервиса */
 .cta { --brand: #229ed9; position: relative; isolation: isolate; overflow: hidden; display: flex; align-items: center; gap: calc(16 * var(--t)); height: calc(84 * var(--t)); padding: 0 calc(22 * var(--t)) 0 calc(16 * var(--t));
-  border-radius: calc(18.51 * var(--t)); border: calc(1.157 * var(--t)) solid rgba(255, 222, 242, .14); background: rgba(32, 2, 25, .5); backdrop-filter: blur(calc(16.2 * var(--t))); -webkit-backdrop-filter: blur(calc(16.2 * var(--t)));
+  border-radius: calc(18.51 * var(--t)); border: calc(1.157 * var(--t)) solid rgba(255, 222, 242, .14); background: rgba(32, 2, 25, .62);
   transition: border-color .45s var(--ease-out), box-shadow .6s var(--ease-out); }
 .cta::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--brand); opacity: 0; transition: opacity .45s var(--ease-out); }
 .cta:hover { border-color: transparent; box-shadow: 0 calc(16 * var(--t)) calc(46 * var(--t)) calc(-14 * var(--t)) color-mix(in srgb, var(--brand) 75%, transparent); }

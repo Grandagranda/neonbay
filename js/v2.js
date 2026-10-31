@@ -1,45 +1,61 @@
 // NeonBay v2 — общее для страниц по первым двум блокам главной:
-// наезд листа на липкую шапку (--p, шапка размывается), параллакс слоёв по скроллу, полоса чтения, оглавление, «скопировать ссылку».
+// наезд листа на липкую шапку (шапка уходит в размытие), параллакс слоёв по скроллу, полоса чтения, оглавление, «скопировать ссылку».
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches, MOB = !!(window.NB_MOB && NB_MOB.matches);
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
   const jobs = [];
 
-  // ---- наезд: --p (0…1) у стопки — насколько лист [data-sheet] закрыл шапку [data-hero]; ролик закрытой шапки стоит ----
+  // ---- наезд: p (0…1) — насколько лист [data-sheet] закрыл шапку [data-hero]; ролик закрытой шапки стоит ----
+  // Каждая работа сначала читает, а записи возвращает функцией: чтение после записи заставляло браузер пересчитывать стили внутри кадра.
+  // Только opacity и transform нескольких слоёв: их ведёт видеокарта. --p на стопке пересчитывал стили всего блока, а blur шёл по экрану с роликом
   document.querySelectorAll('[data-stack]').forEach(stack => {
     const sheet = stack.querySelector('[data-sheet]'), hero = stack.querySelector('[data-hero]');
     if (!sheet || !hero) return;
     const video = hero.querySelector('video'), dim = hero.querySelector('.hero-dim');
-    let covered = false;
+    const soft = hero.querySelector('[data-soft]'), fades = [...hero.querySelectorAll('[data-fade]')];
+    let covered = false, last = -1;
     // отсчёт от того места, где лист стоит при открытии страницы (шапка бывает ниже окна — тогда лист уже виден)
     jobs.push(vh => {
       const start = Math.min(vh, hero.offsetHeight);
-      const p = clamp((start - sheet.getBoundingClientRect().top) / start, 0, 1);
-      // телефон: только затемнение одного слоя. --p на стопке пересчитывал бы стили всего блока на каждый кадр прокрутки
-      if (MOB) { if (dim) dim.style.opacity = (p * .5).toFixed(3); }
-      else stack.style.setProperty('--p', p.toFixed(3));
-      if (video && (p >= 1) !== covered) { covered = p >= 1; covered ? video.pause() : video.play().catch(() => {}); }
+      const p = +clamp((start - sheet.getBoundingClientRect().top) / start, 0, 1).toFixed(3);
+      if (p === last) return;
+      const u = document.documentElement.clientWidth / 1920, on = p > 0;
+      last = p;
+      return () => {
+        if (MOB) { if (dim) dim.style.opacity = (p * .5).toFixed(3); }
+        else {
+          hero.classList.toggle('is-soft', on);
+          hero.style.transform = on ? `translate3d(0, ${(-40 * u * p).toFixed(1)}px, 0)` : '';
+          if (dim) dim.style.opacity = (p * .22).toFixed(3);
+          if (soft) soft.style.opacity = Math.min(1, p * 1.5).toFixed(3);
+          const o = on ? (1 - Math.min(1, p * 1.6)).toFixed(3) : '';
+          fades.forEach(el => { el.style.transition = on ? 'none' : ''; el.style.opacity = o; });
+        }
+        if (video && (p >= 1) !== covered) { covered = p >= 1; covered ? video.pause() : video.play().catch(() => {}); }
+      };
     });
   });
 
   // ---- параллакс: слой отстаёт от прокрутки на долю k; опора — [data-par-root] или ближайшая секция ----
   // at — доля высоты окна, где слой стоит на своём месте; lo/hi — пределы сдвига в px макета;
-  // ps — уменьшение на px ухода вниз (лого блока 2 «уходит» за девушку). На телефоне параллакса нет: прокрутку ведёт система, сдвиг на JS отставал бы от пальца
+  // ps — уменьшение на px ухода вниз (лого блока 2 «уходит» за персонажа). На телефоне параллакса нет: прокрутку ведёт система, сдвиг на JS отставал бы от пальца
   if (!reduce && !MOB) {
     const par = [...document.querySelectorAll('[data-par]')].map(el => ({
       el, root: el.closest('[data-par-root]') || el.closest('section, footer') || el.parentElement,
       k: +el.dataset.par, lo: +(el.dataset.lo ?? -1e4), hi: +(el.dataset.hi ?? 1e4), ps: +(el.dataset.ps || 0), at: +(el.dataset.at || 0),
     }));
     if (par.length) jobs.push(vh => {
-      const u = document.documentElement.clientWidth / 1920;
-      par.forEach(({ el, root, k, lo, hi, ps, at }) => {
-        const r = root.getBoundingClientRect();
+      const u = document.documentElement.clientWidth / 1920, rects = new Map(), out = [];
+      par.forEach(item => {
+        const { root, k, lo, hi, ps, at } = item;
+        if (!rects.has(root)) rects.set(root, root.getBoundingClientRect());
+        const r = rects.get(root);
         if (r.bottom < -vh * .5 || r.top > vh * 1.5) return;
-        const t = clamp(r.top, -root.offsetHeight, vh);
-        const y = clamp((at * vh - t) * k, lo * u, hi * u);
-        el.style.setProperty('--py', y.toFixed(1) + 'px');
-        if (ps) el.style.setProperty('--ps', (1 - Math.max(0, y / u) * ps).toFixed(4));
+        const y = clamp((at * vh - clamp(r.top, -r.height, vh)) * k, lo * u, hi * u);
+        const tr = `translate3d(0, ${y.toFixed(1)}px, 0)` + (ps ? ` scale(${(1 - Math.max(0, y / u) * ps).toFixed(4)})` : '');
+        if (tr !== item.tr) { item.tr = tr; out.push(item); }
       });
+      return () => out.forEach(i => { i.el.style.transform = i.tr; });
     });
   }
 
@@ -47,12 +63,15 @@
   const bar = document.querySelector('[data-progress]'), prose = document.querySelector('[data-prose]');
   if (bar && prose) jobs.push(vh => {
     const r = prose.getBoundingClientRect();
-    bar.style.transform = `scaleX(${clamp((vh * .6 - r.top) / r.height, 0, 1).toFixed(4)})`;
+    const x = clamp((vh * .6 - r.top) / r.height, 0, 1).toFixed(4);
+    return () => { bar.style.transform = `scaleX(${x})`; };
   });
 
-  let raf = 0;
-  const run = () => { raf = 0; const vh = innerHeight; jobs.forEach(j => j(vh)); };
-  addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(run); }, { passive: true });
+  let raf = 0, seen = -1;
+  const run = () => { raf = 0; seen = scrollY; const vh = innerHeight; jobs.map(j => j(vh)).forEach(w => w && w()); };
+  addEventListener('scroll', () => { if (!raf && !window.NB_LENIS) raf = requestAnimationFrame(run); }, { passive: true });
+  // с Lenis слои двигаются в том же кадре, что и прокрутка: через событие scroll они отставали бы на кадр и дрожали относительно страницы
+  window.NB_FRAME = () => { if (scrollY !== seen) run(); };
   addEventListener('resize', run);
   run();
 

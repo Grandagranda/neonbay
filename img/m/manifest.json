@@ -1,0 +1,230 @@
+{
+ "img/b2-bay.webp": {
+  "m": "img/m/b2-bay.webp",
+  "w": 860,
+  "dw": 3840,
+  "crop": true
+ },
+ "img/b2-char.webp": {
+  "m": "img/m/b2-char.webp",
+  "w": 860,
+  "dw": 1474,
+  "crop": false
+ },
+ "img/b2-bg.webp": {
+  "m": "img/m/b2-bg.webp",
+  "w": 860,
+  "dw": 3840,
+  "crop": false
+ },
+ "img/map-neon.webp": {
+  "m": "img/m/map-neon-s.webp",
+  "w": 860,
+  "dw": 3336,
+  "crop": false
+ },
+ "img/nh-bg.webp": {
+  "m": "img/m/nh-bg.webp",
+  "w": 860,
+  "dw": 2688,
+  "crop": true
+ },
+ "img/nh-man-bag.webp": {
+  "m": "img/m/nh-man-bag.webp",
+  "w": 620,
+  "dw": 1224,
+  "crop": false
+ },
+ "img/nh-man-shirt.webp": {
+  "m": "img/m/nh-man-shirt.webp",
+  "w": 620,
+  "dw": 1316,
+  "crop": false
+ },
+ "img/hero-station.jpg": {
+  "m": "img/m/hero-station.webp",
+  "w": 880,
+  "dw": 2752,
+  "crop": true
+ },
+ "img/char-gun.webp": {
+  "m": "img/m/char-gun.webp",
+  "w": 460,
+  "dw": 912,
+  "crop": false
+ },
+ "img/char-girl.webp": {
+  "m": "img/m/char-girl.webp",
+  "w": 400,
+  "dw": 712,
+  "crop": false
+ },
+ "img/char-suit.webp": {
+  "m": "img/m/char-suit.webp",
+  "w": 440,
+  "dw": 772,
+  "crop": false
+ },
+ "img/bill-1.webp": {
+  "m": "img/m/bill-1.webp",
+  "w": 200,
+  "dw": 620,
+  "crop": false
+ },
+ "img/bill-3.webp": {
+  "m": "img/m/bill-3.webp",
+  "w": 200,
+  "dw": 594,
+  "crop": false
+ },
+ "img/ftr-club.webp": {
+  "m": "img/m/ftr-club.webp",
+  "w": 860,
+  "dw": 2400,
+  "crop": true
+ },
+ "img/glow-violet.webp": {
+  "m": "img/m/glow-violet.webp",
+  "w": 760,
+  "dw": 1458,
+  "crop": false
+ },
+ "img/glow-plum.webp": {
+  "m": "img/m/glow-plum.webp",
+  "w": 760,
+  "dw": 1408,
+  "crop": false
+ },
+ "img/ocean-drive.jpg": {
+  "m": "img/m/ocean-drive.webp",
+  "w": 860,
+  "dw": 1792,
+  "crop": false
+ },
+ "img/cover-duo.jpg": {
+  "m": "img/m/cover-duo.webp",
+  "w": 880,
+  "dw": 2752,
+  "crop": true
+ },
+ "img/emblem.jpg": {
+  "m": "img/m/emblem.webp",
+  "w": 720,
+  "dw": 1400,
+  "crop": false
+ },
+ "img/gta6-box.webp": {
+  "m": "img/m/gta6-box.webp",
+  "w": 200,
+  "dw": 420,
+  "crop": false
+ },
+ "img/news/album-spotify-card.webp": {
+  "m": "img/m/news-album-spotify-card.webp",
+  "w": 720,
+  "dw": 960,
+  "crop": false
+ },
+ "img/news/album-spotify-cover.webp": {
+  "m": "img/m/news-album-spotify-cover.webp",
+  "w": 860,
+  "dw": 1280,
+  "crop": false
+ },
+ "img/news/heists-explained-card.webp": {
+  "m": "img/m/news-heists-explained-card.webp",
+  "w": 720,
+  "dw": 960,
+  "crop": false
+ },
+ "img/news/heists-explained-cover.webp": {
+  "m": "img/m/news-heists-explained-cover.webp",
+  "w": 860,
+  "dw": 1170,
+  "crop": false
+ },
+ "img/news/launch-checklist-card.webp": {
+  "m": "img/m/news-launch-checklist-card.webp",
+  "w": 720,
+  "dw": 960,
+  "crop": false
+ },
+ "img/news/launch-checklist-cover.webp": {
+  "m": "img/m/news-launch-checklist-cover.webp",
+  "w": 860,
+  "dw": 1600,
+  "crop": false
+ },
+ "img/news/leonida-regions-card.webp": {
+  "m": "img/m/news-leonida-regions-card.webp",
+  "w": 720,
+  "dw": 960,
+  "crop": false
+ },
+ "img/news/leonida-regions-cover.webp": {
+  "m": "img/m/news-leonida-regions-cover.webp",
+  "w": 860,
+  "dw": 1600,
+  "crop": false
+ },
+ "img/news/nightlife-leak-card.webp": {
+  "m": "img/m/news-nightlife-leak-card.webp",
+  "w": 720,
+  "dw": 960,
+  "crop": false
+ },
+ "img/news/nightlife-leak-cover.webp": {
+  "m": "img/m/news-nightlife-leak-cover.webp",
+  "w": 860,
+  "dw": 1600,
+  "crop": false
+ },
+ "img/news/pc-beta-scam-card.webp": {
+  "m": "img/m/news-pc-beta-scam-card.webp",
+  "w": 720,
+  "dw": 960,
+  "crop": false
+ },
+ "img/news/pc-beta-scam-cover.webp": {
+  "m": "img/m/news-pc-beta-scam-cover.webp",
+  "w": 860,
+  "dw": 1600,
+  "crop": false
+ },
+ "img/news/trailer-locations-card.webp": {
+  "m": "img/m/news-trailer-locations-card.webp",
+  "w": 720,
+  "dw": 960,
+  "crop": false
+ },
+ "img/news/trailer-locations-cover.webp": {
+  "m": "img/m/news-trailer-locations-cover.webp",
+  "w": 860,
+  "dw": 1600,
+  "crop": false
+ },
+ "img/news/ultimate-edition-card.webp": {
+  "m": "img/m/news-ultimate-edition-card.webp",
+  "w": 720,
+  "dw": 960,
+  "crop": false
+ },
+ "img/news/ultimate-edition-cover.webp": {
+  "m": "img/m/news-ultimate-edition-cover.webp",
+  "w": 860,
+  "dw": 1280,
+  "crop": false
+ },
+ "img/news/vinyl-records-card.webp": {
+  "m": "img/m/news-vinyl-records-card.webp",
+  "w": 720,
+  "dw": 960,
+  "crop": false
+ },
+ "img/news/vinyl-records-cover.webp": {
+  "m": "img/m/news-vinyl-records-cover.webp",
+  "w": 860,
+  "dw": 1080,
+  "crop": false
+ }
+}

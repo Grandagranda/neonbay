@@ -81,3 +81,32 @@
   .auth-box { padding: 6px; border-radius: 22px; }
   .auth-form { padding: 24px 16px 16px; }
 }
+
+/* ---------- ПК (не телефон, тот же запрос, что NB_MOB): вход — окно по Figma 4065:1853 / 4065:2939. Поверх страницы — .am, на login.html — поверх размытого арта ---------- */
+@media (min-width: 901px) and (min-height: 521px), (min-width: 1101px) {
+  .auth-box { position: relative; padding: 10px; border-color: rgba(255, 222, 242, .15); background: #1f1927; }
+  .auth-box .seg { border-color: rgba(255, 222, 242, .09); }
+  .auth-box .seg-ind { background: rgba(255, 236, 248, .09); box-shadow: inset 0 0 0 1px rgba(255, 222, 242, .15), 0 4px 8px rgba(0, 0, 0, .3); }
+  .auth-box .input { height: 52px; border-radius: 10px; border-color: #382f3b; background: #19111d; }
+  .auth-box .input:focus { border-color: rgba(255, 141, 184, .65); }
+  .auth-box .btn-primary { border-radius: 12px; }
+  .auth-box .auth-link { text-decoration: none; }
+  .auth-box .auth-h h2 { font: italic 800 36px/.98 'Inter Tight', var(--f-body); letter-spacing: -.72px; }
+
+  .auth { position: relative; display: flex; align-items: center; justify-content: center; }
+  .auth-art { position: absolute; inset: 0; }
+  .auth-art > img { filter: blur(6px); transform: scale(1.04); }
+  .auth-art::after { background: rgba(3, 1, 4, .54); }
+  .auth-pitch { display: none; }
+  .auth-side { width: 100%; overflow: visible; background: none; }
+
+  .am { position: fixed; inset: 0; z-index: 120; display: flex; overflow-y: auto; overscroll-behavior: contain; padding: 24px; background: rgba(3, 1, 4, .54); backdrop-filter: blur(5.5px); -webkit-backdrop-filter: blur(5.5px); opacity: 0; transition: opacity .3s var(--ease-out); }
+  .am.is-on { opacity: 1; }
+  .am-in { position: relative; isolation: isolate; display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 620px; margin: auto; }
+  .am-in::before { content: ''; position: absolute; z-index: -1; left: 50%; top: 0; width: 620px; height: 520px; margin-left: -310px; pointer-events: none; background: radial-gradient(closest-side, rgba(255, 111, 165, .1), rgba(196, 138, 255, .05) 55%, transparent); }
+  .am .auth-box { translate: 0 14px; transition: translate .45s var(--ease-out); }
+  .am.is-on .auth-box { translate: none; }
+  .am .auth-legal { letter-spacing: .44px; }
+  html.am-open { overflow: hidden; }
+  html.am-open body { overflow: hidden; }
+}

@@ -19,6 +19,7 @@
 <link rel="stylesheet" href="css/v2.css">
 <link rel="stylesheet" href="css/news.css">
 <link rel="stylesheet" href="css/mobile.css" media="(max-width: 900px), (max-width: 1100px) and (max-height: 520px)">
+<link rel="stylesheet" href="css/auth.css" media="(min-width: 901px)">
 </head>
 <body class="p-article v2">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -54,9 +55,6 @@
       <a href="map.html" data-nav="map">Map</a>
     </nav>
     <div class="hdr-tools">
-      <div class="lang" role="group" aria-label="Language">
-        <button class="is-on" type="button">EN</button><button type="button">RU</button>
-      </div>
       <a class="btn btn-primary btn-sm hdr-cta" href="login.html">Sign in</a>
       <button class="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="mnav" id="burger"><span></span></button>
     </div>
@@ -81,9 +79,6 @@
         <a class="hb hb-tg" href="#" rel="noopener"><svg viewBox="0 0 15.8 13.24"><use href="#i-tg-s"/></svg><span class="hb-t"><span data-t="Telegram">Telegram</span></span></a>
         <a class="hb hb-dc" href="#" rel="noopener"><svg viewBox="0 0 18.4 11.93"><use href="#i-dc-s"/></svg><span class="hb-t"><span data-t="Discord">Discord</span></span></a>
       </div>
-      <div class="lang" role="group" aria-label="Language">
-        <button class="is-on" type="button">EN</button><button type="button">RU</button>
-      </div>
     </div>
   </div>
 </nav>
@@ -97,10 +92,10 @@
   <section class="ah" data-hero data-k="leak" style="--arn:0.8">
     <img class="ah-amb" src="img/news/nightlife-leak-amb.webp" alt="" aria-hidden="true">
     <div class="ah-shade" aria-hidden="true"></div>
-    <img class="fx fx-leaf ah-leaf" src="img/leaf-o1.svg" alt="" aria-hidden="true" loading="lazy">
-    <figure class="ah-cover rv" style="--d:.1s"><img src="img/news/nightlife-leak-cover.webp" srcset="img/m/news-nightlife-leak-cover.webp 860w, img/news/nightlife-leak-cover.webp 1600w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 1600px" alt="" style="object-position:50% 60%"></figure>
+    <img decoding="async" class="fx fx-leaf ah-leaf" src="img/leaf-o1.svg" alt="" aria-hidden="true" loading="lazy">
+    <figure class="ah-cover rv" data-fade style="--d:.1s"><img src="img/news/nightlife-leak-cover.webp" srcset="img/m/news-nightlife-leak-cover.webp 860w, img/news/nightlife-leak-cover.webp 1600w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 1600px" alt="" style="object-position:50% 60%"></figure>
 
-    <div class="ah-in">
+    <div class="ah-in" data-fade>
       <nav class="crumbs rv" aria-label="Breadcrumbs"><a href="index.html">Home</a><svg><use href="#i-chev"/></svg><a href="news.html">News</a><svg><use href="#i-chev"/></svg><a href="news.html#leak">Leak</a></nav>
       <div class="ah-meta rv" style="--d:.04s"><span class="kk">Leak</span><span class="st st-unconfirmed"><svg><use href="#i-q"/></svg>Unconfirmed</span></div>
       <h1 class="ah-h rv" style="--d:.08s">Leak: Vice City’s nightlife could be bigger than the trailers show.</h1>
@@ -119,9 +114,9 @@
 
   <!-- ЛИСТ СТАТЬИ: текст слева, справа липкая колонка — карточка проверки (как карточка места на карте) и оглавление -->
   <article class="sheet ab" data-sheet data-k="leak">
-    <img class="fx fx-v ab-fx-v" src="img/glow-violet.webp" srcset="img/m/glow-violet.webp 760w, img/glow-violet.webp 1458w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 1458px" alt="" aria-hidden="true" loading="lazy">
-    <img class="fx fx-p ab-fx-p" src="img/glow-plum.webp" srcset="img/m/glow-plum.webp 760w, img/glow-plum.webp 1408w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 1408px" alt="" aria-hidden="true" loading="lazy">
-    <img class="fx fx-leaf ab-leaf" src="img/leaf-o2.svg" alt="" aria-hidden="true" loading="lazy">
+    <img decoding="async" class="fx fx-v ab-fx-v" src="img/glow-violet.webp" srcset="img/m/glow-violet.webp 760w, img/glow-violet.webp 1458w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 1458px" alt="" aria-hidden="true" loading="lazy">
+    <img decoding="async" class="fx fx-p ab-fx-p" src="img/glow-plum.webp" srcset="img/m/glow-plum.webp 760w, img/glow-plum.webp 1408w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 1408px" alt="" aria-hidden="true" loading="lazy">
+    <img decoding="async" class="fx fx-leaf ab-leaf" src="img/leaf-o2.svg" alt="" aria-hidden="true" loading="lazy">
 
     <div class="ab-grid">
       <div class="prose" data-prose>
@@ -163,7 +158,7 @@
       </div>
       <div class="more-grid">
           <a class="sc rv" style="--d:0s" href="news-vinyl-records.html" data-k="news" data-q="rockstar has officially announced the release of vinyl records for gta vi. the soundtrack is getting a physical release. here is what is confirmed, what is not, and how to avoid the fake pre-order pages that showed up within an hour. news">
-          <span class="sc-img"><img src="img/news/vinyl-records-card.webp" srcset="img/m/news-vinyl-records-card.webp 720w, img/news/vinyl-records-card.webp 960w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 960px" alt="" loading="lazy" style="object-position:50% 40%"></span>
+          <span class="sc-img"><img decoding="async" src="img/news/vinyl-records-card.webp" srcset="img/m/news-vinyl-records-card.webp 720w, img/news/vinyl-records-card.webp 960w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 960px" alt="" loading="lazy" style="object-position:50% 40%"></span>
           <span class="sc-body">
             <span class="sc-meta"><span class="kk">News</span><span class="st st-confirmed"><svg><use href="#i-check"/></svg>Confirmed</span></span>
             <span class="sc-h">Rockstar has officially announced the release of vinyl records for GTA VI.</span>
@@ -171,7 +166,7 @@
           </span>
         </a>
           <a class="sc rv" style="--d:0.08s" href="news-album-spotify.html" data-k="news" data-q="rockstar has released the gta vi album on spotify. the official playlist is live. we listened through it, matched it to the trailers and flagged the uploads that only pretend to be official. news">
-          <span class="sc-img"><img src="img/news/album-spotify-card.webp" srcset="img/m/news-album-spotify-card.webp 720w, img/news/album-spotify-card.webp 960w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 960px" alt="" loading="lazy" style="object-position:30% 30%"></span>
+          <span class="sc-img"><img decoding="async" src="img/news/album-spotify-card.webp" srcset="img/m/news-album-spotify-card.webp 720w, img/news/album-spotify-card.webp 960w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 960px" alt="" loading="lazy" style="object-position:30% 30%"></span>
           <span class="sc-body">
             <span class="sc-meta"><span class="kk">News</span><span class="st st-confirmed"><svg><use href="#i-check"/></svg>Confirmed</span></span>
             <span class="sc-h">Rockstar has released the GTA VI album on Spotify.</span>
@@ -179,7 +174,7 @@
           </span>
         </a>
           <a class="sc rv" style="--d:0.16s" href="news-ultimate-edition.html" data-k="news" data-q="rockstar has revealed the contents of gta vi: ultimate edition. a breakdown of what the ultimate edition adds over the standard game — and which bonuses are only cosmetic. news">
-          <span class="sc-img"><img src="img/news/ultimate-edition-card.webp" srcset="img/m/news-ultimate-edition-card.webp 720w, img/news/ultimate-edition-card.webp 960w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 960px" alt="" loading="lazy" style="object-position:20% 50%"></span>
+          <span class="sc-img"><img decoding="async" src="img/news/ultimate-edition-card.webp" srcset="img/m/news-ultimate-edition-card.webp 720w, img/news/ultimate-edition-card.webp 960w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 960px" alt="" loading="lazy" style="object-position:20% 50%"></span>
           <span class="sc-body">
             <span class="sc-meta"><span class="kk">News</span><span class="st st-confirmed"><svg><use href="#i-check"/></svg>Confirmed</span></span>
             <span class="sc-h">Rockstar has revealed the contents of GTA VI: Ultimate Edition.</span>
@@ -194,14 +189,14 @@
   <!-- «Join the crew» (Figma 4048:1305): фото заправки XERON на всю ширину, трое из баннера Discord выходят за верхний край
        (параллакс по скроллу), размытые купюры по краям; кнопки-плашки Telegram/Discord в стекле отсчёта -->
   <section class="crew" data-par-root aria-labelledby="crew-t">
-    <div class="crew-bg" aria-hidden="true"><img src="img/hero-station.jpg" srcset="img/m/hero-station.webp 880w, img/hero-station.jpg 2752w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 2752px" alt="" loading="lazy" data-par=".2" data-at=".5" data-lo="-120" data-hi="220"></div>
+    <div class="crew-bg" aria-hidden="true"><img decoding="async" src="img/hero-station.jpg" srcset="img/m/hero-station.webp 880w, img/hero-station.jpg 2752w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 2752px" alt="" loading="lazy" data-par=".2" data-at=".5" data-lo="-120" data-hi="220"></div>
     <div class="crew-cast" aria-hidden="true">
-      <img class="crew-gun" src="img/char-gun.webp" srcset="img/m/char-gun.webp 460w, img/char-gun.webp 912w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 912px" alt="" loading="lazy" data-par="-.07" data-at=".5" data-lo="-45" data-hi="60">
-      <img class="crew-girl" src="img/char-girl.webp" srcset="img/m/char-girl.webp 400w, img/char-girl.webp 712w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 712px" alt="" loading="lazy" data-par="-.1" data-at=".5" data-lo="-60" data-hi="80">
-      <img class="crew-suit" src="img/char-suit.webp" srcset="img/m/char-suit.webp 440w, img/char-suit.webp 772w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 772px" alt="" loading="lazy" data-par="-.04" data-at=".5" data-lo="-30" data-hi="40">
+      <img decoding="async" class="crew-gun" src="img/char-gun.webp" srcset="img/m/char-gun.webp 460w, img/char-gun.webp 912w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 912px" alt="" loading="lazy" data-par="-.07" data-at=".5" data-lo="-45" data-hi="60">
+      <img decoding="async" class="crew-girl" src="img/char-girl.webp" srcset="img/m/char-girl.webp 400w, img/char-girl.webp 712w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 712px" alt="" loading="lazy" data-par="-.1" data-at=".5" data-lo="-60" data-hi="80">
+      <img decoding="async" class="crew-suit" src="img/char-suit.webp" srcset="img/m/char-suit.webp 440w, img/char-suit.webp 772w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 772px" alt="" loading="lazy" data-par="-.04" data-at=".5" data-lo="-30" data-hi="40">
     </div>
-    <span class="crew-bill crew-bill-1" aria-hidden="true"><img src="img/bill-1.webp" srcset="img/m/bill-1.webp 200w, img/bill-1.webp 620w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 620px" alt="" loading="lazy"></span>
-    <span class="crew-bill crew-bill-2" aria-hidden="true"><img src="img/bill-3.webp" srcset="img/m/bill-3.webp 200w, img/bill-3.webp 594w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 594px" alt="" loading="lazy"></span>
+    <span class="crew-bill crew-bill-1" aria-hidden="true"><img decoding="async" src="img/bill-1.webp" srcset="img/m/bill-1.webp 200w, img/bill-1.webp 620w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 620px" alt="" loading="lazy"></span>
+    <span class="crew-bill crew-bill-2" aria-hidden="true"><img decoding="async" src="img/bill-3.webp" srcset="img/m/bill-3.webp 200w, img/bill-3.webp 594w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 594px" alt="" loading="lazy"></span>
     <div class="crew-in">
       <span class="hero-kicker rv">Community</span>
       <h2 class="crew-t rv" style="--d:.06s" id="crew-t">Join the crew.</h2>
@@ -218,11 +213,11 @@
 <!-- подвал по Figma 4048:1348: «See you in Vice City» с отсчётом поверх клуба в глубокой тени, свечения и купюры;
      внизу лого, меню, «наверх» и юридическая строка. Единицы свои (--fu/--ft): подвал стоит и на старых страницах -->
 <footer class="ftr">
-  <div class="ftr-art" aria-hidden="true"><img src="img/ftr-club.webp" srcset="img/m/ftr-club.webp 860w, img/ftr-club.webp 2400w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 2400px" alt="" loading="lazy"></div>
-  <img class="ftr-fx ftr-fx-v" src="img/glow-violet.webp" srcset="img/m/glow-violet.webp 760w, img/glow-violet.webp 1458w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 1458px" alt="" aria-hidden="true" loading="lazy">
-  <img class="ftr-fx ftr-fx-p" src="img/glow-plum.webp" srcset="img/m/glow-plum.webp 760w, img/glow-plum.webp 1408w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 1408px" alt="" aria-hidden="true" loading="lazy">
-  <span class="ftr-bill ftr-bill-1" aria-hidden="true"><img src="img/hero-bill.webp" alt="" loading="lazy"></span>
-  <span class="ftr-bill ftr-bill-2" aria-hidden="true"><img src="img/hero-bill-2.webp" alt="" loading="lazy"></span>
+  <div class="ftr-art" aria-hidden="true"><img decoding="async" src="img/ftr-club.webp" srcset="img/m/ftr-club.webp 860w, img/ftr-club.webp 2400w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 2400px" alt="" loading="lazy"></div>
+  <img decoding="async" class="ftr-fx ftr-fx-v" src="img/glow-violet.webp" srcset="img/m/glow-violet.webp 760w, img/glow-violet.webp 1458w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 1458px" alt="" aria-hidden="true" loading="lazy">
+  <img decoding="async" class="ftr-fx ftr-fx-p" src="img/glow-plum.webp" srcset="img/m/glow-plum.webp 760w, img/glow-plum.webp 1408w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 1408px" alt="" aria-hidden="true" loading="lazy">
+  <span class="ftr-bill ftr-bill-1" aria-hidden="true"><img decoding="async" src="img/hero-bill.webp" alt="" loading="lazy"></span>
+  <span class="ftr-bill ftr-bill-2" aria-hidden="true"><img decoding="async" src="img/hero-bill-2.webp" alt="" loading="lazy"></span>
 
   <div class="ftr-stage">
     <span class="hero-kicker">Nov 19, 2026 · PS5 · Xbox Series X|S</span>
@@ -240,7 +235,7 @@
     </div>
   </div>
 
-  <a class="ftr-logo" href="index.html" aria-label="NeonBay — home"><img src="img/logo.svg" alt="NeonBay" width="126" height="35" loading="lazy"></a>
+  <a class="ftr-logo" href="index.html" aria-label="NeonBay — home"><img decoding="async" src="img/logo.svg" alt="NeonBay" width="126" height="35" loading="lazy"></a>
   <nav class="ftr-nav" aria-label="Footer">
     <a href="index.html">Home</a><a href="news.html">News</a><a href="map.html">Map</a>
   </nav>
@@ -251,6 +246,48 @@
   </div>
 </footer>
 
+<template id="auth-tpl">    <div class="auth-box rv" style="--d:.1s">
+      <div class="seg" role="tablist" data-seg>
+        <span class="seg-ind" aria-hidden="true"></span>
+        <button class="is-on" type="button" role="tab" data-tab="in">Sign in</button>
+        <button type="button" role="tab" data-tab="up">Create account</button>
+      </div>
+
+      <form class="auth-form" data-pane="in" action="account.html">
+        <div class="auth-h">
+          <h2>Welcome back</h2>
+          <p>Pick up where you left off on the map.</p>
+        </div>
+        <div class="field"><label for="in-email">Email</label><input class="input" id="in-email" type="email" placeholder="you@email.com" autocomplete="email" required></div>
+        <div class="field">
+          <label for="in-pass">Password</label>
+          <div class="pass"><input class="input" id="in-pass" type="password" placeholder="••••••••" autocomplete="current-password" required><button type="button" class="pass-eye" aria-label="Show password"><svg><use href="#i-eye"/></svg></button></div>
+        </div>
+        <div class="auth-row">
+          <label class="check"><input type="checkbox" checked><span></span>Remember me</label>
+          <a class="auth-link" href="#">Forgot password?</a>
+        </div>
+        <button class="btn btn-primary btn-block" type="submit">Sign in</button>
+      </form>
+
+      <form class="auth-form" data-pane="up" action="account.html" hidden>
+        <div class="auth-h">
+          <h2>Join NeonBay</h2>
+          <p>Free. Your progress stays yours.</p>
+        </div>
+        <div class="field"><label for="up-name">Display name</label><input class="input" id="up-name" type="text" placeholder="vicefan" autocomplete="username" required></div>
+        <div class="field"><label for="up-email">Email</label><input class="input" id="up-email" type="email" placeholder="you@email.com" autocomplete="email" required></div>
+        <div class="field">
+          <label for="up-pass">Password</label>
+          <div class="pass"><input class="input" id="up-pass" type="password" placeholder="At least 8 characters" autocomplete="new-password" minlength="8" required><button type="button" class="pass-eye" aria-label="Show password"><svg><use href="#i-eye"/></svg></button></div>
+          <div class="meter" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        </div>
+        <label class="check"><input type="checkbox" required><span></span>I agree to the <a class="auth-link" href="#">Terms</a> and <a class="auth-link" href="#">Privacy</a></label>
+        <button class="btn btn-primary btn-block" type="submit">Create account</button>
+      </form>
+    </div>
+    <p class="auth-legal mono">Unofficial fan project. Not affiliated with Rockstar Games or Take-Two Interactive.</p>
+</template>
 <script src="js/site.js"></script>
 <script src="js/v2.js"></script>
 </body>
