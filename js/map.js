@@ -216,7 +216,7 @@
       im.className = 'tile'; im.alt = ''; im.decoding = 'async'; im.fetchPriority = 'low';
       im.style.cssText = `left:${c / l.cols * 100}%;top:${r / l.rows * 100}%;width:${100 / l.cols + .02}%;height:${100 / l.rows + .02}%;z-index:${L}`;
       im.onload = () => im.classList.add('is-on');
-      im.src = `img/map/t/${k}.webp`;
+      im.src = `img/map/t/${k}.webp?v=2`; // v — после пересборки плиток, чтобы не брались старые из кэша
       tilesEl.appendChild(im); live.set(k, im);
     });
     // лишние: другой стиль и всё, когда хватает основы, — сразу; прежний уровень остаётся под новым, пока плиток не больше CAP

@@ -34,8 +34,14 @@
 .tile { position: absolute; max-width: none; opacity: 0; transition: opacity .3s var(--ease); }
 .tile.is-on { opacity: 1; }
 /* тень снизу под доком регионов (слой «тень 2»): многоточечный спад, без видимого края; поверх карты, под панелями */
-.stage-shade { position: absolute; left: 0; right: 0; bottom: 0; height: 34%; pointer-events: none;
-  background: linear-gradient(180deg, rgba(4, 3, 12, 0) 0%, rgba(4, 3, 12, .04) 20%, rgba(4, 3, 12, .12) 40%, rgba(4, 3, 12, .24) 60%, rgba(4, 3, 12, .38) 80%, rgba(4, 3, 12, .5) 100%); }
+.stage-shade { position: absolute; inset: 0; pointer-events: none;
+  /* атмосфера в тон сайта поверх карты (без швов: слой на всю сцену): фиолетовый свет сверху слева и розовый справа внизу —
+     цвета прежних свечений страницы, но неподвижно и в полсилы; края к низу и бокам темнеют, под доком — тень «тень 2» */
+  background:
+    linear-gradient(180deg, rgba(4, 3, 12, 0) 66%, rgba(4, 3, 12, .14) 78%, rgba(4, 3, 12, .32) 90%, rgba(4, 3, 12, .48) 100%),
+    radial-gradient(130% 95% at 50% 42%, rgba(4, 3, 12, 0) 58%, rgba(4, 3, 12, .16) 74%, rgba(4, 3, 12, .38) 90%, rgba(4, 3, 12, .5) 100%),
+    radial-gradient(42% 52% at 4% 2%, rgba(98, 74, 150, .26) 0%, rgba(98, 74, 150, .12) 40%, rgba(98, 74, 150, .03) 72%, rgba(98, 74, 150, 0) 100%),
+    radial-gradient(38% 46% at 100% 88%, rgba(188, 90, 138, .16) 0%, rgba(188, 90, 138, .07) 42%, rgba(188, 90, 138, .015) 74%, rgba(188, 90, 138, 0) 100%); }
 .credit { position: absolute; right: var(--pad); bottom: 5px; z-index: 9; margin: 0; font-size: 10px; letter-spacing: .02em; color: rgba(236, 246, 248, .4); }
 .credit a { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(236, 246, 248, .22); transition: color .2s; }
 .credit a:hover { color: rgba(236, 246, 248, .75); }
