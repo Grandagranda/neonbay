@@ -131,10 +131,19 @@
 <main class="atlas">
   <!-- КАРТА: вариант «Бархат», основа 4096 + плитки z4/z5 при приближении (_tools/map6) -->
   <section class="stage" id="stage" aria-label="Map of Vice City and Leonida">
-    <!-- внутриигровая карта GTA VI (gtadb.org, CC BY 4.0) в палитрах сайта (_tools/map6): море — часть картинки, его дальний цвет = фон сцены -->
+    <!-- фон по Figma 4029:349: тёмная слива, свечения медленно кружат (периоды взаимно простые), листья пальм с параллаксом -->
+    <div class="sky" aria-hidden="true">
+      <span class="glow g1"><i></i></span>
+      <span class="glow g2"><i></i></span>
+      <span class="glow g3"><i></i></span>
+      <span class="glow g4"><i></i></span>
+      <img class="palm leaf-a" data-k=".05" src="img/leaf-a.svg" alt="">
+      <img class="palm leaf-b" data-k=".03" src="img/leaf-b.svg" alt="">
+    </div>
+    <!-- внутриигровая карта GTA VI (gtadb.org, CC BY 4.0), вариант «Бархат» (_tools/map6): остров с прозрачным морем, основа 4096 + плитки z4/z5 -->
     <div class="world" id="world">
       <div class="map-img" aria-hidden="true">
-        <img class="lay-night" src="img/map/night.webp?v=2" srcset="img/m/map/night.webp?v=2 2048w, img/map/night.webp?v=2 4096w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 4096px" alt="" draggable="false">
+        <img class="lay-night" src="img/map/night.webp?v=3" srcset="img/m/map/night.webp?v=3 2048w, img/map/night.webp?v=3 4096w" sizes="(max-width: 900px) 1px, (max-width: 1100px) and (max-height: 520px) 1px, 4096px" alt="" draggable="false">
         <div class="tiles" id="tiles"></div>
       </div>
       <div class="blips" id="blips"></div>
@@ -173,7 +182,7 @@
 
   <!-- ОБЗОР: весь остров, рамка — видимая часть; клик или перетаскивание — туда -->
   <div class="ov" id="ov" role="button" tabindex="0" aria-label="Overview — click to move the map">
-    <img class="ov-night" src="img/map/ov-night.webp?v=2" alt="" draggable="false">
+    <img class="ov-night" src="img/map/ov-night.webp?v=3" alt="" draggable="false">
     <i class="ov-view" id="ovView"></i>
   </div>
 

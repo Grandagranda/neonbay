@@ -1,6 +1,6 @@
 /* Карта Леониды — по Figma ZlzQiYNmOu9… кадр «карт» 4029:349 (ПК 1920).
    С 2026-11-22 основа — внутриигровая карта GTA VI (gtadb.org, CC BY 4.0) в палитрах сайта «Ночь» / «День» (_tools/map6):
-   море входит в картинку, его дальний цвет #060413 — фон сцены (вариант «Бархат»); фиолетовые свечения и листья убраны (заказчик: «фиолетовый — иишно»).
+   море прозрачное (остров вырезан на всех уровнях плиток), под ним — прежний фон страницы со свечениями и листьями, вариант «Бархат»; фиолетовые свечения и листья убраны (заказчик: «фиолетовый — иишно»).
    Стеклянные панели rgba(18, 9, 32, .55) с обводкой .1 — как были; шрифт Inter Tight. */
 
 .is-app { overflow: hidden; }
@@ -22,10 +22,12 @@
 .is-app .hdr-cta.btn:hover { background: #ffcb96; }
 
 /* ---------- карта ---------- */
-.stage { position: absolute; inset: 0; overflow: hidden; background: #060413; cursor: grab; user-select: none; touch-action: none; }
+.stage { position: absolute; inset: 0; overflow: hidden; background: #130923; cursor: grab; user-select: none; touch-action: none; }
 .stage.is-drag { cursor: grabbing; }
 /* мир = рамка, в которой заданы точки (в % ширины/высоты); картинка карты больше мира — с морем вокруг острова */
-.world { position: absolute; left: 0; top: 0; width: 1000px; aspect-ratio: 3331 / 4787; transform-origin: 0 0; will-change: transform; }
+.world { position: absolute; left: 0; top: 0; width: 1000px; aspect-ratio: 3331 / 4787; transform-origin: 0 0; }
+/* слой мира — отдельный только во время движения: с постоянным will-change Chrome не перерисовывает точки и подписи после зума и растягивает их растр */
+.world.is-move, .world.is-anim { will-change: transform; }
 .world.is-anim { transition: transform .7s var(--ease-out); }
 .map-img { position: absolute; left: -7.8598%; top: -5.8566%; width: 122.9699%; height: 106.9549%; pointer-events: none; isolation: isolate; } /* z-index плиток не выходит выше точек */
 .map-img > img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; transition: opacity .6s var(--ease); }
@@ -34,14 +36,32 @@
 .tile { position: absolute; max-width: none; opacity: 0; transition: opacity .3s var(--ease); }
 .tile.is-on { opacity: 1; }
 /* тень снизу под доком регионов (слой «тень 2»): многоточечный спад, без видимого края; поверх карты, под панелями */
-.stage-shade { position: absolute; inset: 0; pointer-events: none;
-  /* атмосфера в тон сайта поверх карты (без швов: слой на всю сцену): фиолетовый свет сверху слева и розовый справа внизу —
-     цвета прежних свечений страницы, но неподвижно и в полсилы; края к низу и бокам темнеют, под доком — тень «тень 2» */
-  background:
-    linear-gradient(180deg, rgba(4, 3, 12, 0) 66%, rgba(4, 3, 12, .14) 78%, rgba(4, 3, 12, .32) 90%, rgba(4, 3, 12, .48) 100%),
-    radial-gradient(130% 95% at 50% 42%, rgba(4, 3, 12, 0) 58%, rgba(4, 3, 12, .16) 74%, rgba(4, 3, 12, .38) 90%, rgba(4, 3, 12, .5) 100%),
-    radial-gradient(42% 52% at 4% 2%, rgba(98, 74, 150, .26) 0%, rgba(98, 74, 150, .12) 40%, rgba(98, 74, 150, .03) 72%, rgba(98, 74, 150, 0) 100%),
-    radial-gradient(38% 46% at 100% 88%, rgba(188, 90, 138, .16) 0%, rgba(188, 90, 138, .07) 42%, rgba(188, 90, 138, .015) 74%, rgba(188, 90, 138, 0) 100%); }
+/* фон: свечения — мягкие радиальные пятна с длинным спадом (без края), каждое ходит по своему кругу,
+   внутри — вытянутый эллипс медленно вращается: форма «тянется», а не пульсирует туда-обратно */
+.sky { position: absolute; inset: 0; pointer-events: none; overflow: hidden; background: #130923; }
+.glow { position: absolute; width: var(--w); height: var(--w); margin: calc(var(--w) / -2) 0 0 calc(var(--w) / -2); will-change: transform;
+  animation: orbit var(--t) linear infinite; }
+.glow i { position: absolute; inset: 0; border-radius: 50%; will-change: transform; animation: spin var(--s) linear infinite;
+  background: radial-gradient(50% 36% at 50% 50%,
+    rgb(var(--c) / var(--a)) 0%, rgb(var(--c) / calc(var(--a) * .86)) 16%, rgb(var(--c) / calc(var(--a) * .62)) 34%,
+    rgb(var(--c) / calc(var(--a) * .36)) 54%, rgb(var(--c) / calc(var(--a) * .15)) 74%, rgb(var(--c) / calc(var(--a) * .04)) 90%, rgb(var(--c) / 0) 100%); }
+/* фиолетовое — сверху слева (Ellipse 2, #4D3C70) */
+.g1 { left: 12%; top: 6%; --w: 1500px; --c: 77 60 112; --a: .95; --r: 150px; --t: 41s; --s: 67s; }
+/* розовое — справа (Ellipse 1, #BC5A8A) */
+.g2 { left: 100%; top: 62%; --w: 1600px; --c: 188 90 138; --a: .62; --r: 170px; --t: 53s; --s: 83s; animation-direction: reverse; }
+/* в той же гамме: слива снизу и сирень сверху справа — дают перелив между двумя главными */
+.g3 { left: 48%; top: 104%; --w: 1400px; --c: 112 42 108; --a: .55; --r: 190px; --t: 47s; --s: 71s; animation-delay: -12s; }
+.g4 { left: 74%; top: 4%; --w: 1200px; --c: 70 46 118; --a: .6; --r: 140px; --t: 59s; --s: 89s; animation-delay: -30s; animation-direction: reverse; }
+@keyframes orbit { from { transform: rotate(0) translateX(var(--r)) rotate(0); } to { transform: rotate(360deg) translateX(var(--r)) rotate(-360deg); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+/* тень снизу под картой (слой «тень 2»): многоточечный спад, без видимого края */
+.sky::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 62%;
+  background: linear-gradient(180deg, rgba(8, 4, 15, 0) 0%, rgba(8, 4, 15, .05) 18%, rgba(8, 4, 15, .16) 36%, rgba(8, 4, 15, .32) 54%, rgba(8, 4, 15, .5) 72%, rgba(8, 4, 15, .66) 88%, rgba(8, 4, 15, .74) 100%); }
+/* листья пальм из макета: сиреневый слева сверху, светлый 10 % справа снизу */
+.palm { position: absolute; max-width: none; will-change: translate; }
+.leaf-a { left: -174px; top: 7px; width: 582px; }
+.leaf-b { right: calc(137.5px - 434.8px); bottom: calc(35.5px - 280.9px); width: 869.6px; rotate: -53.11deg; }
+.stage-shade { position: absolute; inset: 0; pointer-events: none; }
 .credit { position: absolute; right: var(--pad); bottom: 5px; z-index: 9; margin: 0; font-size: 10px; letter-spacing: .02em; color: rgba(236, 246, 248, .4); }
 .credit a { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(236, 246, 248, .22); transition: color .2s; }
 .credit a:hover { color: rgba(236, 246, 248, .75); }

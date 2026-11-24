@@ -3,6 +3,7 @@
 // Телефон: щипок, инерция, выбор ближайшей точки касанием, нижние листы вместо панелей, плитки полного разрешения при приближении.
 (() => {
   const D = window.MAP, $ = s => document.querySelector(s);
+  const palms = [...document.querySelectorAll('.palm')];
   const stage = $('#stage'), world = $('#world'), blipsEl = $('#blips'), info = $('#info'), atlas = $('.atlas'), legend = $('#legend');
   const WW = 1000, WH = WW * D.aspect, KM_X = D.kmPerMap, KM_Y = D.kmPerMap * D.aspect;
   const MOB = !!(window.NB_MOB && NB_MOB.matches), PORTRAIT = matchMedia('(orientation: portrait) and (max-width: 640px)');
@@ -188,6 +189,9 @@
       $('#zl').textContent = rel.toFixed(1) + '×';
     }
     if (MOB) { if (!hudT) hudT = setTimeout(() => { hudT = 0; updateHud(); tiles(); }, 130); return; }
+    palms.forEach(p => { const k = +p.dataset.k; p.style.translate = `${(x * k).toFixed(1)}px ${(y * k).toFixed(1)}px`; });
+    // слой мира отдельный только пока карта движется; после остановки Chrome перерисовывает точки и текст в настоящем масштабе
+    world.classList.add('is-move'); clearTimeout(apply.still); apply.still = setTimeout(() => { if (!drag) world.classList.remove('is-move'); }, 180);
     updateHud(); tilesSoon();
   };
   const schedule = () => { if (!frame) frame = requestAnimationFrame(() => { frame = 0; apply(); }); };
@@ -216,7 +220,7 @@
       im.className = 'tile'; im.alt = ''; im.decoding = 'async'; im.fetchPriority = 'low';
       im.style.cssText = `left:${c / l.cols * 100}%;top:${r / l.rows * 100}%;width:${100 / l.cols + .02}%;height:${100 / l.rows + .02}%;z-index:${L}`;
       im.onload = () => im.classList.add('is-on');
-      im.src = `img/map/t/${k}.webp?v=2`; // v — после пересборки плиток, чтобы не брались старые из кэша
+      im.src = `img/map/t/${k}.webp?v=3`; // v — после пересборки плиток, чтобы не брались старые из кэша
       tilesEl.appendChild(im); live.set(k, im);
     });
     // лишние: другой стиль и всё, когда хватает основы, — сразу; прежний уровень остаётся под новым, пока плиток не больше CAP
