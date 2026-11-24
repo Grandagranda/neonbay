@@ -17,12 +17,6 @@
   "dw": 3840,
   "crop": false
  },
- "img/map-neon.webp": {
-  "m": "img/m/map-neon-s.webp",
-  "w": 860,
-  "dw": 3336,
-  "crop": false
- },
  "img/nh-bg.webp": {
   "m": "img/m/nh-bg.webp",
   "w": 860,
@@ -225,6 +219,12 @@
   "m": "img/m/news-vinyl-records-cover.webp",
   "w": 860,
   "dw": 1080,
+  "crop": false
+ },
+ "img/map-neon.webp": {
+  "m": "img/m/map-neon-s.webp",
+  "w": 860,
+  "dw": 3336,
   "crop": false
  }
 }

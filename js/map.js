@@ -3,7 +3,6 @@
 // Телефон: щипок, инерция, выбор ближайшей точки касанием, нижние листы вместо панелей, плитки полного разрешения при приближении.
 (() => {
   const D = window.MAP, $ = s => document.querySelector(s);
-  const palms = [...document.querySelectorAll('.palm')];
   const stage = $('#stage'), world = $('#world'), blipsEl = $('#blips'), info = $('#info'), atlas = $('.atlas'), legend = $('#legend');
   const WW = 1000, WH = WW * D.aspect, KM_X = D.kmPerMap, KM_Y = D.kmPerMap * D.aspect;
   const MOB = !!(window.NB_MOB && NB_MOB.matches), PORTRAIT = matchMedia('(orientation: portrait) and (max-width: 640px)');
@@ -29,7 +28,7 @@
     const inside = D.regions.filter(r => x >= r.b[0] && x <= r.b[2] && y >= r.b[1] && y <= r.b[3]);
     return inside.sort((a, b) => ((a.lx - x) ** 2 + (a.ly - y) ** 2) - ((b.lx - x) ** 2 + (b.ly - y) ** 2))[0] || null;
   };
-  const gxy = (x, y) => `X ${Math.round((x - 50) * 118).toLocaleString('en')} · Y ${Math.round((50 - y) * 170).toLocaleString('en')}`;
+  const gxy = (x, y) => `X ${(Math.round((x - 50) * 118) || 0).toLocaleString('en')} · Y ${(Math.round((50 - y) * 170) || 0).toLocaleString('en')}`;
 
   // ---- блипы: подпись по наведению; при открытии проявляются волной от центра ----
   const START = [64, 46];
@@ -189,38 +188,44 @@
       $('#zl').textContent = rel.toFixed(1) + '×';
     }
     if (MOB) { if (!hudT) hudT = setTimeout(() => { hudT = 0; updateHud(); tiles(); }, 130); return; }
-    palms.forEach(p => { const k = +p.dataset.k; p.style.translate = `${(x * k).toFixed(1)}px ${(y * k).toFixed(1)}px`; });
-    updateHud();
+    updateHud(); tilesSoon();
   };
   const schedule = () => { if (!frame) frame = requestAnimationFrame(() => { frame = 0; apply(); }); };
 
-  // ---- плитки: основа 1668 px лёгкая, но при приближении мылит; поверх подгружается полное разрешение, только видимая часть ----
-  const tilesEl = $('#tiles'), TC = 4, TR = 6, live = new Map();
+  // ---- плитки: основа (по ширине кадра ПК 4096, телефон 2048) мылит при приближении — поверх грузятся плитки 1024 px
+  // уровней z4 (×2) и z5 (×4), только видимые и только там, где есть суша (D.img.levels[].have); море — сама основа ----
+  const IMG = D.img, tilesEl = $('#tiles'), live = new Map(), BASE = MOB ? 2048 : 4096, CAP = MOB ? 16 : 36;
+  let tilesT = 0;
   const tiles = () => {
+    clearTimeout(tilesT); tilesT = 0;
     if (MOB && shot.getAttribute('src') && !shot.complete) { shot.addEventListener('load', tiles, { once: true }); return; } // сначала кадр карточки, потом плитки
-    const on = z * WW * Math.min(devicePixelRatio || 1, 3) > 1668 * 1.1, style = document.body.dataset.mode;
-    tilesEl.hidden = !on;
+    const mode = document.body.dataset.mode, dpr = Math.min(devicePixelRatio || 1, MOB ? 2 : 3);
+    const cw = WW * IMG.box.w / 100 * z, ch = WH * IMG.box.h / 100 * z, need = cw * dpr; // кадр на экране и сколько px картинки нужно по ширине
+    const lv = need > BASE * 1.15 ? (IMG.levels.find(l => 4096 * l.k >= need * .9) || IMG.levels[IMG.levels.length - 1]) : null;
     const want = new Set();
-    if (on) {
-      const W = stage.clientWidth, H = stage.clientHeight, tw = WW * z / TC, th = WH * z / TR;
-      const c0 = Math.max(0, Math.floor(-x / tw)), c1 = Math.min(TC - 1, Math.floor((W - x) / tw));
-      const r0 = Math.max(0, Math.floor(-y / th)), r1 = Math.min(TR - 1, Math.floor((H - y) / th));
-      for (let r = r0; r <= r1; r++) for (let c = c0; c <= c1; c++) want.add(`${style}-${r}-${c}`);
+    if (lv) {
+      const W = stage.clientWidth, H = stage.clientHeight, tw = cw / lv.cols, th = ch / lv.rows;
+      const cl = x + WW * IMG.box.l / 100 * z, ct = y + WH * IMG.box.t / 100 * z;
+      const c0 = Math.max(0, Math.floor(-cl / tw)), c1 = Math.min(lv.cols - 1, Math.floor((W - cl) / tw));
+      const r0 = Math.max(0, Math.floor(-ct / th)), r1 = Math.min(lv.rows - 1, Math.floor((H - ct) / th));
+      for (let r = r0; r <= r1; r++) for (let c = c0; c <= c1; c++) if (lv.have[r * lv.cols + c] === '1') want.add(`${mode}/${lv.L}/${r}-${c}`);
     }
     want.forEach(k => {
       if (live.has(k)) return;
-      const [, r, c] = k.split('-').map(Number), im = new Image();
+      const [, L, rc] = k.split('/'), [r, c] = rc.split('-').map(Number), l = IMG.levels.find(v => v.L === +L), im = new Image();
       im.className = 'tile'; im.alt = ''; im.decoding = 'async'; im.fetchPriority = 'low';
-      im.style.cssText = `left:${c / TC * 100}%;top:${r / TR * 100}%;width:${100 / TC + .03}%;height:${100 / TR + .03}%`;
+      im.style.cssText = `left:${c / l.cols * 100}%;top:${r / l.rows * 100}%;width:${100 / l.cols + .02}%;height:${100 / l.rows + .02}%;z-index:${L}`;
       im.onload = () => im.classList.add('is-on');
-      im.src = `img/m/map/${k}.webp`;
+      im.src = `img/map/t/${k}.webp`;
       tilesEl.appendChild(im); live.set(k, im);
     });
-    // в памяти держим не больше дюжины плиток: 24 штуки — это снова целая картинка
-    live.forEach((im, k) => { if (!want.has(k) && (live.size > 12 || !k.startsWith(style))) { im.remove(); live.delete(k); } });
+    // лишние: другой стиль и всё, когда хватает основы, — сразу; прежний уровень остаётся под новым, пока плиток не больше CAP
+    let extra = live.size - CAP;
+    live.forEach((im, k) => { if (!want.has(k) && (!lv || !k.startsWith(mode + '/') || extra > 0)) { im.remove(); live.delete(k); extra--; } });
   };
+  const tilesSoon = () => { clearTimeout(tilesT); tilesT = setTimeout(tiles, 110); };
   const anim = on => { world.classList.toggle('is-anim', !!on); clearTimeout(anim.t); if (on) anim.t = setTimeout(() => world.classList.remove('is-anim'), 720); };
-  const clampZ = v => Math.min(fitZ * 6.5, Math.max(fitZ * .8, v));
+  const clampZ = v => Math.min(fitZ * 11, Math.max(fitZ * .8, v));
   const flyTo = (cx, cy, nz, a = true) => { // cx, cy — в % карты
     const b = box(); z = clampZ(nz);
     x = b.l + b.w / 2 - cx / 100 * WW * z; y = b.t + b.h / 2 - cy / 100 * WH * z;
@@ -407,18 +412,6 @@
     flyTo((r.b[0] + r.b[2]) / 2, (r.b[1] + r.b[3]) / 2, nz);
   });
   chip.querySelector('button').addEventListener('click', () => setRegion(null));
-
-  // ---- стиль карты: неон / атлас ----
-  // атлас на телефоне подгружается только по выбору стиля, на ПК — сразу, как и раньше
-  const lay = $('.lay-atlas'), loadAtlas = () => { if (!lay.getAttribute('src')) lay.src = MOB ? 'img/m/map/atlas.webp' : 'img/map-atlas.webp'; };
-  if (!MOB) loadAtlas();
-  document.querySelector('.mode').addEventListener('click', e => {
-    const b = e.target.closest('[data-mode]'); if (!b) return;
-    document.body.dataset.mode = b.dataset.mode;
-    document.querySelectorAll('.mode button').forEach(o => o.classList.toggle('is-on', o === b));
-    if (b.dataset.mode === 'atlas') loadAtlas();
-    if (MOB) tiles();
-  });
 
   // ---- клавиши ----
   addEventListener('keydown', e => {

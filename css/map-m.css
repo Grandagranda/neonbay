@@ -15,20 +15,10 @@
 .is-app .hdr-cta.btn { --h: 38px; padding: 0 16px; font-size: 14px; }
 html.menu-open .is-app .hdr { background: none; border-color: transparent; }
 
-/* фон: свечения стоят, листья тоже */
-.glow, .glow i { animation: none; will-change: auto; }
-.g1 { --w: 760px; } .g2 { --w: 820px; } .g3 { --w: 720px; } .g4 { --w: 640px; }
-.palm { will-change: auto; }
-.leaf-a { width: 340px; left: -120px; top: 40px; }
-.leaf-b { width: 480px; right: -220px; bottom: -120px; }
 .world { will-change: auto; }
 .world.is-move { will-change: transform; }
 
-/* плитки полного разрешения поверх основы */
-.tiles { position: absolute; inset: 0; pointer-events: none; }
-.tiles[hidden] { display: none; }
-.tile { position: absolute; max-width: none; opacity: 0; transition: opacity .3s var(--ease); }
-.tile.is-on { opacity: 1; }
+/* плитки z4/z5 поверх основы — правила общие с ПК (map.css) */
 
 html:has(.is-app) { overscroll-behavior: none; } /* без «оттягивания» и обновления жестом вниз поверх карты */
 /* два пальца на панелях не должны приближать саму страницу */
